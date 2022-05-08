@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using GadzzaaTB.Classes;
 
 namespace GadzzaaTB.Windows
 {
@@ -58,7 +60,11 @@ namespace GadzzaaTB.Windows
 
         private async void SubmitButton_OnClick(object sender, RoutedEventArgs e)
         {
-            await Classes.Octokit.Main("Titlu", "test...");
+            _description = await LogFile.LoadLogFile(_description);
+            await Classes.Octokit.Main(_name, _description);
+            Close();
+            Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
         }
     }
 }

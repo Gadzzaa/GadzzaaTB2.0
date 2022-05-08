@@ -27,7 +27,7 @@ namespace GadzzaaTB.Classes
                 FileName =
                     @"${specialfolder:folder=LocalApplicationData}/GadzzaaTB/logs/${date:format=yyyy-MM-dd HH.mm}.log",
                 Layout = "${time} ${uppercase:${level}} ${message}",
-                KeepFileOpen = true,
+                KeepFileOpen = false,
                 ConcurrentWrites = true
             };
             nlogConfig.AddTarget(fileTarget);
