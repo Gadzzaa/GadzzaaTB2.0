@@ -8,24 +8,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="45154575-6710-4807-96dd-3defc3128252" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.GadzzaaTB 2.0/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/GadzzaaTB 2.0/v17/.suo" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/PostSharpAspects.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GadzzaaTB 2.0.sln.DotSettings.user" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/gadzzaa_Dq1_icon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pages/Main.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pages/Main.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Windows/MainWindow.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classes/RatioConverter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GadzzaaTB 2.0.csproj.DotSettings.user" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GadzzaaTB 2.0_10mae4gc_wpftmp.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GadzzaaTB 2.0_zbm30k4c_wpftmp.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Windows/BugReport.xaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Windows/BugReport.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GadzzaaTB 2.0/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GadzzaaTB 2.0/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/GadzzaaTB 2.0/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/GadzzaaTB 2.0/v17/.suo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.config" beforeDir="false" afterPath="$PROJECT_DIR$/App.config" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/App.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/App.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/PostSharpAspects.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/PostSharpAspects.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GadzzaaTB 2.0.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GadzzaaTB 2.0.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Windows/MainWindow.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow.xaml.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GadzzaaTB 2.0.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/GadzzaaTB 2.0.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Main.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Main.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Main.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Main.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Properties/AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Properties/AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Properties/Resources.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Properties/Resources.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Properties/Resources.resx" beforeDir="false" afterPath="$PROJECT_DIR$/Properties/Resources.resx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Windows/MainWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Windows/MainWindow.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Windows/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Windows/MainWindow.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/packages.config" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +37,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b04dc0027d9245d59f0781c8c53ad1565fe778/36/5b84d312/WpfXamlLoader.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b04dc0027d9245d59f0781c8c53ad1565fe778/db/e5bc15ff/Window.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/obj/Debug/App.g.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -57,12 +63,13 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.20121951&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;SolutionBuilderGeneralOptionsPage&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -96,8 +103,24 @@
       <updated>1650533113307</updated>
       <workItem from="1650533121197" duration="1705000" />
       <workItem from="1650534855466" duration="7441000" />
-      <workItem from="1650543510158" duration="2629000" />
+      <workItem from="1650543510158" duration="7549000" />
+      <workItem from="1650622339464" duration="1620000" />
+      <workItem from="1650624201014" duration="1611000" />
+      <workItem from="1650656995898" duration="1205000" />
+      <workItem from="1652002218972" duration="274000" />
+      <workItem from="1652007205969" duration="1808000" />
+      <workItem from="1652011235195" duration="882000" />
+      <workItem from="1652015852412" duration="632000" />
+      <workItem from="1652016653692" duration="3849000" />
     </task>
+    <task id="LOCAL-00001" summary="Logging Completed">
+      <created>1650546293967</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1650546293967</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,15 +142,30 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Logging Completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Logging Completed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" suspend="NONE" type="DotNet Exception Breakpoints">
+          <properties exception="System.Windows.Markup.XamlParseException" isInternal="false" displayValue="XamlParseException" namespaceName="System.Windows.Markup">
+            <option name="internal" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint enabled="true" type="DotNet Exception Breakpoints" />
         <breakpoint enabled="true" type="CidrExceptionBreakpoint" />
         <breakpoint enabled="true" type="javascript-exception" />
       </default-breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Type#System.Exception" memberName="InnerException" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

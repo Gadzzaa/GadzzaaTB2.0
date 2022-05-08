@@ -1,0 +1,11 @@
+﻿<Window x:Class="GadzzaaTB.Windows.BugReport"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:classes="clr-namespace:GadzzaaTB.Classes"
+        Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={classes:RatioConverter}, ConverterParameter=0.45 }" 
+        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={classes:RatioConverter}, ConverterParameter=0.4 }" 
+        Title="Bug Report" Background="#7f6cd2" FontFamily="Segoe UI" Foreground="#cfcefe">
+    <Grid>
+        
+    </Grid>
+</Window>

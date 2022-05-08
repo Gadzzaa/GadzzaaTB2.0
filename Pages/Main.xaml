@@ -3,10 +3,76 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:GadzzaaTB.Pages"
-      mc:Ignorable="d"
-      Title="Main" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+      xmlns:classes="clr-namespace:GadzzaaTB.Classes"
+      mc:Ignorable="d"  
+      Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={classes:RatioConverter}, ConverterParameter=0.45 }" 
+      Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={classes:RatioConverter}, ConverterParameter=0.4 }" 
+      Background="#7f6cd2" FontFamily="Segoe UI" Foreground="#cfcefe">
+    <Viewbox>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="20"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="20"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="1" Grid.Row="1" TextAlignment="Center" FontWeight="Bold"
+                       Text="GadzzaaTB" FontSize="30" Margin="0,0,0,15"/>
+            <TextBox x:Name = "ChannelNameBox"
+                     Grid.Column="1" Grid.Row="2" TextAlignment="Center"
+                     Text="Channel Name" FontSize="15" Width="150" Margin="0,0,0,0"
+                     GotFocus="ChannelNameBox_OnGotFocus" LostFocus="ChannelNameBox_OnLostFocus"/>
+            <Button x:Name="ConnectionButton" Grid.Column="1" Grid.Row="3"
+                    FontSize="15" Width="150" Cursor="Hand"
+                Content="Connect"/>
+            <TextBlock Grid.Column="1" Grid.Row="4" TextAlignment="Center" FontWeight="Bold"
+                       Text="Connection Status:" FontSize="15" Margin="0,0,0,2"/>
+
+            <DockPanel Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" Margin="0,0,0,0">
+                <TextBlock TextAlignment="Center" Text="Twitch" 
+                           FontSize="10" />   
+                <TextBlock Text="-" Margin="5,0,0,0" 
+                           FontSize="10"/>
+                <TextBlock x:Name="TwitchConnection" Text="Disconnected" Margin="5,0,0,0" 
+                           FontSize="10"/>
+            </DockPanel>        
+            <DockPanel Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" Margin="0,0,0,2">
+                <TextBlock TextAlignment="Center" Text="osu!" 
+                           FontSize="10" />   
+                <TextBlock Text="-" Margin="5,0,0,0" 
+                           FontSize="10"/>
+                <TextBlock x:Name="OsuConnection" Text="No data received" Margin="5,0,0,0" 
+                           FontSize="10"/>
+            </DockPanel>
+            <DockPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="7" Margin="0,3,0,5">
+                <StackPanel
+                    HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <Button x:Name="DiscordButton" Content="Discord" Cursor="Hand"
+                            FontSize="7"
+                            Click="DiscordButton_OnClick" Width="30"/>           
+                    <Button x:Name="TwitchButton" Content="Twitch" Cursor="Hand"
+                            FontSize="7"
+                            Click="TwitchButton_OnClick" Width="30"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <TextBlock Text="v2.0" TextAlignment="Center"
+                               FontSize="10"/>
+                    <Button x:Name="BugButton" Content="Bug Report" Cursor="Hand"
+                            FontSize="7"
+                            Click="BugButton_OnClick" Width="40"/>
+                </StackPanel>
+            </DockPanel>
+
+        </Grid>
+    </Viewbox>
 </Page>

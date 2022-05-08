@@ -3,9 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GadzzaaTB"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:classes="clr-namespace:GadzzaaTB.Classes"
+        mc:Ignorable="d" 
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="CanMinimize" Visibility="Visible"
+        WindowStartupLocation="CenterScreen"
+        Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={classes:RatioConverter}, ConverterParameter=0.45 }" 
+        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={classes:RatioConverter}, ConverterParameter=0.4 }" 
+        Title="GadzzaaTB | Main Menu" Background="#cfcefe">
     <Grid>
         <Frame x:Name="NavigationFrame" NavigationUIVisibility="Hidden" />
     </Grid>

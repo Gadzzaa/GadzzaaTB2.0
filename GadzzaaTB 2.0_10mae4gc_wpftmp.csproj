@@ -36,39 +36,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>packages\NLog.5.0.0-rc2\lib\net46\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="PostSharp, Version=6.10.9.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-      <HintPath>packages\PostSharp.Redist.6.10.9\lib\net45\PostSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="PostSharp.Patterns.Common, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-      <HintPath>packages\PostSharp.Patterns.Common.Redist.6.10.9\lib\net47\PostSharp.Patterns.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="PostSharp.Patterns.Diagnostics, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-      <HintPath>packages\PostSharp.Patterns.Diagnostics.Redist.6.10.9\lib\net47\PostSharp.Patterns.Diagnostics.dll</HintPath>
-    </Reference>
-    <Reference Include="PostSharp.Patterns.Diagnostics.Backends.NLog, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-      <HintPath>packages\PostSharp.Patterns.Diagnostics.NLog.6.10.9\lib\net45\PostSharp.Patterns.Diagnostics.Backends.NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -77,9 +46,6 @@
     <Compile Include="Classes\RatioConverter.cs" />
     <Compile Include="Pages\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\BugReport.xaml.cs">
-      <DependentUpon>BugReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -106,12 +72,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Pages\Main.xaml" />
-    <Page Include="Windows\BugReport.xaml" />
-    <Page Include="Windows\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\Background.png" />
@@ -125,4 +85,29 @@
     <Error Condition="!Exists('packages\PostSharp.6.10.9\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\PostSharp.6.10.9\build\PostSharp.targets'))" />
   </Target>
   <Import Project="packages\PostSharp.6.10.9\build\PostSharp.targets" Condition="Exists('packages\PostSharp.6.10.9\build\PostSharp.targets')" />
+  <ItemGroup>
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll" />
+    <ReferencePath Include="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\packages\NLog.5.0.0-rc2\lib\net46\NLog.dll" />
+    <ReferencePath Include="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\packages\PostSharp.Redist.6.10.9\lib\net45\PostSharp.dll" />
+    <ReferencePath Include="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\packages\PostSharp.Patterns.Common.Redist.6.10.9\lib\net47\PostSharp.Patterns.Common.dll" />
+    <ReferencePath Include="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\packages\PostSharp.Patterns.Diagnostics.NLog.6.10.9\lib\net45\PostSharp.Patterns.Diagnostics.Backends.NLog.dll" />
+    <ReferencePath Include="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\packages\PostSharp.Patterns.Diagnostics.Redist.6.10.9\lib\net47\PostSharp.Patterns.Diagnostics.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\PresentationCore.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\PresentationFramework.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Configuration.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Core.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.IO.Compression.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xaml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\WindowsBase.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\obj\Debug\Pages\Main.g.cs" />
+    <Compile Include="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\obj\Debug\Windows\MainWindow.g.cs" />
+    <Compile Include="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\obj\Debug\App.g.cs" />
+    <Compile Include="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\obj\Debug\GadzzaaTB_Content.g.cs" />
+    <Compile Include="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\obj\Debug\GeneratedInternalTypeHelper.g.cs" />
+  </ItemGroup>
 </Project>

@@ -1,28 +1,34 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using GadzzaaTB.Pages;
 using NLog;
-using PostSharp.Patterns.Diagnostics;
-using PostSharp.Patterns.Diagnostics.Backends.NLog;
 
 namespace GadzzaaTB.Windows
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : Window
     {
-        private readonly Main _page = new Main();
+        public readonly BugReport BugReport;
 
         public MainWindow()
         {
             InitializeComponent();
-            NavigationFrame.NavigationService.Navigate(_page);
-            Closed += OnClosed;
+            var main = new Main();
+            BugReport = new BugReport();
+            Closing += OnClosing;
+            NavigationFrame.NavigationService.Navigate(main);
         }
 
-        private void OnClosed(object sender, EventArgs e)
+        private void OnClosing(object sender, CancelEventArgs e)
         {
-            NLog.LogManager.Shutdown();
+            BugReport.IsClosing = true;
+            BugReport.Close();
+            LogManager.Shutdown();
         }
     }
 }
