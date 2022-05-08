@@ -5,6 +5,7 @@ using PostSharp.Extensibility;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.NLog;
 using LogLevel = NLog.LogLevel;
+
 #pragma warning disable CS0618
 
 [assembly:
@@ -24,7 +25,7 @@ namespace GadzzaaTB.Classes
             var fileTarget = new FileTarget("myLoggerTarget")
             {
                 FileName =
-                    @"${specialfolder:folder=LocalApplicationData}/GadzzaaTB/logs/${date:format=yyyy-MM-dd HH.mm.ss}.log",
+                    @"${specialfolder:folder=LocalApplicationData}/GadzzaaTB/logs/${date:format=yyyy-MM-dd HH.mm}.log",
                 Layout = "${time} ${uppercase:${level}} ${message}",
                 KeepFileOpen = true,
                 ConcurrentWrites = true
