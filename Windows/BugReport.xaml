@@ -32,7 +32,8 @@
                                  TextChanged="ReportName_OnTextChanged" />
                         <ScrollViewer Grid.Column="1" Grid.Row="3" FontSize="9" Margin="0,0,0,10" Height="50">
                                 <TextBox x:Name="ReportDescription" Text="Report Description" TextAlignment="Center"
-                                         AcceptsReturn="True"
+                                         AcceptsReturn="True" VerticalScrollBarVisibility="Auto" MaxWidth="132"
+                                         TextWrapping="Wrap"
                                          GotFocus="ReportDescription_OnGotFocus"
                                          LostFocus="ReportDescription_OnLostFocus"
                                          TextChanged="ReportDescription_OnTextChanged" />
