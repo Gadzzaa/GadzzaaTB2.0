@@ -20,24 +20,31 @@ namespace GadzzaaTB.Classes
     {
         public static void StartNLog()
         {
+            var target = new NLogCollectingTarget("toPostSharp"); // the name does not matter
+            var sourceConfiguration = new LoggingConfiguration();
+            sourceConfiguration.AddTarget(target);
+            sourceConfiguration.LoggingRules.Add(new LoggingRule("*", LogLevel.Trace, target)); // Capture all events.
+            LogManager.Configuration = sourceConfiguration; // Set it as the default configuration
+            LogManager.EnableLogging();
+
             var nlogConfig = new LoggingConfiguration();
 
-            var fileTarget = new FileTarget("myLoggerTarget")
+            var fileTarget = new FileTarget("file")
             {
                 FileName =
-                    @"${specialfolder:folder=LocalApplicationData}/GadzzaaTB/logs/${date:format=yyyy-MM-dd HH.mm}.log",
+                    @"${specialfolder:folder=LocalApplicationData}/GadzzaaTB/logs/${date:format=yyyy-MM-dd}.log",
                 Layout = "${time} ${uppercase:${level}} ${message}",
-                KeepFileOpen = false,
-                ConcurrentWrites = true
+                KeepFileOpen = true,
+                ConcurrentWrites = false
             };
             nlogConfig.AddTarget(fileTarget);
-            nlogConfig.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, fileTarget));
+            nlogConfig.LoggingRules.Add(new LoggingRule("*", LogLevel.Trace, fileTarget));
 
             var consoleTarget = new ConsoleTarget("console");
             nlogConfig.AddTarget(consoleTarget);
-            nlogConfig.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, consoleTarget));
+            nlogConfig.LoggingRules.Add(new LoggingRule("*", LogLevel.Trace, consoleTarget));
 
-            LogManager.EnableLogging();
+
             // Configure PostSharp Logging to use NLog.
             LoggingServices.DefaultBackend = new NLogLoggingBackend(new LogFactory(nlogConfig));
         }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using GadzzaaTB.Pages;
 using NLog;
 
@@ -14,18 +11,23 @@ namespace GadzzaaTB.Windows
     public partial class MainWindow : Window
     {
         public readonly BugReport BugReport;
+        public readonly DebugOsu DebugOsu;
+
 
         public MainWindow()
         {
             InitializeComponent();
             var main = new Main();
             BugReport = new BugReport();
+            DebugOsu = new DebugOsu();
             Closing += OnClosing;
             NavigationFrame.NavigationService.Navigate(main);
         }
 
         private void OnClosing(object sender, CancelEventArgs e)
         {
+            var logger = LogManager.GetLogger("");
+            logger.Debug("### LOGGING SESSION FINISHED ###");
             BugReport.IsClosing = true;
             BugReport.Close();
             LogManager.Shutdown();

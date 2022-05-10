@@ -1,0 +1,51 @@
+﻿<Window x:Class="GadzzaaTB.Windows.DebugOsu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:classes="clr-namespace:GadzzaaTB.Classes"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="CanMinimize" Visibility="Visible"
+        WindowStartupLocation="CenterScreen"
+        Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={classes:RatioConverter}, ConverterParameter=0.45 }"
+        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={classes:RatioConverter}, ConverterParameter=0.4 }"
+        Title="GadzzaaTB | Main Menu" Background="#cfcefe" FontSize="30">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Column="1" Grid.Row="1">
+            <TextBlock Text="mStars: " />
+            <TextBlock Text="{Binding mStars, Mode=OneWay}" />
+        </DockPanel>
+        <DockPanel Grid.Column="1" Grid.Row="2">
+            <TextBlock Text="mapArtistTitle: " />
+            <TextBlock Text="{Binding mapArtistTitle, Mode=OneWay}" />
+        </DockPanel>
+        <DockPanel Grid.Column="1" Grid.Row="3">
+            <TextBlock Text="mapDiff: " />
+            <TextBlock Text="{Binding mapDiff, Mode=OneWay}" />
+        </DockPanel>
+        <DockPanel Grid.Column="1" Grid.Row="4">
+            <TextBlock Text="mods: " />
+            <TextBlock Text="{Binding mods, Mode=OneWay}" />
+        </DockPanel>
+        <DockPanel Grid.Column="1" Grid.Row="5">
+            <TextBlock Text="dl: " />
+            <TextBlock Text="{Binding dl, Mode=OneWay}" />
+        </DockPanel>
+    </Grid>
+</Window>

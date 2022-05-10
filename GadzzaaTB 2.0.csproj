@@ -22,53 +22,60 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
-      <Reference Include="Microsoft.CSharp"/>
-      <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-          <HintPath>packages\NLog.5.0.0-rc2\lib\net46\NLog.dll</HintPath>
-      </Reference>
-      <Reference Include="Octokit, Version=0.51.0.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>packages\Octokit.0.51.0\lib\net46\Octokit.dll</HintPath>
-      </Reference>
-      <Reference Include="PostSharp, Version=6.10.9.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-          <HintPath>packages\PostSharp.Redist.6.10.9\lib\net45\PostSharp.dll</HintPath>
-      </Reference>
-      <Reference Include="PostSharp.Patterns.Common, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-          <HintPath>packages\PostSharp.Patterns.Common.Redist.6.10.9\lib\net47\PostSharp.Patterns.Common.dll</HintPath>
-      </Reference>
-      <Reference Include="PostSharp.Patterns.Diagnostics, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-          <HintPath>packages\PostSharp.Patterns.Diagnostics.Redist.6.10.9\lib\net47\PostSharp.Patterns.Diagnostics.dll</HintPath>
-      </Reference>
-      <Reference Include="PostSharp.Patterns.Diagnostics.Backends.NLog, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-          <HintPath>packages\PostSharp.Patterns.Diagnostics.NLog.6.10.9\lib\net45\PostSharp.Patterns.Diagnostics.Backends.NLog.dll</HintPath>
-      </Reference>
-      <Reference Include="System"/>
-      <Reference Include="System.Configuration"/>
-      <Reference Include="System.Core"/>
-      <Reference Include="System.Data"/>
-      <Reference Include="System.IO.Compression"/>
-      <Reference Include="System.Net.Http"/>
-      <Reference Include="System.Xml"/>
-      <Reference Include="System.Xaml">
-          <RequiredTargetFramework>4.0</RequiredTargetFramework>
-      </Reference>
-      <Reference Include="WindowsBase"/>
-      <Reference Include="PresentationCore"/>
-      <Reference Include="PresentationFramework"/>
-  </ItemGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="Microsoft.CSharp"/>
+        <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+            <HintPath>packages\NLog.5.0.0-rc2\lib\net46\NLog.dll</HintPath>
+        </Reference>
+        <Reference Include="Octokit, Version=0.51.0.0, Culture=neutral, processorArchitecture=MSIL">
+            <HintPath>packages\Octokit.0.51.0\lib\net46\Octokit.dll</HintPath>
+        </Reference>
+        <Reference Include="OsuMemoryDataProvider, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+            <HintPath>packages\OsuMemoryDataProvider.0.8.9\lib\net472\OsuMemoryDataProvider.dll</HintPath>
+        </Reference>
+        <Reference Include="PostSharp, Version=6.10.9.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+            <HintPath>packages\PostSharp.Redist.6.10.9\lib\net45\PostSharp.dll</HintPath>
+        </Reference>
+        <Reference Include="PostSharp.Patterns.Common, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
+            <HintPath>packages\PostSharp.Patterns.Common.Redist.6.10.9\lib\net47\PostSharp.Patterns.Common.dll</HintPath>
+        </Reference>
+        <Reference Include="PostSharp.Patterns.Diagnostics, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
+            <HintPath>packages\PostSharp.Patterns.Diagnostics.Redist.6.10.9\lib\net47\PostSharp.Patterns.Diagnostics.dll</HintPath>
+        </Reference>
+        <Reference Include="PostSharp.Patterns.Diagnostics.Backends.NLog, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
+            <HintPath>packages\PostSharp.Patterns.Diagnostics.NLog.6.10.9\lib\net45\PostSharp.Patterns.Diagnostics.Backends.NLog.dll</HintPath>
+        </Reference>
+        <Reference Include="ProcessMemoryDataFinder, Version=0.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+            <HintPath>packages\ProcessMemoryDataFinder.0.8.3\lib\net472\ProcessMemoryDataFinder.dll</HintPath>
+        </Reference>
+        <Reference Include="System"/>
+        <Reference Include="System.Configuration"/>
+        <Reference Include="System.Core"/>
+        <Reference Include="System.Data"/>
+        <Reference Include="System.Data.DataSetExtensions"/>
+        <Reference Include="System.IO.Compression"/>
+        <Reference Include="System.Net.Http"/>
+        <Reference Include="System.Xml"/>
+        <Reference Include="System.Xaml">
+            <RequiredTargetFramework>4.0</RequiredTargetFramework>
+        </Reference>
+        <Reference Include="WindowsBase"/>
+        <Reference Include="PresentationCore"/>
+        <Reference Include="PresentationFramework"/>
+    </ItemGroup>
     <ItemGroup>
         <ApplicationDefinition Include="App.xaml">
             <Generator>MSBuild:Compile</Generator>
@@ -92,6 +99,9 @@
         </Compile>
         <Compile Include="Windows\BugReport.xaml.cs">
             <DependentUpon>BugReport.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Windows\DebugOsu.xaml.cs">
+            <DependentUpon>DebugOsu.xaml</DependentUpon>
         </Compile>
         <Compile Include="Windows\MainWindow.xaml.cs">
             <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -124,6 +134,7 @@
     <ItemGroup>
         <Page Include="Pages\Main.xaml"/>
         <Page Include="Windows\BugReport.xaml"/>
+        <Page Include="Windows\DebugOsu.xaml"/>
         <Page Include="Windows\MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
