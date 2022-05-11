@@ -10,7 +10,7 @@ namespace GadzzaaTB.Classes
         {
             // client initialization and authentication 
             var client = new GitHubClient(new ProductHeaderValue("Gadzzaa"));
-            var user = await client.User.Get("Gadzzaa");
+            await client.User.Get("Gadzzaa");
             var tokenAuth = new Credentials(Passwords.githubOAuth);
             client.Credentials = tokenAuth;
 

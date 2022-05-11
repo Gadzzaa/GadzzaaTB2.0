@@ -1,14 +1,15 @@
 ﻿using System.ComponentModel;
-using System.Windows;
 using GadzzaaTB.Pages;
 using NLog;
+
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace GadzzaaTB.Windows
 {
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public readonly BugReport BugReport;
         public readonly DebugOsu DebugOsu;

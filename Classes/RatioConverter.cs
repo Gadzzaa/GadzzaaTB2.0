@@ -10,16 +10,17 @@ namespace GadzzaaTB.Classes
     {
         private static RatioConverter _instance;
 
-        public RatioConverter() { }
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        { // do not let the culture default to local to prevent variable outcome re decimal syntax
-            var size = System.Convert.ToDouble(value) * System.Convert.ToDouble(parameter,CultureInfo.InvariantCulture);
-            return size.ToString( "G0", CultureInfo.InvariantCulture );
+        {
+            // do not let the culture default to local to prevent variable outcome re decimal syntax
+            var size = System.Convert.ToDouble(value) *
+                       System.Convert.ToDouble(parameter, CultureInfo.InvariantCulture);
+            return size.ToString("G0", CultureInfo.InvariantCulture);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        { // read only converter...
+        {
+            // read only converter...
             return null;
         }
 
@@ -27,6 +28,5 @@ namespace GadzzaaTB.Classes
         {
             return _instance ?? (_instance = new RatioConverter());
         }
-
     }
 }

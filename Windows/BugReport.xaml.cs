@@ -23,7 +23,7 @@ namespace GadzzaaTB.Windows
         {
             if (!IsClosing)
             {
-                this.Hide();
+                Hide();
                 e.Cancel = true;
             }
         }

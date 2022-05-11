@@ -5,43 +5,43 @@
         Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={classes:RatioConverter}, ConverterParameter=0.4 }"
         Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={classes:RatioConverter}, ConverterParameter=0.3 }"
         Title="GadzzaaTB | Bug Report" Background="#7f6cd2" FontFamily="Segoe UI" Foreground="#cfcefe">
-        <Viewbox>
-                <Grid>
-                        <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="20" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                                <RowDefinition Height="20" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="20" />
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="1" Grid.Row="1"
-                                   Text="Bug Report" FontSize="30" Margin="0,0,0,20" />
-                        <TextBox x:Name="ReportName" Grid.Column="1" Grid.Row="2"
-                                 Text="Report Name" TextAlignment="Center"
-                                 FontSize="9" Margin="0,0,0,10"
-                                 MaxWidth="100" GotFocus="ReportName_OnGotFocus" LostFocus="ReportName_OnLostFocus"
-                                 TextChanged="ReportName_OnTextChanged" />
-                        <ScrollViewer Grid.Column="1" Grid.Row="3" FontSize="9" Margin="0,0,0,10" Height="50">
-                                <TextBox x:Name="ReportDescription" Text="Report Description" TextAlignment="Center"
-                                         AcceptsReturn="True" VerticalScrollBarVisibility="Auto" MaxWidth="132"
-                                         TextWrapping="Wrap"
-                                         GotFocus="ReportDescription_OnGotFocus"
-                                         LostFocus="ReportDescription_OnLostFocus"
-                                         TextChanged="ReportDescription_OnTextChanged" />
-                        </ScrollViewer>
-                        <Button x:Name="SubmitButton"
-                                Grid.Column="1" Grid.Row="4" Margin="0,0,0,10"
-                                Content="Submit" FontSize="9" Width="100"
-                                Cursor="Hand" Click="SubmitButton_OnClick" />
-                </Grid>
-        </Viewbox>
+    <Viewbox>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="1" Grid.Row="1"
+                       Text="Bug Report" FontSize="30" Margin="0,0,0,20" />
+            <TextBox x:Name="ReportName" Grid.Column="1" Grid.Row="2"
+                     Text="Report Name" TextAlignment="Center"
+                     FontSize="9" Margin="0,0,0,10"
+                     MaxWidth="100" GotFocus="ReportName_OnGotFocus" LostFocus="ReportName_OnLostFocus"
+                     TextChanged="ReportName_OnTextChanged" />
+            <ScrollViewer Grid.Column="1" Grid.Row="3" FontSize="9" Margin="0,0,0,10" Height="50">
+                <TextBox x:Name="ReportDescription" Text="Report Description" TextAlignment="Center"
+                         AcceptsReturn="True" VerticalScrollBarVisibility="Auto" MaxWidth="132"
+                         TextWrapping="Wrap"
+                         GotFocus="ReportDescription_OnGotFocus"
+                         LostFocus="ReportDescription_OnLostFocus"
+                         TextChanged="ReportDescription_OnTextChanged" />
+            </ScrollViewer>
+            <Button x:Name="SubmitButton"
+                    Grid.Column="1" Grid.Row="4" Margin="0,0,0,10"
+                    Content="Submit" FontSize="9" Width="100"
+                    Cursor="Hand" Click="SubmitButton_OnClick" />
+        </Grid>
+    </Viewbox>
 </Window>

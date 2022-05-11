@@ -1,42 +1,66 @@
-﻿using System;
+﻿using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using GadzzaaTB.Windows;
+using NLog;
 using OsuMemoryDataProvider;
 using OsuMemoryDataProvider.OsuMemoryModels;
 
+// ReSharper disable FunctionNeverReturns
+// ReSharper disable RedundantCheckBeforeAssignment
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace GadzzaaTB.Pages
 {
-    public partial class Main : Page
+    public sealed partial class Main : INotifyPropertyChanged
     {
         private static readonly OsuBaseAddresses BaseAddresses = new OsuBaseAddresses();
+        private readonly Logger _logger = LogManager.GetLogger("toPostSharp");
+        private readonly MainWindow _mainWindow = (MainWindow) Application.Current.MainWindow;
         private readonly int _readDelay = 33;
         private readonly StructuredOsuMemoryReader _sreader;
-        public readonly MainWindow MainWindow = (MainWindow) Application.Current.MainWindow;
         private string _oldText;
-
+        private string _osuStatus;
 
         public Main()
         {
             InitializeComponent();
-            //   _sreader = StructuredOsuMemoryReader.Instance.GetInstanceForWindowTitleHint(osuWindowsTitle);
-            //  Initialized += OnInitialized;
+            DataContext = this;
+            _sreader = StructuredOsuMemoryReader.Instance;
+            Loaded += OnLoaded;
         }
 
-        private async void OnInitialized(object sender, EventArgs e)
+        public string OsuStatus
         {
-            if (!_sreader.CanRead)
+            get => _osuStatus;
+            set
             {
-                OsuConnection.Text = "Process not found";
-                await Task.Delay(_readDelay);
+                if (_osuStatus != value) _osuStatus = value;
+                OnPropertyChanged();
             }
+        }
 
-            _sreader.TryRead(BaseAddresses.GeneralData);
-            if (BaseAddresses.GeneralData.OsuStatus != OsuMemoryStatus.NotRunning)
-                OsuConnection.Text = "Online";
-            await Task.Delay(_readDelay);
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private async void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            while (true)
+            {
+                _logger.Info("INITIALIZED!");
+                if (!_sreader.CanRead)
+                {
+                    OsuStatus = "Process not found!";
+                    await Task.Delay(_readDelay);
+                }
+                else
+                {
+                    OsuStatus = "Running";
+                    _sreader.TryRead(BaseAddresses.GeneralData);
+                    await Task.Delay(_readDelay);
+                }
+            }
         }
 
         private void ChannelNameBox_OnGotFocus(object sender, RoutedEventArgs e)
@@ -52,7 +76,7 @@ namespace GadzzaaTB.Pages
 
         private void BugButton_OnClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.BugReport.Show();
+            _mainWindow.BugReport.Show();
         }
 
         private void DiscordButton_OnClick(object sender, RoutedEventArgs e)
@@ -65,10 +89,9 @@ namespace GadzzaaTB.Pages
             Process.Start("https://twitch.tv/gadzzaa");
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            string s = null;
-            s.Trim();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

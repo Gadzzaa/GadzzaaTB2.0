@@ -7,7 +7,7 @@ namespace GadzzaaTB.Windows
     [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
     [SuppressMessage("ReSharper", "RedundantCheckBeforeAssignment")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public partial class DebugOsu : INotifyPropertyChanged
+    public sealed partial class DebugOsu : INotifyPropertyChanged
     {
         private string _dl = "_dl";
 
@@ -82,13 +82,9 @@ namespace GadzzaaTB.Windows
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
-
-    public class OsuData
-    {
     }
 }
