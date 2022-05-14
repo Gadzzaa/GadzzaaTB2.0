@@ -1,7 +1,9 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/Highlighting/SweaWarningsMode/@EntryValue">ShowAndRun</s:String>
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\packages\PostSharp.Redist.6.10.9\lib\net45\PostSharp.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\packages\Octokit.0.51.0\lib\net46\Octokit.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\packages\OsuMemoryDataProvider.0.8.9\lib\net472\OsuMemoryDataProvider.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 	<s:String x:Key="/Default/Environment/Hierarchy/Build/BuildTool/CustomBuildToolPath/@EntryValue">C:\Users\Robert Popescu\AppData\Local\JetBrains\Toolbox\apps\Rider\ch-0\221.5591.20\tools\MSBuild\Current\Bin\MSBuild.exe</s:String>
 	<s:Int64 x:Key="/Default/Environment/Hierarchy/Build/BuildTool/MsbuildVersion/@EntryValue">1114112</s:Int64>

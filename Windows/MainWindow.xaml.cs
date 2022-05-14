@@ -13,24 +13,27 @@ namespace GadzzaaTB.Windows
     {
         public readonly BugReport BugReport;
         public readonly DebugOsu DebugOsu;
+        public readonly Main Main;
 
 
         public MainWindow()
         {
             InitializeComponent();
-            var main = new Main();
+            Main = new Main();
             BugReport = new BugReport();
             DebugOsu = new DebugOsu();
             Closing += OnClosing;
-            NavigationFrame.NavigationService.Navigate(main);
+            DebugOsu.UpdateModsText();
+            NavigationFrame.NavigationService.Navigate(Main);
         }
 
         private void OnClosing(object sender, CancelEventArgs e)
         {
-            var logger = LogManager.GetLogger("");
+            var logger = LogManager.GetLogger("toPostSharp");
             logger.Debug("### LOGGING SESSION FINISHED ###");
             BugReport.IsClosing = true;
             BugReport.Close();
+            DebugOsu.Close();
             LogManager.Shutdown();
         }
     }

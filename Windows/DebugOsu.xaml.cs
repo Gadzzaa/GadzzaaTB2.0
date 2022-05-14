@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using GadzzaaTB.Classes;
 
 namespace GadzzaaTB.Windows
 {
@@ -9,15 +10,15 @@ namespace GadzzaaTB.Windows
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public sealed partial class DebugOsu : INotifyPropertyChanged
     {
-        private string _dl = "_dl";
+        private string _dl;
 
-        private string _mapArtistTitle = "_mapArtistTitle";
+        private string _mapInfo;
 
-        private string _mapDiff = "_mapDiff";
+        private int _mods;
+        private string _modsText;
 
-        private string _mods = "_mods";
+        private int _mStars;
 
-        private double _mStars = 5.00;
 
         public DebugOsu()
         {
@@ -26,7 +27,7 @@ namespace GadzzaaTB.Windows
         }
 
         // ReSharper disable once MemberCanBePrivate.Global
-        public double mStars
+        public int mStars
         {
             get => _mStars;
             set
@@ -37,34 +38,33 @@ namespace GadzzaaTB.Windows
         }
 
         // ReSharper disable once MemberCanBePrivate.Global
-        public string mapArtistTitle
+        public string mapInfo
         {
-            get => _mapArtistTitle;
+            get => _mapInfo;
             set
             {
-                if (_mapArtistTitle != value) _mapArtistTitle = value;
+                if (_mapInfo != value) _mapInfo = value;
                 OnPropertyChanged();
             }
         }
 
         // ReSharper disable once MemberCanBePrivate.Global
-        public string mapDiff
+        public int mods
         {
-            get => _mapDiff;
             set
             {
-                if (_mapDiff != value) _mapDiff = value;
-                OnPropertyChanged();
+                if (_mods == value) return;
+                _mods = value;
+                UpdateModsText();
             }
         }
 
-        // ReSharper disable once MemberCanBePrivate.Global
-        public string mods
+        public string modsText
         {
-            get => _mods;
+            get => _modsText;
             set
             {
-                if (_mods != value) _mods = value;
+                if (_modsText != value) _modsText = value;
                 OnPropertyChanged();
             }
         }
@@ -81,6 +81,11 @@ namespace GadzzaaTB.Windows
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public void UpdateModsText()
+        {
+            modsText = UpdateValue.UpdateMods(_mods);
+        }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

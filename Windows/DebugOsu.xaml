@@ -24,6 +24,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
@@ -32,18 +33,14 @@
             <TextBlock Text="{Binding mStars, Mode=OneWay}" />
         </DockPanel>
         <DockPanel Grid.Column="1" Grid.Row="2">
-            <TextBlock Text="mapArtistTitle: " />
-            <TextBlock Text="{Binding mapArtistTitle, Mode=OneWay}" />
+            <TextBlock Text="Map Info: " />
+            <TextBlock Text="{Binding mapInfo, Mode=OneWay}" />
         </DockPanel>
         <DockPanel Grid.Column="1" Grid.Row="3">
-            <TextBlock Text="mapDiff: " />
-            <TextBlock Text="{Binding mapDiff, Mode=OneWay}" />
+            <TextBlock Text="mods: " />
+            <TextBlock Text="{Binding modsText, Mode=OneWay}" />
         </DockPanel>
         <DockPanel Grid.Column="1" Grid.Row="4">
-            <TextBlock Text="mods: " />
-            <TextBlock Text="{Binding mods, Mode=OneWay}" />
-        </DockPanel>
-        <DockPanel Grid.Column="1" Grid.Row="5">
             <TextBlock Text="dl: " />
             <TextBlock Text="{Binding dl, Mode=OneWay}" />
         </DockPanel>

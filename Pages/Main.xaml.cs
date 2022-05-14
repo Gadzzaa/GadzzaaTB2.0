@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using GadzzaaTB.Classes;
 using GadzzaaTB.Windows;
 using NLog;
 using OsuMemoryDataProvider;
@@ -16,11 +17,11 @@ namespace GadzzaaTB.Pages
 {
     public sealed partial class Main : INotifyPropertyChanged
     {
-        private static readonly OsuBaseAddresses BaseAddresses = new OsuBaseAddresses();
         private readonly Logger _logger = LogManager.GetLogger("toPostSharp");
         private readonly MainWindow _mainWindow = (MainWindow) Application.Current.MainWindow;
         private readonly int _readDelay = 33;
         private readonly StructuredOsuMemoryReader _sreader;
+        public readonly OsuBaseAddresses BaseAddresses = new OsuBaseAddresses();
         private string _oldText;
         private string _osuStatus;
 
@@ -57,7 +58,16 @@ namespace GadzzaaTB.Pages
                 else
                 {
                     OsuStatus = "Running";
+                    _sreader.TryRead(BaseAddresses.Beatmap);
+                    _sreader.TryRead(BaseAddresses.Skin);
                     _sreader.TryRead(BaseAddresses.GeneralData);
+                    if (BaseAddresses.GeneralData.OsuStatus == OsuMemoryStatus.SongSelect)
+                        _sreader.TryRead(BaseAddresses.SongSelectionScores);
+                    else
+                        BaseAddresses.SongSelectionScores.Scores.Clear();
+                    if (BaseAddresses.GeneralData.OsuStatus == OsuMemoryStatus.ResultsScreen)
+                        _sreader.TryRead(BaseAddresses.ResultsScreen);
+                    UpdateValue.UpdateValues();
                     await Task.Delay(_readDelay);
                 }
             }
