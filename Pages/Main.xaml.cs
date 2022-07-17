@@ -9,7 +9,6 @@ using GadzzaaTB.Windows;
 using NLog;
 using OsuMemoryDataProvider;
 using OsuMemoryDataProvider.OsuMemoryModels;
-using TwitchLib.Api.V5.Models.UploadVideo;
 
 // ReSharper disable FunctionNeverReturns
 // ReSharper disable RedundantCheckBeforeAssignment
@@ -20,15 +19,15 @@ namespace GadzzaaTB.Pages
     public sealed partial class Main : INotifyPropertyChanged
     {
         private readonly Logger _logger = LogManager.GetLogger("toPostSharp");
-        private readonly MainWindow _mainWindow = (MainWindow) Application.Current.MainWindow;
+        private readonly MainWindow _mainWindow = (MainWindow)Application.Current.MainWindow;
         private readonly int _readDelay = 33;
         private readonly StructuredOsuMemoryReader _sreader;
-        public readonly Bot twitch;
         public readonly OsuBaseAddresses BaseAddresses = new OsuBaseAddresses();
+        public readonly Bot twitch;
         private string _oldText;
         private string _osuStatus;
-        private string _twitchStatus;
         private string _twitchButton;
+        private string _twitchStatus;
 
         public Main()
         {
@@ -120,9 +119,19 @@ namespace GadzzaaTB.Pages
 
         private void JoinChannel()
         {
-            if (ChannelNameBox.Text == "Channel Name") {Console.WriteLine(@"Channel Name invalid!"); return;}
-            if (!twitch.Client.IsConnected) {Console.WriteLine(@"Twitch connection error!"); return;}
-            if(twitch.JoinedChannel != null) twitch.Client.LeaveChannel(twitch.JoinedChannel);
+            if (ChannelNameBox.Text == "Channel Name")
+            {
+                Console.WriteLine(@"Channel Name invalid!");
+                return;
+            }
+
+            if (!twitch.Client.IsConnected)
+            {
+                Console.WriteLine(@"Twitch connection error!");
+                return;
+            }
+
+            if (twitch.JoinedChannel != null) twitch.Client.LeaveChannel(twitch.JoinedChannel);
             twitch.Client.JoinChannel(ChannelNameBox.Text);
         }
 

@@ -23,7 +23,7 @@ namespace GadzzaaTB.Classes
             // input validation
             while (string.IsNullOrEmpty(userIssue) || string.IsNullOrEmpty(userIssueTitle)) break;
 
-            var newIssue = new NewIssue(userIssueTitle) {Body = userIssue};
+            var newIssue = new NewIssue(userIssueTitle) { Body = userIssue };
             var issue = await client.Issue.Create("Gadzzaa", "GadzzaaTB2.0", newIssue);
 
             var issueId = issue.Id;
