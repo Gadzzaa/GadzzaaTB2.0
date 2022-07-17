@@ -15,7 +15,6 @@ namespace GadzzaaTB.Windows
         public readonly DebugOsu DebugOsu;
         public readonly Main Main;
 
-
         public MainWindow()
         {
             InitializeComponent();

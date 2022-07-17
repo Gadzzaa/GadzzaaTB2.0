@@ -5,7 +5,7 @@
   &lt;Assembly Path="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\packages\Octokit.0.51.0\lib\net46\Octokit.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\Robert Popescu\Desktop\GadzzaaTB 2.0\packages\OsuMemoryDataProvider.0.8.9\lib\net472\OsuMemoryDataProvider.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/Hierarchy/Build/BuildTool/CustomBuildToolPath/@EntryValue">C:\Users\Robert Popescu\AppData\Local\JetBrains\Toolbox\apps\Rider\ch-0\221.5591.20\tools\MSBuild\Current\Bin\MSBuild.exe</s:String>
+	<s:String x:Key="/Default/Environment/Hierarchy/Build/BuildTool/CustomBuildToolPath/@EntryValue">C:\Users\Gadzzaa\AppData\Local\JetBrains\Toolbox\apps\Rider\ch-0\222.3345.44\tools\MSBuild\Current\Bin\MSBuild.exe</s:String>
 	<s:Int64 x:Key="/Default/Environment/Hierarchy/Build/BuildTool/MsbuildVersion/@EntryValue">1114112</s:Int64>
 	<s:String x:Key="/Default/Environment/Hierarchy/Build/SolutionBuilderNext/FileVerbosityLevel/@EntryValue">Detailed</s:String>
 	

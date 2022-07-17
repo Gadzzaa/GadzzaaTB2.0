@@ -34,7 +34,7 @@
                      GotFocus="ChannelNameBox_OnGotFocus" LostFocus="ChannelNameBox_OnLostFocus" />
             <Button x:Name="ConnectionButton" Grid.Column="1" Grid.Row="3"
                     FontSize="15" Width="150" Cursor="Hand"
-                    Content="Connect" />
+                    Content="{Binding TwitchConnect, Mode=OneWay}" Click="ConnectionButton_OnClick" />
             <TextBlock Grid.Column="1" Grid.Row="4" TextAlignment="Center" FontWeight="Bold"
                        Text="Connection Status:" FontSize="15" Margin="0,0,0,2" />
 
@@ -43,7 +43,7 @@
                            FontSize="10" />
                 <TextBlock Text="-" Margin="5,0,0,0"
                            FontSize="10" />
-                <TextBlock x:Name="TwitchConnection" Text="Disconnected" Margin="5,0,0,0"
+                <TextBlock x:Name="TwitchConnection" Text="{Binding TwitchStatus, Mode=OneWay}" Margin="5,0,0,0"
                            FontSize="10" />
             </DockPanel>
             <DockPanel Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" Margin="0,0,0,2">

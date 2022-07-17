@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using GadzzaaTB.Windows;
 using NLog;
 using OsuMemoryDataProvider;
 using OsuMemoryDataProvider.OsuMemoryModels;
+using TwitchLib.Api.V5.Models.UploadVideo;
 
 // ReSharper disable FunctionNeverReturns
 // ReSharper disable RedundantCheckBeforeAssignment
@@ -21,15 +23,19 @@ namespace GadzzaaTB.Pages
         private readonly MainWindow _mainWindow = (MainWindow) Application.Current.MainWindow;
         private readonly int _readDelay = 33;
         private readonly StructuredOsuMemoryReader _sreader;
+        private readonly Bot twitch;
         public readonly OsuBaseAddresses BaseAddresses = new OsuBaseAddresses();
         private string _oldText;
         private string _osuStatus;
+        private string _twitchStatus;
+        private string _twitchButton;
 
         public Main()
         {
             InitializeComponent();
             DataContext = this;
             _sreader = StructuredOsuMemoryReader.Instance;
+            twitch = new Bot();
             Loaded += OnLoaded;
         }
 
@@ -43,10 +49,32 @@ namespace GadzzaaTB.Pages
             }
         }
 
+        public string TwitchStatus
+        {
+            get => _twitchStatus;
+            set
+            {
+                if (_twitchStatus != value) _twitchStatus = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string TwitchConnect
+        {
+            get => _twitchButton;
+            set
+            {
+                if (_twitchButton != value) _twitchButton = value;
+                OnPropertyChanged();
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
+            TwitchStatus = "Disconnected";
+            TwitchConnect = "Connect";
             while (true)
             {
                 _logger.Info("INITIALIZED!");
@@ -82,6 +110,20 @@ namespace GadzzaaTB.Pages
         private void ChannelNameBox_OnLostFocus(object sender, RoutedEventArgs e)
         {
             if (ChannelNameBox.Text == "") ChannelNameBox.Text = _oldText;
+        }
+
+        private void ConnectionButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (TwitchConnect == "Connect") JoinChannel();
+            else twitch.Client.LeaveChannel(ChannelNameBox.Text);
+        }
+
+        private void JoinChannel()
+        {
+            if (ChannelNameBox.Text == "Channel Name") {Console.WriteLine(@"Channel Name invalid!"); return;}
+            if (!twitch.Client.IsConnected) {Console.WriteLine(@"Twitch connection error!"); return;}
+            if(twitch.JoinedChannel != null) twitch.Client.LeaveChannel(twitch.JoinedChannel);
+            twitch.Client.JoinChannel(ChannelNameBox.Text);
         }
 
         private void BugButton_OnClick(object sender, RoutedEventArgs e)
