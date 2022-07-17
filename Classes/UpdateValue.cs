@@ -41,7 +41,7 @@ namespace GadzzaaTB.Classes
 
         public static void UpdateValues()
         {
-            MainWindow.DebugOsu.dl = "https://osu.ppy.sh/b/" + Data.Beatmap.SetId;
+            MainWindow.DebugOsu.dl = "https://osu.ppy.sh/beatmaps/" + Data.Beatmap.SetId;
             MainWindow.DebugOsu.mods = Data.GeneralData.Mods;
             MainWindow.DebugOsu.mapInfo = Data.Beatmap.MapString;
             MainWindow.DebugOsu.mStars = Data.Beatmap.SetId;

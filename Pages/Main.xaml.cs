@@ -23,7 +23,7 @@ namespace GadzzaaTB.Pages
         private readonly MainWindow _mainWindow = (MainWindow) Application.Current.MainWindow;
         private readonly int _readDelay = 33;
         private readonly StructuredOsuMemoryReader _sreader;
-        private readonly Bot twitch;
+        public readonly Bot twitch;
         public readonly OsuBaseAddresses BaseAddresses = new OsuBaseAddresses();
         private string _oldText;
         private string _osuStatus;

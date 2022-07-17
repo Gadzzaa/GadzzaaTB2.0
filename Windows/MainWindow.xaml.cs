@@ -30,6 +30,8 @@ namespace GadzzaaTB.Windows
         {
             var logger = LogManager.GetLogger("toPostSharp");
             logger.Debug("### LOGGING SESSION FINISHED ###");
+            Main.twitch.Client.LeaveChannel(Main.twitch.JoinedChannel);
+            Main.twitch.Client.Disconnect();
             BugReport.IsClosing = true;
             BugReport.Close();
             DebugOsu.Close();

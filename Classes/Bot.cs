@@ -13,7 +13,7 @@ using TwitchLib.Communication.Models;
 
 namespace GadzzaaTB.Classes
 {
-    class Bot
+    public class Bot
     {
         public TwitchClient Client;
         public string JoinedChannel;
@@ -89,7 +89,10 @@ namespace GadzzaaTB.Classes
 
         private void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
-            
+            if (e.ChatMessage.Message == "!np")
+            {
+                Client.SendMessage(e.ChatMessage.Channel,_mainWindow.DebugOsu.mapInfo + " | Mods: " + _mainWindow.DebugOsu.modsText + " | Download: " + _mainWindow.DebugOsu.dl);
+            }
         }
     }
 }
