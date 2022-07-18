@@ -32,7 +32,7 @@
                      Grid.Column="1" Grid.Row="2" TextAlignment="Center"
                      Text="Channel Name" FontSize="15" Width="150" Margin="0,0,0,0"
                      GotFocus="ChannelNameBox_OnGotFocus" LostFocus="ChannelNameBox_OnLostFocus"
-                     TextChanged="ChannelNameBox_OnTextChanged"/>
+                     TextChanged="ChannelNameBox_OnTextChanged" />
             <Button x:Name="ConnectionButton" Grid.Column="1" Grid.Row="3"
                     FontSize="15" Width="150" Cursor="Hand"
                     Content="{Binding TwitchConnect, Mode=OneWay}" Click="ConnectionButton_OnClick" />
