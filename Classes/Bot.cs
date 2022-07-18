@@ -50,9 +50,10 @@ namespace GadzzaaTB.Classes
 
         private void Client_OnJoinedChannel(object sender, OnJoinedChannelArgs e)
         {
+            JoinedChannel = e.Channel;
+            if (!Settings.Default.Verified) return;
             Console.WriteLine(@"Connected to channel: " + e.Channel);
             Client.SendMessage(e.Channel, "Bot online!");
-            JoinedChannel = e.Channel;
             Task.Factory.StartNew(() =>
             {
                 var _ = _mainWindow.Dispatcher.BeginInvoke((Action)(() =>
@@ -85,7 +86,22 @@ namespace GadzzaaTB.Classes
 
         private void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
+            if(!Settings.Default.Verified)
+                if (e.ChatMessage.Message != "!verify") return;
+                else
+                {
+                    Settings.Default.Verified = true;
+                    _mainWindow.Main.TwitchStatus = "Connected";
+                    _mainWindow.Main.TwitchConnect = "Disconnect";
+                    Client.SendMessage(e.ChatMessage.Channel,"Verification process completed! Thank you for using my bot!");
+                    return;
+                }
             if (e.ChatMessage.Message != "!np") return;
+            if (!_mainWindow.Main._sreader.CanRead)
+            {
+                Client.SendMessage(e.ChatMessage.Channel,@"Process 'osu.exe' could not be found running. Please launch the game before using the command");
+                return;
+            }
             Client.SendMessage(e.ChatMessage.Channel,
                 _mainWindow.DebugOsu.mapInfo + " | Mods: " + _mainWindow.DebugOsu.modsText + " | Download: " +
                 _mainWindow.DebugOsu.dl);

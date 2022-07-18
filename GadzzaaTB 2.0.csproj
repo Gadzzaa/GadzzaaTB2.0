@@ -1,228 +1,237 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="packages\PostSharp.6.10.9\build\PostSharp.props" Condition="Exists('packages\PostSharp.6.10.9\build\PostSharp.props')"/>
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+  <Import Project="packages\PostSharp.6.10.9\build\PostSharp.props" Condition="Exists('packages\PostSharp.6.10.9\build\PostSharp.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FF34FDFB-28DC-4A7C-ACA1-91584B14E436}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>GadzzaaTB</RootNamespace>
+    <AssemblyName>GadzzaaTB</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <ApplicationIcon>Images\gadzzaa_Dq1_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.Logging.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>packages\NLog.5.0.0-rc2\lib\net46\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Octokit, Version=0.51.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Octokit.0.51.0\lib\net46\Octokit.dll</HintPath>
+    </Reference>
+    <Reference Include="OsuMemoryDataProvider, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\OsuMemoryDataProvider.0.8.9\lib\net472\OsuMemoryDataProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp, Version=6.10.9.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <HintPath>packages\PostSharp.Redist.6.10.9\lib\net45\PostSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp.Patterns.Common, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
+      <HintPath>packages\PostSharp.Patterns.Common.Redist.6.10.9\lib\net47\PostSharp.Patterns.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp.Patterns.Diagnostics, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
+      <HintPath>packages\PostSharp.Patterns.Diagnostics.Redist.6.10.9\lib\net47\PostSharp.Patterns.Diagnostics.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp.Patterns.Diagnostics.Backends.NLog, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
+      <HintPath>packages\PostSharp.Patterns.Diagnostics.NLog.6.10.9\lib\net45\PostSharp.Patterns.Diagnostics.Backends.NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="ProcessMemoryDataFinder, Version=0.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ProcessMemoryDataFinder.0.8.3\lib\net472\ProcessMemoryDataFinder.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="TwitchLib.Api, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.Api.3.3.0\lib\netstandard2.0\TwitchLib.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitchLib.Api.Core, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.Api.Core.3.3.0\lib\netstandard2.0\TwitchLib.Api.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitchLib.Api.Core.Enums, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.Api.Core.Enums.3.3.0\lib\netstandard2.0\TwitchLib.Api.Core.Enums.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitchLib.Api.Core.Interfaces, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.Api.Core.Interfaces.3.3.0\lib\netstandard2.0\TwitchLib.Api.Core.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitchLib.Api.Core.Models, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.Api.Core.Models.3.3.0\lib\netstandard2.0\TwitchLib.Api.Core.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitchLib.Api.Helix, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.Api.Helix.3.3.0\lib\netstandard2.0\TwitchLib.Api.Helix.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitchLib.Api.Helix.Models, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.Api.Helix.Models.3.3.0\lib\netstandard2.0\TwitchLib.Api.Helix.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitchLib.Api.V5, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.Api.V5.3.3.0\lib\netstandard2.0\TwitchLib.Api.V5.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitchLib.Api.V5.Models, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.Api.V5.Models.3.3.0\lib\netstandard2.0\TwitchLib.Api.V5.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitchLib.Client, Version=3.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.Client.3.2.4\lib\netstandard2.0\TwitchLib.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitchLib.Client.Enums, Version=3.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.Client.Enums.3.2.4\lib\netstandard2.0\TwitchLib.Client.Enums.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitchLib.Client.Models, Version=3.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.Client.Models.3.2.4\lib\netstandard2.0\TwitchLib.Client.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitchLib.Communication, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.Communication.1.0.3\lib\netstandard2.0\TwitchLib.Communication.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitchLib.PubSub, Version=3.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\TwitchLib.PubSub.3.2.3\lib\netstandard2.0\TwitchLib.PubSub.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\Bot.cs" />
+    <Compile Include="Classes\LogFile.cs" />
+    <Compile Include="Classes\ModsArray.cs" />
+    <Compile Include="Classes\Octokit.cs" />
+    <Compile Include="Classes\PostSharpAspects.cs" />
+    <Compile Include="Classes\RatioConverter.cs" />
+    <Compile Include="Classes\UpdateValue.cs" />
+    <Compile Include="Pages\Main.xaml.cs">
+      <DependentUpon>Main.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Passwords.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Passwords.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\BugReport.xaml.cs">
+      <DependentUpon>BugReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DebugOsu.xaml.cs">
+      <DependentUpon>DebugOsu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Passwords.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Passwords.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Images\gadzzaa_Dq1_icon.ico" />
+    <None Include="packages.config" />
+    <None Include="Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Pages\Main.xaml" />
+    <Page Include="Windows\BugReport.xaml" />
+    <Page Include="Windows\DebugOsu.xaml" />
+    <Page Include="Windows\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Background.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{FF34FDFB-28DC-4A7C-ACA1-91584B14E436}</ProjectGuid>
-        <OutputType>WinExe</OutputType>
-        <RootNamespace>GadzzaaTB</RootNamespace>
-        <AssemblyName>GadzzaaTB</AssemblyName>
-        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-        <FileAlignment>512</FileAlignment>
-        <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-        <WarningLevel>4</WarningLevel>
-        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <ApplicationIcon>Images\gadzzaa_Dq1_icon.ico</ApplicationIcon>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them. For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="Microsoft.CSharp"/>
-        <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-            <HintPath>packages\Microsoft.Extensions.Logging.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
-        </Reference>
-        <Reference Include="mscorlib"/>
-        <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-            <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-        </Reference>
-        <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-            <HintPath>packages\NLog.5.0.0-rc2\lib\net46\NLog.dll</HintPath>
-        </Reference>
-        <Reference Include="Octokit, Version=0.51.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\Octokit.0.51.0\lib\net46\Octokit.dll</HintPath>
-        </Reference>
-        <Reference Include="OsuMemoryDataProvider, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\OsuMemoryDataProvider.0.8.9\lib\net472\OsuMemoryDataProvider.dll</HintPath>
-        </Reference>
-        <Reference Include="PostSharp, Version=6.10.9.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-            <HintPath>packages\PostSharp.Redist.6.10.9\lib\net45\PostSharp.dll</HintPath>
-        </Reference>
-        <Reference Include="PostSharp.Patterns.Common, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-            <HintPath>packages\PostSharp.Patterns.Common.Redist.6.10.9\lib\net47\PostSharp.Patterns.Common.dll</HintPath>
-        </Reference>
-        <Reference Include="PostSharp.Patterns.Diagnostics, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-            <HintPath>packages\PostSharp.Patterns.Diagnostics.Redist.6.10.9\lib\net47\PostSharp.Patterns.Diagnostics.dll</HintPath>
-        </Reference>
-        <Reference Include="PostSharp.Patterns.Diagnostics.Backends.NLog, Version=6.10.9.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-            <HintPath>packages\PostSharp.Patterns.Diagnostics.NLog.6.10.9\lib\net45\PostSharp.Patterns.Diagnostics.Backends.NLog.dll</HintPath>
-        </Reference>
-        <Reference Include="ProcessMemoryDataFinder, Version=0.8.3.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\ProcessMemoryDataFinder.0.8.3\lib\net472\ProcessMemoryDataFinder.dll</HintPath>
-        </Reference>
-        <Reference Include="System"/>
-        <Reference Include="System.ComponentModel.Composition"/>
-        <Reference Include="System.Configuration"/>
-        <Reference Include="System.Core"/>
-        <Reference Include="System.Data"/>
-        <Reference Include="System.Data.DataSetExtensions"/>
-        <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-            <HintPath>packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
-        </Reference>
-        <Reference Include="System.IO.Compression"/>
-        <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-            <HintPath>packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-            <HintPath>packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-            <HintPath>packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-            <HintPath>packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-            <HintPath>packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-            <HintPath>packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Xml"/>
-        <Reference Include="System.Xaml">
-            <RequiredTargetFramework>4.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="TwitchLib.Api, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.Api.3.3.0\lib\netstandard2.0\TwitchLib.Api.dll</HintPath>
-        </Reference>
-        <Reference Include="TwitchLib.Api.Core, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.Api.Core.3.3.0\lib\netstandard2.0\TwitchLib.Api.Core.dll</HintPath>
-        </Reference>
-        <Reference Include="TwitchLib.Api.Core.Enums, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.Api.Core.Enums.3.3.0\lib\netstandard2.0\TwitchLib.Api.Core.Enums.dll</HintPath>
-        </Reference>
-        <Reference Include="TwitchLib.Api.Core.Interfaces, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.Api.Core.Interfaces.3.3.0\lib\netstandard2.0\TwitchLib.Api.Core.Interfaces.dll</HintPath>
-        </Reference>
-        <Reference Include="TwitchLib.Api.Core.Models, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.Api.Core.Models.3.3.0\lib\netstandard2.0\TwitchLib.Api.Core.Models.dll</HintPath>
-        </Reference>
-        <Reference Include="TwitchLib.Api.Helix, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.Api.Helix.3.3.0\lib\netstandard2.0\TwitchLib.Api.Helix.dll</HintPath>
-        </Reference>
-        <Reference Include="TwitchLib.Api.Helix.Models, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.Api.Helix.Models.3.3.0\lib\netstandard2.0\TwitchLib.Api.Helix.Models.dll</HintPath>
-        </Reference>
-        <Reference Include="TwitchLib.Api.V5, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.Api.V5.3.3.0\lib\netstandard2.0\TwitchLib.Api.V5.dll</HintPath>
-        </Reference>
-        <Reference Include="TwitchLib.Api.V5.Models, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.Api.V5.Models.3.3.0\lib\netstandard2.0\TwitchLib.Api.V5.Models.dll</HintPath>
-        </Reference>
-        <Reference Include="TwitchLib.Client, Version=3.2.4.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.Client.3.2.4\lib\netstandard2.0\TwitchLib.Client.dll</HintPath>
-        </Reference>
-        <Reference Include="TwitchLib.Client.Enums, Version=3.2.4.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.Client.Enums.3.2.4\lib\netstandard2.0\TwitchLib.Client.Enums.dll</HintPath>
-        </Reference>
-        <Reference Include="TwitchLib.Client.Models, Version=3.2.4.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.Client.Models.3.2.4\lib\netstandard2.0\TwitchLib.Client.Models.dll</HintPath>
-        </Reference>
-        <Reference Include="TwitchLib.Communication, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.Communication.1.0.3\lib\netstandard2.0\TwitchLib.Communication.dll</HintPath>
-        </Reference>
-        <Reference Include="TwitchLib.PubSub, Version=3.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\TwitchLib.PubSub.3.2.3\lib\netstandard2.0\TwitchLib.PubSub.dll</HintPath>
-        </Reference>
-        <Reference Include="WindowsBase"/>
-        <Reference Include="PresentationCore"/>
-        <Reference Include="PresentationFramework"/>
-    </ItemGroup>
-    <ItemGroup>
-        <ApplicationDefinition Include="App.xaml">
-            <Generator>MSBuild:Compile</Generator>
-            <SubType>Designer</SubType>
-        </ApplicationDefinition>
-        <Compile Include="App.xaml.cs">
-            <DependentUpon>App.xaml</DependentUpon>
-            <SubType>Code</SubType>
-        </Compile>
-        <Compile Include="Classes\Bot.cs"/>
-        <Compile Include="Classes\LogFile.cs"/>
-        <Compile Include="Classes\ModsArray.cs"/>
-        <Compile Include="Classes\Octokit.cs"/>
-        <Compile Include="Classes\PostSharpAspects.cs"/>
-        <Compile Include="Classes\RatioConverter.cs"/>
-        <Compile Include="Classes\UpdateValue.cs"/>
-        <Compile Include="Pages\Main.xaml.cs">
-            <DependentUpon>Main.xaml</DependentUpon>
-        </Compile>
-        <Compile Include="Passwords.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Passwords.resx</DependentUpon>
-        </Compile>
-        <Compile Include="Windows\BugReport.xaml.cs">
-            <DependentUpon>BugReport.xaml</DependentUpon>
-        </Compile>
-        <Compile Include="Windows\DebugOsu.xaml.cs">
-            <DependentUpon>DebugOsu.xaml</DependentUpon>
-        </Compile>
-        <Compile Include="Windows\MainWindow.xaml.cs">
-            <DependentUpon>MainWindow.xaml</DependentUpon>
-            <SubType>Code</SubType>
-        </Compile>
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Properties\AssemblyInfo.cs">
-            <SubType>Code</SubType>
-        </Compile>
-        <Compile Include="Properties\Resources.Designer.cs">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>Resources.resx</DependentUpon>
-        </Compile>
-        <EmbeddedResource Include="Passwords.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Passwords.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Properties\Resources.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="App.config"/>
-        <None Include="Images\gadzzaa_Dq1_icon.ico"/>
-        <None Include="packages.config"/>
-    </ItemGroup>
-    <ItemGroup>
-        <Page Include="Pages\Main.xaml"/>
-        <Page Include="Windows\BugReport.xaml"/>
-        <Page Include="Windows\DebugOsu.xaml"/>
-        <Page Include="Windows\MainWindow.xaml">
-            <Generator>MSBuild:Compile</Generator>
-            <SubType>Designer</SubType>
-        </Page>
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="Images\Background.png"/>
-    </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
-    <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-        <PropertyGroup>
-            <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them. For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
-        </PropertyGroup>
-        <Error Condition="!Exists('packages\PostSharp.6.10.9\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\PostSharp.6.10.9\build\PostSharp.props'))"/>
-        <Error Condition="!Exists('packages\PostSharp.6.10.9\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\PostSharp.6.10.9\build\PostSharp.targets'))"/>
-    </Target>
-    <Import Project="packages\PostSharp.6.10.9\build\PostSharp.targets" Condition="Exists('packages\PostSharp.6.10.9\build\PostSharp.targets')"/>
+    <Error Condition="!Exists('packages\PostSharp.6.10.9\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\PostSharp.6.10.9\build\PostSharp.props'))" />
+    <Error Condition="!Exists('packages\PostSharp.6.10.9\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\PostSharp.6.10.9\build\PostSharp.targets'))" />
+  </Target>
+  <Import Project="packages\PostSharp.6.10.9\build\PostSharp.targets" Condition="Exists('packages\PostSharp.6.10.9\build\PostSharp.targets')" />
 </Project>

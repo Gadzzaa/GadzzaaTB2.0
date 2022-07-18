@@ -30,12 +30,14 @@ namespace GadzzaaTB.Windows
         {
             var logger = LogManager.GetLogger("toPostSharp");
             logger.Debug("### LOGGING SESSION FINISHED ###");
-            if (Main.twitch.JoinedChannel != null) Main.twitch.Client.LeaveChannel(Main.twitch.JoinedChannel);
-            Main.twitch.Client.Disconnect();
+            Settings.Default.Username = Main.ChannelNameBox.Text;
+            if (Main.Twitch.JoinedChannel != null) Main.Twitch.Client.LeaveChannel(Main.Twitch.JoinedChannel);
+            Main.Twitch.Client.Disconnect();
             BugReport.IsClosing = true;
             BugReport.Close();
             DebugOsu.Close();
             LogManager.Shutdown();
+            Settings.Default.Save();
         }
     }
 }

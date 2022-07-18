@@ -4,11 +4,13 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using GadzzaaTB.Classes;
 using GadzzaaTB.Windows;
 using NLog;
 using OsuMemoryDataProvider;
 using OsuMemoryDataProvider.OsuMemoryModels;
+using TwitchLib.Api.Helix.Models.Search;
 
 // ReSharper disable FunctionNeverReturns
 // ReSharper disable RedundantCheckBeforeAssignment
@@ -21,20 +23,21 @@ namespace GadzzaaTB.Pages
         private readonly Logger _logger = LogManager.GetLogger("toPostSharp");
         private readonly MainWindow _mainWindow = (MainWindow)Application.Current.MainWindow;
         private readonly int _readDelay = 33;
-        private readonly StructuredOsuMemoryReader _sreader;
+        public readonly StructuredOsuMemoryReader _sreader;
         public readonly OsuBaseAddresses BaseAddresses = new OsuBaseAddresses();
-        public readonly Bot twitch;
+        public readonly Bot Twitch;
         private string _oldText;
         private string _osuStatus;
         private string _twitchButton;
         private string _twitchStatus;
+        private bool settingsLoaded = false;
 
         public Main()
         {
             InitializeComponent();
             DataContext = this;
             _sreader = StructuredOsuMemoryReader.Instance;
-            twitch = new Bot();
+            Twitch = new Bot();
             Loaded += OnLoaded;
         }
 
@@ -73,7 +76,10 @@ namespace GadzzaaTB.Pages
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
             TwitchStatus = "Disconnected";
+            if (!Settings.Default.Verified) TwitchStatus = "Un-Verified";
             TwitchConnect = "Connect";
+            ChannelNameBox.Text = Settings.Default.Username;
+            settingsLoaded = true;
             while (true)
             {
                 _logger.Info("INITIALIZED!");
@@ -111,10 +117,33 @@ namespace GadzzaaTB.Pages
             if (ChannelNameBox.Text == "") ChannelNameBox.Text = _oldText;
         }
 
+        private void ChannelNameBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!settingsLoaded) return;
+            Settings.Default.Verified = false;
+            TwitchStatus = "Un-Verified";
+        }
+        
         private void ConnectionButton_OnClick(object sender, RoutedEventArgs e)
         {
+            if (TwitchConnect == "Abort")
+            {
+                Abort();
+                return;
+            }
+            if (!Settings.Default.Verified) { Verify(); return; }
             if (TwitchConnect == "Connect") JoinChannel();
-            else twitch.Client.LeaveChannel(ChannelNameBox.Text);
+            else Twitch.Client.LeaveChannel(ChannelNameBox.Text);
+        }
+
+        private void Verify()
+        {
+            JoinChannel();
+            TwitchConnect = "Abort";
+            ChannelNameBox.IsEnabled = false;
+            TwitchStatus = "Awaiting verification...";
+            Twitch.Client.SendMessage(ChannelNameBox.Text,"Please type '!verify' in order to confirm that you are the owner of the channel.");
+            Console.WriteLine(@"Verification message has been sent, awaiting confirmation...");
         }
 
         private void JoinChannel()
@@ -125,16 +154,22 @@ namespace GadzzaaTB.Pages
                 return;
             }
 
-            if (!twitch.Client.IsConnected)
+            if (!Twitch.Client.IsConnected)
             {
                 Console.WriteLine(@"Twitch connection error!");
                 return;
             }
 
-            if (twitch.JoinedChannel != null) twitch.Client.LeaveChannel(twitch.JoinedChannel);
-            twitch.Client.JoinChannel(ChannelNameBox.Text);
+            if (Twitch.JoinedChannel != null) Twitch.Client.LeaveChannel(Twitch.JoinedChannel);
+            Twitch.Client.JoinChannel(ChannelNameBox.Text);
         }
 
+        private void Abort()
+        {
+            Twitch.Client.SendMessage(ChannelNameBox.Text,"Verification process aborted.");
+            Console.WriteLine(@"Verification process aborted.");
+            Twitch.Client.LeaveChannel(Twitch.JoinedChannel);
+        }
         private void BugButton_OnClick(object sender, RoutedEventArgs e)
         {
             _mainWindow.BugReport.Show();
@@ -154,5 +189,6 @@ namespace GadzzaaTB.Pages
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        
     }
 }
