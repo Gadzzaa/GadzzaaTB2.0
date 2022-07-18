@@ -87,20 +87,16 @@ namespace GadzzaaTB.Classes
         private void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
             if (!Settings.Default.Verified)
-                if (e.ChatMessage.Message != "!verify")
-                {
-                    return;
-                }
-                else
-                {
-                    Settings.Default.Verified = true;
-                    _mainWindow.Main.TwitchStatus = "Connected";
-                    _mainWindow.Main.TwitchConnect = "Disconnect";
-                    Client.SendMessage(e.ChatMessage.Channel,
-                        "Verification process completed! Thank you for using my bot!");
-                    return;
-                }
-
+            {
+                if (e.ChatMessage.Message != "!verify") return;
+                if(e.ChatMessage.Username != e.ChatMessage.Channel) return;
+                Settings.Default.Verified = true;
+                _mainWindow.Main.TwitchStatus = "Connected";
+                _mainWindow.Main.TwitchConnect = "Disconnect";
+                Client.SendMessage(e.ChatMessage.Channel,
+                    "Verification process completed! Thank you for using my bot!");
+                return;
+            }
             if (e.ChatMessage.Message != "!np") return;
             if (!_mainWindow.Main._sreader.CanRead)
             {
