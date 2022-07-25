@@ -127,7 +127,6 @@ namespace GadzzaaTB.Windows
             BugReport.Close();
             DebugOsu.Close();
             if (Twitch.JoinedChannel != null) Twitch.Client.LeaveChannel(Twitch.JoinedChannel);
-            Twitch.Client.Disconnect();
         }
 
         private void ChannelNameBox_OnGotFocus(object sender, RoutedEventArgs e)
