@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using GadzzaaTB.Pages;
 using NLog;
 
@@ -21,12 +22,12 @@ namespace GadzzaaTB.Windows
             Main = new Main();
             BugReport = new BugReport();
             DebugOsu = new DebugOsu();
-            Closing += OnClosing;
+            Closed += OnClosed;
             DebugOsu.UpdateModsText();
             NavigationFrame.NavigationService.Navigate(Main);
         }
 
-        private void OnClosing(object sender, CancelEventArgs e)
+        private void OnClosed(object sender, EventArgs e)
         {
             var logger = LogManager.GetLogger("toPostSharp");
             logger.Debug("### LOGGING SESSION FINISHED ###");
