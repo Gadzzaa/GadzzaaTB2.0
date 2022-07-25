@@ -78,40 +78,16 @@ namespace GadzzaaTB.Windows
 
         private async void OnContentRendered(object sender, EventArgs e)
         {
-            Twitch = new Bot();
-            BugReport = new BugReport();
-            DebugOsu = new DebugOsu();
+            ExecuteWindows();
             DebugOsu.UpdateModsText();
-            TwitchStatus = "Disconnected";
-            if (!Settings.Default.Verified) TwitchStatus = "Un-Verified";
-            TwitchConnect = "Connect";
-            ChannelNameBox.Text = Settings.Default.Username;
+            ExecuteLabels();
             _settingsLoaded = true;
             Twitch.Client.Connect();
             Grid.IsEnabled = true;
             _logger.Info("INITIALIZED!");
             while (true)
             {
-                if (!_sreader.CanRead)
-                {
-                    if(OsuStatus != "Process not found!") OsuStatus = "Process not found!";
-                    await Task.Delay(_readDelay);
-                }
-                else
-                {
-                    if(OsuStatus != "Running") OsuStatus = "Running";
-                    _sreader.TryRead(BaseAddresses.Beatmap);
-                    _sreader.TryRead(BaseAddresses.Skin);
-                    _sreader.TryRead(BaseAddresses.GeneralData);
-                    if (BaseAddresses.GeneralData.OsuStatus == OsuMemoryStatus.SongSelect)
-                        _sreader.TryRead(BaseAddresses.SongSelectionScores);
-                    else
-                        BaseAddresses.SongSelectionScores.Scores.Clear();
-                    if (BaseAddresses.GeneralData.OsuStatus == OsuMemoryStatus.ResultsScreen)
-                        _sreader.TryRead(BaseAddresses.ResultsScreen);
-                    UpdateValue.UpdateValues();
-                    await Task.Delay(_readDelay);
-                }
+                getOsuData();
             }
             // ReSharper disable once FunctionNeverReturns
         }
@@ -199,6 +175,45 @@ namespace GadzzaaTB.Windows
             Twitch.Client.SendMessage(ChannelNameBox.Text, "Verification process aborted.");
             Console.WriteLine(@"Verification process aborted.");
             Twitch.Client.LeaveChannel(Twitch.JoinedChannel);
+        }
+
+        private async void getOsuData()
+        {
+            if (!_sreader.CanRead)
+            {
+                if(OsuStatus != "Process not found!") OsuStatus = "Process not found!";
+                await Task.Delay(_readDelay);
+            }
+            else
+            {
+                if(OsuStatus != "Running") OsuStatus = "Running";
+                _sreader.TryRead(BaseAddresses.Beatmap);
+                _sreader.TryRead(BaseAddresses.Skin);
+                _sreader.TryRead(BaseAddresses.GeneralData);
+                if (BaseAddresses.GeneralData.OsuStatus == OsuMemoryStatus.SongSelect)
+                    _sreader.TryRead(BaseAddresses.SongSelectionScores);
+                else
+                    BaseAddresses.SongSelectionScores.Scores.Clear();
+                if (BaseAddresses.GeneralData.OsuStatus == OsuMemoryStatus.ResultsScreen)
+                    _sreader.TryRead(BaseAddresses.ResultsScreen);
+                UpdateValue.UpdateValues();
+                await Task.Delay(_readDelay);
+            }
+        }
+
+        private void ExecuteWindows()
+        {
+            Twitch = new Bot();
+            BugReport = new BugReport();
+            DebugOsu = new DebugOsu();
+        }
+
+        private void ExecuteLabels()
+        {
+            TwitchStatus = "Disconnected";
+            if (!Settings.Default.Verified) TwitchStatus = "Un-Verified";
+            TwitchConnect = "Connect";
+            ChannelNameBox.Text = Settings.Default.Username;
         }
 
         private void BugButton_OnClick(object sender, RoutedEventArgs e)
