@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:classes="clr-namespace:GadzzaaTB.Classes"
         mc:Ignorable="d"
         WindowStyle="SingleBorderWindow"
         ResizeMode="CanMinimize" Visibility="Visible"
@@ -11,202 +10,202 @@
         Width="1280"
         Height="720"
         Title="GadzzaaTB | Main Menu" Background="#7f6cd2" FontFamily="Segoe UI" Foreground="#cfcefe">
-        <Grid x:Name="Grid" IsEnabled="False" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            
-            <TextBlock Grid.Row="0" Text="GadzzaaTB"
-                       TextAlignment="Center"
-                       FontSize="70" FontWeight="Bold"
-                       Margin="0,10,0,15">
-                
-                <TextBlock.Effect>
-                    <DropShadowEffect ShadowDepth="4" RenderingBias="Quality"/>
-                </TextBlock.Effect>
-                
-            </TextBlock>
-            
-            <TextBox x:Name="ChannelNameBox" Grid.Row="1" 
-                     Text="Loading..."
-                     TextAlignment="Center"
-                     FontSize="30" Margin="0,100,0,5"
-                     GotFocus="ChannelNameBox_OnGotFocus" LostFocus="ChannelNameBox_OnLostFocus"
-                     TextChanged="ChannelNameBox_OnTextChanged">
-                <TextBox.Template>
-                    <ControlTemplate TargetType="TextBox">
+    <Grid x:Name="Grid" IsEnabled="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="GadzzaaTB"
+                   TextAlignment="Center"
+                   FontSize="70" FontWeight="Bold"
+                   Margin="0,10,0,15">
+
+            <TextBlock.Effect>
+                <DropShadowEffect ShadowDepth="4" RenderingBias="Quality" />
+            </TextBlock.Effect>
+
+        </TextBlock>
+
+        <TextBox x:Name="ChannelNameBox" Grid.Row="1"
+                 Text="Loading..."
+                 TextAlignment="Center"
+                 FontSize="30" Margin="0,100,0,5"
+                 GotFocus="ChannelNameBox_OnGotFocus" LostFocus="ChannelNameBox_OnLostFocus"
+                 TextChanged="ChannelNameBox_OnTextChanged">
+            <TextBox.Template>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Width="250" Height="65"
+                            CornerRadius="15"
+                            Background="{TemplateBinding Background}">
+                        <ScrollViewer Margin="0" x:Name="PART_ContentHost"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
+
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+
+            <Button x:Name="ConnectionButton"
+                    FontSize="30" Cursor="Hand"
+                    Content="{Binding TwitchConnect, Mode=OneWay}" Click="ConnectionButton_OnClick">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#cfcefe" />
+                        <Setter Property="Cursor" Value="Hand" />
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#b7b5fd" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
                         <Border Width="250" Height="65"
                                 CornerRadius="15"
                                 Background="{TemplateBinding Background}">
-                            <ScrollViewer Margin="0" x:Name="PART_ContentHost" 
-                                          HorizontalAlignment="Center" 
-                                          VerticalAlignment="Center"/>
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
-                </TextBox.Template>
-            </TextBox>
-            
-            
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                
-                <Button x:Name="ConnectionButton" 
-                        FontSize="30" Cursor="Hand"
-                        Content="{Binding TwitchConnect, Mode=OneWay}" Click="ConnectionButton_OnClick" >
-                
+                </Button.Template>
+
+            </Button>
+        </StackPanel>
+
+
+        <TextBlock Grid.Row="3" Text="CONNECTION STATUS:"
+                   TextAlignment="Center"
+                   FontSize="35" FontWeight="Bold"
+                   Margin="0,30,0,2" />
+
+        <DockPanel Grid.Row="4" HorizontalAlignment="Center" Margin="0,15,0,0">
+            <TextBlock TextAlignment="Center" Text="Twitch"
+                       FontSize="25" />
+            <TextBlock Text="-" Margin="5,0,0,0"
+                       FontSize="25" />
+            <TextBlock x:Name="TwitchConnection" Text="{Binding TwitchStatus, Mode=OneWay}" Margin="5,0,0,0"
+                       FontSize="25" />
+        </DockPanel>
+        <DockPanel Grid.Row="5" HorizontalAlignment="Center" Margin="0,0,0,2">
+            <TextBlock TextAlignment="Center" Text="osu!"
+                       FontSize="25" />
+            <TextBlock Text="-" Margin="5,0,0,0"
+                       FontSize="25" />
+            <TextBlock Text="{Binding OsuStatus, Mode=OneWay}" Margin="5,0,0,0"
+                       FontSize="25" />
+        </DockPanel>
+        <DockPanel Grid.Row="6">
+            <StackPanel
+                HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                <Button x:Name="DiscordButton" Content="Discord" Cursor="Hand"
+                        FontSize="25" Margin="0,0,0,5"
+                        Click="DiscordButton_OnClick">
                     <Button.Style>
                         <Style TargetType="Button">
-                            <Setter Property="Background" Value="#cfcefe"/>
-                            <Setter Property="Cursor" Value="Hand"/>
-                            
+                            <Setter Property="Background" Value="#cfcefe" />
+                            <Setter Property="Cursor" Value="Hand" />
+
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#b7b5fd"/>
+                                    <Setter Property="Background" Value="#b7b5fd" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
-                    
+
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border Width="250" Height="65"
+                            <Border Width="125" Height="65"
                                     CornerRadius="15"
                                     Background="{TemplateBinding Background}">
-                            <ContentPresenter VerticalAlignment="Center"
-                                              HorizontalAlignment="Center"/>
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center" />
                             </Border>
                         </ControlTemplate>
                     </Button.Template>
-                    
                 </Button>
-            </StackPanel>
-            
-            
-            <TextBlock Grid.Row="3" Text="CONNECTION STATUS:"
-                       TextAlignment="Center" 
-                       FontSize="35" FontWeight="Bold"
-                       Margin="0,30,0,2"/>
+                <Button x:Name="TwitchButton" Content="Twitch"
+                        FontSize="25"
+                        Click="TwitchButton_OnClick">
 
-            <DockPanel Grid.Row="4" HorizontalAlignment="Center" Margin="0,15,0,0">
-                <TextBlock TextAlignment="Center" Text="Twitch"
-                           FontSize="25" />
-                <TextBlock Text="-" Margin="5,0,0,0"
-                           FontSize="25" />
-                <TextBlock x:Name="TwitchConnection" Text="{Binding TwitchStatus, Mode=OneWay}" Margin="5,0,0,0"
-                           FontSize="25" />
-            </DockPanel>
-            <DockPanel Grid.Row="5" HorizontalAlignment="Center" Margin="0,0,0,2">
-                <TextBlock TextAlignment="Center" Text="osu!"
-                           FontSize="25" />
-                <TextBlock Text="-" Margin="5,0,0,0"
-                           FontSize="25" />
-                <TextBlock Text="{Binding OsuStatus, Mode=OneWay}" Margin="5,0,0,0"
-                           FontSize="25" />
-            </DockPanel>
-            <DockPanel Grid.Row="6">
-                <StackPanel
-                    HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                    <Button x:Name="DiscordButton" Content="Discord" Cursor="Hand"
-                            FontSize="25" Margin="0,0,0,5"
-                            Click="DiscordButton_OnClick">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="#cfcefe"/>
-                                <Setter Property="Cursor" Value="Hand"/>
-                            
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#b7b5fd"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Width="125" Height="65"
-                                        CornerRadius="15"
-                                        Background="{TemplateBinding Background}">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                      HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                    <Button x:Name="TwitchButton" Content="Twitch"
-                            FontSize="25"
-                            Click="TwitchButton_OnClick">
-                        
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="#cfcefe"/>
-                                <Setter Property="Cursor" Value="Hand"/>
-                            
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#b7b5fd"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Width="125" Height="65"
-                                        CornerRadius="15"
-                                        Background="{TemplateBinding Background}">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                      HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                        
-                    </Button>
-                    
-                </StackPanel>
-                
-                
-                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                    
-                    <TextBlock Text="v2.0" TextAlignment="Center"
-                               FontSize="35" Margin="0,0,0,5"/>
-                    
-                    <Button x:Name="BugButton" Content="Bug Report"
-                            FontSize="20"
-                            Click="BugButton_OnClick">
-                        
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="#cfcefe"/>
-                                <Setter Property="Cursor" Value="Hand"/>
-                            
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#b7b5fd"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Width="125" Height="65"
-                                        CornerRadius="15"
-                                        Background="{TemplateBinding Background}">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                      HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                    
-                </StackPanel>
-                
-            </DockPanel>
-        </Grid>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#cfcefe" />
+                            <Setter Property="Cursor" Value="Hand" />
+
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#b7b5fd" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="125" Height="65"
+                                    CornerRadius="15"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+
+                </Button>
+
+            </StackPanel>
+
+
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
+
+                <TextBlock Text="v2.0" TextAlignment="Center"
+                           FontSize="35" Margin="0,0,0,5" />
+
+                <Button x:Name="BugButton" Content="Bug Report"
+                        FontSize="20"
+                        Click="BugButton_OnClick">
+
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#cfcefe" />
+                            <Setter Property="Cursor" Value="Hand" />
+
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#b7b5fd" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="125" Height="65"
+                                    CornerRadius="15"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </StackPanel>
+
+        </DockPanel>
+    </Grid>
 </Window>

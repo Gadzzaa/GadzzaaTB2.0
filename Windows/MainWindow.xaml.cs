@@ -83,10 +83,7 @@ namespace GadzzaaTB.Windows
             Twitch.Client.Connect();
             Grid.IsEnabled = true;
             _logger.Info("INITIALIZED!");
-            while (true)
-            {
-                await getOsuData();
-            }
+            while (true) await getOsuData();
             // ReSharper disable once FunctionNeverReturns
         }
 
