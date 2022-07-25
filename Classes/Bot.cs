@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using GadzzaaTB.Windows;
@@ -7,6 +8,7 @@ using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
+using TwitchLib.Communication.Events;
 using TwitchLib.Communication.Models;
 
 namespace GadzzaaTB.Classes
@@ -34,6 +36,21 @@ namespace GadzzaaTB.Classes
             Client.OnMessageReceived += Client_OnMessageReceived;
             Client.OnConnected += Client_OnConnected;
             Client.OnLeftChannel += ClientOnOnLeftChannel;
+            Client.OnDisconnected += ClientOnOnDisconnected;
+            Client.OnReconnected += ClientOnOnReconnected;
+        }
+
+        private void ClientOnOnReconnected(object sender, OnReconnectedEventArgs e)
+        {
+            if (JoinedChannel is null) return;
+            Client.JoinChannel(JoinedChannel);
+        }
+
+        private void ClientOnOnDisconnected(object sender, OnDisconnectedEventArgs e)
+        {
+            if(_mainWindow.BugReport.IsClosing) return;
+            Client.Reconnect();
+            Thread.Sleep(5000);
         }
 
 
