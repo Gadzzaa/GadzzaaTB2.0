@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using GadzzaaTB.Windows;
@@ -27,20 +28,18 @@ namespace GadzzaaTB.Classes
             var customClient = new WebSocketClient(clientOptions);
             Client = new TwitchClient(customClient);
             Client.Initialize(credentials);
-
+            
             Client.OnLog += Client_OnLog;
             Client.OnJoinedChannel += Client_OnJoinedChannel;
             Client.OnMessageReceived += Client_OnMessageReceived;
             Client.OnConnected += Client_OnConnected;
             Client.OnLeftChannel += ClientOnOnLeftChannel;
-
-            Client.Connect();
         }
 
 
         private void Client_OnLog(object sender, OnLogArgs e)
         {
-            Console.WriteLine($"{e.DateTime.ToString()}: {e.BotUsername} - {e.Data}");
+            Console.WriteLine($@"{e.DateTime.ToString(CultureInfo.CurrentCulture)}: {e.BotUsername} - {e.Data}");
         }
 
         private void Client_OnConnected(object sender, OnConnectedArgs e)
@@ -59,9 +58,9 @@ namespace GadzzaaTB.Classes
                 var _ = _mainWindow.Dispatcher.BeginInvoke((Action)(() =>
                 {
                     {
-                        _mainWindow.Main.TwitchStatus = "Connected";
-                        _mainWindow.Main.TwitchConnect = "Disconnect";
-                        _mainWindow.Main.ChannelNameBox.IsEnabled = false;
+                        _mainWindow.TwitchStatus = "Connected";
+                        _mainWindow.TwitchConnect = "Disconnect";
+                        _mainWindow.ChannelNameBox.IsEnabled = false;
                     }
                 }));
             });
@@ -76,9 +75,9 @@ namespace GadzzaaTB.Classes
                 var _ = _mainWindow.Dispatcher.BeginInvoke((Action)(() =>
                 {
                     {
-                        _mainWindow.Main.TwitchStatus = "Disconnected";
-                        _mainWindow.Main.TwitchConnect = "Connect";
-                        _mainWindow.Main.ChannelNameBox.IsEnabled = true;
+                        _mainWindow.TwitchStatus = "Disconnected";
+                        _mainWindow.TwitchConnect = "Connect";
+                        _mainWindow.ChannelNameBox.IsEnabled = true;
                     }
                 }));
             });
@@ -91,14 +90,14 @@ namespace GadzzaaTB.Classes
                 if (e.ChatMessage.Message != "!verify") return;
                 if(e.ChatMessage.Username != e.ChatMessage.Channel) return;
                 Settings.Default.Verified = true;
-                _mainWindow.Main.TwitchStatus = "Connected";
-                _mainWindow.Main.TwitchConnect = "Disconnect";
+                _mainWindow.TwitchStatus = "Connected";
+                _mainWindow.TwitchConnect = "Disconnect";
                 Client.SendMessage(e.ChatMessage.Channel,
                     "Verification process completed! Thank you for using my bot!");
                 return;
             }
             if (e.ChatMessage.Message != "!np") return;
-            if (!_mainWindow.Main._sreader.CanRead)
+            if (!_mainWindow._sreader.CanRead)
             {
                 Client.SendMessage(e.ChatMessage.Channel,
                     @"Process 'osu.exe' could not be found running. Please launch the game before using the command");

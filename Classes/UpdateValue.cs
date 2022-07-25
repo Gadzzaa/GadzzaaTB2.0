@@ -8,7 +8,7 @@ namespace GadzzaaTB.Classes
     public static class UpdateValue
     {
         private static readonly MainWindow MainWindow = (MainWindow)Application.Current.MainWindow;
-        private static readonly OsuBaseAddresses Data = MainWindow.Main.BaseAddresses;
+        private static readonly OsuBaseAddresses Data = MainWindow.BaseAddresses;
 
         private static readonly List<ModsArray> ModsArray = new List<ModsArray>
         {
