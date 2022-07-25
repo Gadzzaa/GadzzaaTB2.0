@@ -58,7 +58,7 @@
                 <TextBlock Text="{Binding OsuStatus, Mode=OneWay}" Margin="5,0,0,0"
                            FontSize="10" />
             </DockPanel>
-            <DockPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="7" Margin="0,3,0,5">
+            <DockPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="7" Margin="0,3,0,0">
                 <StackPanel
                     HorizontalAlignment="Left" VerticalAlignment="Bottom">
                     <Button x:Name="DiscordButton" Content="Discord" Cursor="Hand"

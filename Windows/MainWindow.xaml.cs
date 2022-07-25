@@ -84,7 +84,10 @@ namespace GadzzaaTB.Windows
             Twitch.Client.Connect();
             Grid.IsEnabled = true;
             _logger.Info("INITIALIZED!");
-            while (true) getOsuData();
+            while (true)
+            {
+                await getOsuData();
+            }
             // ReSharper disable once FunctionNeverReturns
         }
 
@@ -173,7 +176,7 @@ namespace GadzzaaTB.Windows
             Twitch.Client.LeaveChannel(Twitch.JoinedChannel);
         }
 
-        private async void getOsuData()
+        private async Task getOsuData()
         {
             if (!_sreader.CanRead)
             {
