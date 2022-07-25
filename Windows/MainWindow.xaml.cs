@@ -115,7 +115,7 @@ namespace GadzzaaTB.Windows
         {
             if (!_settingsLoaded) return;
             Settings.Default.Verified = false;
-            TwitchStatus = "Un-Verified";
+            TwitchStatus = "Verification Required";
         }
 
         private void ConnectionButton_OnClick(object sender, RoutedEventArgs e)
@@ -206,7 +206,7 @@ namespace GadzzaaTB.Windows
         private void ExecuteLabels()
         {
             TwitchStatus = "Disconnected";
-            if (!Settings.Default.Verified) TwitchStatus = "Un-Verified";
+            if (!Settings.Default.Verified) TwitchStatus = "Verification Required";
             TwitchConnect = "Connect";
             ChannelNameBox.Text = Settings.Default.Username;
         }
