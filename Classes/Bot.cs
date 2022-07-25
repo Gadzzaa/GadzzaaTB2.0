@@ -28,7 +28,7 @@ namespace GadzzaaTB.Classes
             var customClient = new WebSocketClient(clientOptions);
             Client = new TwitchClient(customClient);
             Client.Initialize(credentials);
-            
+
             Client.OnLog += Client_OnLog;
             Client.OnJoinedChannel += Client_OnJoinedChannel;
             Client.OnMessageReceived += Client_OnMessageReceived;
@@ -88,7 +88,7 @@ namespace GadzzaaTB.Classes
             if (!Settings.Default.Verified)
             {
                 if (e.ChatMessage.Message != "!verify") return;
-                if(e.ChatMessage.Username != e.ChatMessage.Channel) return;
+                if (e.ChatMessage.Username != e.ChatMessage.Channel) return;
                 Settings.Default.Verified = true;
                 _mainWindow.TwitchStatus = "Connected";
                 _mainWindow.TwitchConnect = "Disconnect";
@@ -96,6 +96,7 @@ namespace GadzzaaTB.Classes
                     "Verification process completed! Thank you for using my bot!");
                 return;
             }
+
             if (e.ChatMessage.Message != "!np") return;
             if (!_mainWindow._sreader.CanRead)
             {

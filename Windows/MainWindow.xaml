@@ -12,28 +12,28 @@
         Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={classes:RatioConverter}, ConverterParameter=0.4 }"
         Title="GadzzaaTB | Main Menu" Background="#7f6cd2" FontFamily="Segoe UI" Foreground="#cfcefe">
     <Viewbox>
-        <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="20" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="20" />
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Column="1" Grid.Row="1" TextAlignment="Center" FontWeight="Bold"
+        <Grid x:Name="Grid" IsEnabled="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="1" Grid.Row="1" TextAlignment="Center" FontWeight="Bold"
                        Text="GadzzaaTB" FontSize="30" Margin="0,0,0,15" />
             <TextBox x:Name="ChannelNameBox"
                      Grid.Column="1" Grid.Row="2" TextAlignment="Center"
-                     Text="Channel Name" FontSize="15" Width="150" Margin="0,0,0,0"
+                     Text="Loading..." FontSize="15" Width="150" Margin="0,0,0,0"
                      GotFocus="ChannelNameBox_OnGotFocus" LostFocus="ChannelNameBox_OnLostFocus"
                      TextChanged="ChannelNameBox_OnTextChanged" />
             <Button x:Name="ConnectionButton" Grid.Column="1" Grid.Row="3"
