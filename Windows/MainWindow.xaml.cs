@@ -19,7 +19,6 @@ namespace GadzzaaTB.Windows
     public partial class MainWindow : INotifyPropertyChanged
     {
         private readonly Logger _logger = LogManager.GetLogger("toPostSharp");
-        private readonly MainWindow _mainWindow = (MainWindow)Application.Current.MainWindow;
         private readonly int _readDelay = 33;
 
         // ReSharper disable once InconsistentNaming
@@ -217,7 +216,7 @@ namespace GadzzaaTB.Windows
 
         private void BugButton_OnClick(object sender, RoutedEventArgs e)
         {
-            _mainWindow.BugReport.Show();
+            BugReport.Show();
         }
 
         private void DiscordButton_OnClick(object sender, RoutedEventArgs e)
