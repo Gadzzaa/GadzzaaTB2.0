@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using GadzzaaTB.Classes;
 using NLog;
-using NLog.Targets;
 using OsuMemoryDataProvider;
 using OsuMemoryDataProvider.OsuMemoryModels;
 
@@ -85,10 +84,7 @@ namespace GadzzaaTB.Windows
             Twitch.Client.Connect();
             Grid.IsEnabled = true;
             _logger.Info("INITIALIZED!");
-            while (true)
-            {
-                getOsuData();
-            }
+            while (true) getOsuData();
             // ReSharper disable once FunctionNeverReturns
         }
 
@@ -181,12 +177,12 @@ namespace GadzzaaTB.Windows
         {
             if (!_sreader.CanRead)
             {
-                if(OsuStatus != "Process not found!") OsuStatus = "Process not found!";
+                if (OsuStatus != "Process not found!") OsuStatus = "Process not found!";
                 await Task.Delay(_readDelay);
             }
             else
             {
-                if(OsuStatus != "Running") OsuStatus = "Running";
+                if (OsuStatus != "Running") OsuStatus = "Running";
                 _sreader.TryRead(BaseAddresses.Beatmap);
                 _sreader.TryRead(BaseAddresses.Skin);
                 _sreader.TryRead(BaseAddresses.GeneralData);

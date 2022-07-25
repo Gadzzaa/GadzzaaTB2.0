@@ -48,7 +48,7 @@ namespace GadzzaaTB.Classes
 
         private void ClientOnOnDisconnected(object sender, OnDisconnectedEventArgs e)
         {
-            if(_mainWindow.BugReport.IsClosing) return;
+            if (_mainWindow.BugReport.IsClosing) return;
             Client.Reconnect();
             Thread.Sleep(5000);
         }
