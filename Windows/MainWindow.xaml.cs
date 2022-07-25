@@ -2,14 +2,15 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using GadzzaaTB.Classes;
 using NLog;
+using NLog.Targets;
 using OsuMemoryDataProvider;
 using OsuMemoryDataProvider.OsuMemoryModels;
+
 // ReSharper disable RedundantCheckBeforeAssignment
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -18,9 +19,31 @@ namespace GadzzaaTB.Windows
 {
     public partial class MainWindow : INotifyPropertyChanged
     {
+        private readonly Logger _logger = LogManager.GetLogger("toPostSharp");
+        private readonly MainWindow _mainWindow = (MainWindow)Application.Current.MainWindow;
+        private readonly int _readDelay = 33;
+
+        // ReSharper disable once InconsistentNaming
+        public readonly StructuredOsuMemoryReader _sreader;
+        public readonly OsuBaseAddresses BaseAddresses = new OsuBaseAddresses();
+        private string _oldText;
+        private string _osuStatus = "Loading...";
+        private bool _settingsLoaded;
+        private string _twitchButton = "Loading...";
+        private string _twitchStatus = "Loading...";
         public BugReport BugReport;
         public DebugOsu DebugOsu;
-        
+        public Bot Twitch;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            DataContext = this;
+            _sreader = StructuredOsuMemoryReader.Instance;
+            ContentRendered += OnContentRendered;
+            Closing += OnClosing;
+        }
+
         public string OsuStatus
         {
             get => _osuStatus;
@@ -51,28 +74,7 @@ namespace GadzzaaTB.Windows
             }
         }
 
-        private readonly Logger _logger = LogManager.GetLogger("toPostSharp");
-        private readonly MainWindow _mainWindow = (MainWindow)Application.Current.MainWindow;
-        private readonly int _readDelay = 33;
-        // ReSharper disable once InconsistentNaming
-        public readonly StructuredOsuMemoryReader _sreader;
-        public readonly OsuBaseAddresses BaseAddresses = new OsuBaseAddresses();
-        public Bot Twitch;
-        private string _oldText;
-        private string _osuStatus = "Loading..";
-        private string _twitchButton = "Loading..";
-        private string _twitchStatus = "Loading..";
-        private bool _settingsLoaded;
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public MainWindow()
-        {
-            InitializeComponent();
-            DataContext = this;
-            _sreader = StructuredOsuMemoryReader.Instance;
-            ContentRendered += OnContentRendered;
-            Closed += OnClosed;
-        }
 
         private async void OnContentRendered(object sender, EventArgs e)
         {
@@ -86,17 +88,18 @@ namespace GadzzaaTB.Windows
             ChannelNameBox.Text = Settings.Default.Username;
             _settingsLoaded = true;
             Twitch.Client.Connect();
+            Grid.IsEnabled = true;
+            _logger.Info("INITIALIZED!");
             while (true)
             {
-                _logger.Info("INITIALIZED!");
                 if (!_sreader.CanRead)
                 {
-                    OsuStatus = "Process not found!";
+                    if(OsuStatus != "Process not found!") OsuStatus = "Process not found!";
                     await Task.Delay(_readDelay);
                 }
                 else
                 {
-                    OsuStatus = "Running";
+                    if(OsuStatus != "Running") OsuStatus = "Running";
                     _sreader.TryRead(BaseAddresses.Beatmap);
                     _sreader.TryRead(BaseAddresses.Skin);
                     _sreader.TryRead(BaseAddresses.GeneralData);
@@ -113,21 +116,21 @@ namespace GadzzaaTB.Windows
             // ReSharper disable once FunctionNeverReturns
         }
 
-        private void OnClosed(object sender, EventArgs e)
+        private void OnClosing(object sender, EventArgs e)
         {
             var logger = LogManager.GetLogger("toPostSharp");
             logger.Debug("### LOGGING SESSION FINISHED ###");
             Settings.Default.Username = ChannelNameBox.Text;
-            if (Twitch.JoinedChannel != null) Twitch.Client.LeaveChannel(Twitch.JoinedChannel);
-            Twitch.Client.Disconnect();
+            LogManager.Shutdown();
+            Settings.Default.Save();
             BugReport.IsClosing = true;
             BugReport.Close();
             DebugOsu.Close();
-            LogManager.Shutdown();
-            Settings.Default.Save();
+            if (Twitch.JoinedChannel != null) Twitch.Client.LeaveChannel(Twitch.JoinedChannel);
+            Twitch.Client.Disconnect();
         }
 
-private void ChannelNameBox_OnGotFocus(object sender, RoutedEventArgs e)
+        private void ChannelNameBox_OnGotFocus(object sender, RoutedEventArgs e)
         {
             _oldText = ChannelNameBox.Text;
             ChannelNameBox.Text = "";
