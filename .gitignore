@@ -7,3 +7,5 @@ riderModule.iml
 *.user
 .vs/
 lazygit.exe
+Passwords.resx
+Passwords.Designer.cs
