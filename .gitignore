@@ -4,9 +4,6 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 .idea/
-Passwords.resx
-Passwords.Designer.cs
-.vs/. i d e a 
+*.user
+.vs/
 lazygit.exe
- 
- 
