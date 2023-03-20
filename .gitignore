@@ -9,3 +9,4 @@ riderModule.iml
 lazygit.exe
 Passwords.resx
 Passwords.Designer.cs
+*.csproj
