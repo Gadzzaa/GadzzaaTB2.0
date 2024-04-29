@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Threading;
-using GadzzaaTB.Classes;
 
 namespace GadzzaaTB
 {
@@ -9,16 +8,6 @@ namespace GadzzaaTB
     /// </summary>
     public partial class App
     {
-        public App()
-        {
-            Startup += OnStartup;
-        }
-
-        private static void OnStartup(object sender, StartupEventArgs e)
-        {
-            PostSharpAspects.StartNLog();
-        }
-
         private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             MessageBox.Show(

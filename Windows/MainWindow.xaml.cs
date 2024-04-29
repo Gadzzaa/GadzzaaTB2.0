@@ -9,6 +9,8 @@ using GadzzaaTB.Classes;
 using NLog;
 using OsuMemoryDataProvider;
 using OsuMemoryDataProvider.OsuMemoryModels;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 
 // ReSharper disable RedundantCheckBeforeAssignment
 
@@ -18,8 +20,7 @@ namespace GadzzaaTB.Windows
 {
     public partial class MainWindow : INotifyPropertyChanged
     {
-        private readonly Logger _logger = LogManager.GetLogger("toPostSharp");
-        private readonly int _readDelay = 33;
+        private readonly int _readDelay = 500;
 
         // ReSharper disable once InconsistentNaming
         public readonly StructuredOsuMemoryReader _sreader;
@@ -71,6 +72,21 @@ namespace GadzzaaTB.Windows
                 OnPropertyChanged();
             }
         }
+        
+        public bool IsConnectedToInternet()
+        {
+            bool isConnected = NetworkInterface.GetIsNetworkAvailable();
+
+            if(isConnected){
+                try{
+                    using (TcpClient client = new TcpClient("www.google.com", 80))
+                        isConnected = true;
+                }
+                catch(Exception){ isConnected = false; }
+            }
+
+            return isConnected;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -80,24 +96,25 @@ namespace GadzzaaTB.Windows
             DebugOsu.UpdateModsText();
             ExecuteLabels();
             _settingsLoaded = true;
-            Twitch.Client.Connect();
+            Console.WriteLine("Awaiting internet connection.");
+            if (!IsConnectedToInternet()) return;
+            await Twitch.Client.ConnectAsync();
             Grid.IsEnabled = true;
-            _logger.Info("INITIALIZED!");
+            Console.WriteLine("INITIALIZED!");
             while (true) await getOsuData();
             // ReSharper disable once FunctionNeverReturns
         }
 
-        private void OnClosing(object sender, EventArgs e)
+        private async void OnClosing(object sender, EventArgs e)
         {
-            var logger = LogManager.GetLogger("toPostSharp");
-            logger.Debug("### LOGGING SESSION FINISHED ###");
             Settings.Default.Username = ChannelNameBox.Text;
             LogManager.Shutdown();
             Settings.Default.Save();
             BugReport.IsClosing = true;
+            DebugOsu.IsClosing = true;
             BugReport.Close();
             DebugOsu.Close();
-            if (Twitch.JoinedChannel != null) Twitch.Client.LeaveChannel(Twitch.JoinedChannel);
+            if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
         }
 
         private void ChannelNameBox_OnGotFocus(object sender, RoutedEventArgs e)
@@ -118,7 +135,7 @@ namespace GadzzaaTB.Windows
             TwitchStatus = "Verification Required";
         }
 
-        private void ConnectionButton_OnClick(object sender, RoutedEventArgs e)
+        private async void ConnectionButton_OnClick(object sender, RoutedEventArgs e)
         {
             if (TwitchConnect == "Abort")
             {
@@ -132,22 +149,22 @@ namespace GadzzaaTB.Windows
                 return;
             }
 
-            if (TwitchConnect == "Connect") JoinChannel();
-            else Twitch.Client.LeaveChannel(ChannelNameBox.Text);
+            if (TwitchConnect == "Connect") await JoinChannel();
+            else await Twitch.Client.LeaveChannelAsync(ChannelNameBox.Text);
         }
 
-        private void Verify()
+        private async void Verify()
         {
-            JoinChannel();
+            await JoinChannel();
             TwitchConnect = "Abort";
             ChannelNameBox.IsEnabled = false;
             TwitchStatus = "Awaiting verification...";
-            Twitch.Client.SendMessage(ChannelNameBox.Text,
+            await Twitch.Client.SendMessageAsync(ChannelNameBox.Text,
                 "Please type '!verify' in order to confirm that you are the owner of the channel.");
             Console.WriteLine(@"Verification message has been sent, awaiting confirmation...");
         }
 
-        private void JoinChannel()
+        private async Task JoinChannel()
         {
             if (ChannelNameBox.Text == "Channel Name")
             {
@@ -161,15 +178,15 @@ namespace GadzzaaTB.Windows
                 return;
             }
 
-            if (Twitch.JoinedChannel != null) Twitch.Client.LeaveChannel(Twitch.JoinedChannel);
-            Twitch.Client.JoinChannel(ChannelNameBox.Text);
+            if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
+            await Twitch.Client.JoinChannelAsync(ChannelNameBox.Text);
         }
 
-        private void Abort()
+        private async void Abort()
         {
-            Twitch.Client.SendMessage(ChannelNameBox.Text, "Verification process aborted.");
+            await Twitch.Client.SendMessageAsync(ChannelNameBox.Text, "Verification process aborted.");
             Console.WriteLine(@"Verification process aborted.");
-            Twitch.Client.LeaveChannel(Twitch.JoinedChannel);
+            await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
         }
 
         private async Task getOsuData()
@@ -183,15 +200,15 @@ namespace GadzzaaTB.Windows
             {
                 if (OsuStatus != "Running") OsuStatus = "Running";
                 _sreader.TryRead(BaseAddresses.Beatmap);
-                _sreader.TryRead(BaseAddresses.Skin);
-                _sreader.TryRead(BaseAddresses.GeneralData);
+          //      _sreader.TryRead(BaseAddresses.Skin);
+          //      _sreader.TryRead(BaseAddresses.GeneralData);
                 if (BaseAddresses.GeneralData.OsuStatus == OsuMemoryStatus.SongSelect)
                     _sreader.TryRead(BaseAddresses.SongSelectionScores);
                 else
                     BaseAddresses.SongSelectionScores.Scores.Clear();
                 if (BaseAddresses.GeneralData.OsuStatus == OsuMemoryStatus.ResultsScreen)
                     _sreader.TryRead(BaseAddresses.ResultsScreen);
-                UpdateValue.UpdateValues();
+                new UpdateValue().UpdateValues();
                 await Task.Delay(_readDelay);
             }
         }
@@ -224,6 +241,11 @@ namespace GadzzaaTB.Windows
         private void TwitchButton_OnClick(object sender, RoutedEventArgs e)
         {
             Process.Start("https://twitch.tv/gadzzaa");
+        }
+        
+        private void DebugButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            DebugOsu.Show();
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)

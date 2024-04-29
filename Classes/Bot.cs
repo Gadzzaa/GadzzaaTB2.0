@@ -1,130 +1,128 @@
 ﻿using System;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using GadzzaaTB.Windows;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
-using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Events;
-using TwitchLib.Communication.Models;
+using OnConnectedEventArgs = TwitchLib.Client.Events.OnConnectedEventArgs;
 
 namespace GadzzaaTB.Classes
 {
     public class Bot
     {
-        private readonly MainWindow _mainWindow = (MainWindow)Application.Current.MainWindow;
-        public TwitchClient Client;
-        public string JoinedChannel;
+        private readonly MainWindow? _mainWindow = (MainWindow)Application.Current.MainWindow;
+        public readonly TwitchClient Client;
+        public string? JoinedChannel;
 
         public Bot()
         {
+            var loggerFactory = LoggerFactory.Create(c => c.Services.AddLogging());
+            Client = new TwitchClient(loggerFactory: loggerFactory);
             var credentials = new ConnectionCredentials("gadzzaaBot", Passwords.twitchOAuth);
-            var clientOptions = new ClientOptions
-            {
-                MessagesAllowedInPeriod = 750,
-                ThrottlingPeriod = TimeSpan.FromSeconds(30)
-            };
-            var customClient = new WebSocketClient(clientOptions);
-            Client = new TwitchClient(customClient);
             Client.Initialize(credentials);
-
-            Client.OnLog += Client_OnLog;
+            
+            Client.OnConnected += Client_OnConnected;
             Client.OnJoinedChannel += Client_OnJoinedChannel;
             Client.OnMessageReceived += Client_OnMessageReceived;
-            Client.OnConnected += Client_OnConnected;
             Client.OnLeftChannel += ClientOnOnLeftChannel;
             Client.OnDisconnected += ClientOnOnDisconnected;
             Client.OnReconnected += ClientOnOnReconnected;
+            
         }
 
-        private void ClientOnOnReconnected(object sender, OnReconnectedEventArgs e)
+        async Task ClientOnOnReconnected(object? sender, OnConnectedEventArgs onConnectedEventArgs)
         {
-            if (JoinedChannel is null) return;
-            Client.JoinChannel(JoinedChannel);
+            if (JoinedChannel != null) await Client.JoinChannelAsync(JoinedChannel);
         }
 
-        private void ClientOnOnDisconnected(object sender, OnDisconnectedEventArgs e)
+        async Task ClientOnOnDisconnected(object? sender, OnDisconnectedEventArgs e)
         {
-            if (_mainWindow.BugReport.IsClosing) return;
-            Client.Reconnect();
+            if (_mainWindow != null && _mainWindow.BugReport.IsClosing) return;
+            await Client.ReconnectAsync();
             Thread.Sleep(5000);
         }
 
-
-        private void Client_OnLog(object sender, OnLogArgs e)
-        {
-            Console.WriteLine($@"{e.DateTime.ToString(CultureInfo.CurrentCulture)}: {e.BotUsername} - {e.Data}");
-        }
-
-        private void Client_OnConnected(object sender, OnConnectedArgs e)
+        Task Client_OnConnected(object? sender, OnConnectedEventArgs onConnectedEventArgs)
         {
             Console.WriteLine(@"Connected to Twitch!");
+            return Task.CompletedTask;
         }
 
-        private void Client_OnJoinedChannel(object sender, OnJoinedChannelArgs e)
+        async Task Client_OnJoinedChannel(object? sender, OnJoinedChannelArgs e)
         {
             JoinedChannel = e.Channel;
             if (!Settings.Default.Verified) return;
             Console.WriteLine(@"Connected to channel: " + e.Channel);
-            Client.SendMessage(e.Channel, "Bot online!");
-            Task.Factory.StartNew(() =>
+            await Client.SendMessageAsync(e.Channel, "Bot online!");
+            await Task.Factory.StartNew(() =>
             {
-                var _ = _mainWindow.Dispatcher.BeginInvoke((Action)(() =>
+                if (_mainWindow != null)
                 {
+                    var _ = _mainWindow.Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        _mainWindow.TwitchStatus = "Connected";
-                        _mainWindow.TwitchConnect = "Disconnect";
-                        _mainWindow.ChannelNameBox.IsEnabled = false;
-                    }
-                }));
+                        {
+                            _mainWindow.TwitchStatus = "Connected";
+                            _mainWindow.TwitchConnect = "Disconnect";
+                            _mainWindow.ChannelNameBox.IsEnabled = false;
+                        }
+                    }));
+                }
             });
         }
 
-        private void ClientOnOnLeftChannel(object sender, OnLeftChannelArgs e)
+        Task ClientOnOnLeftChannel(object? sender, OnLeftChannelArgs e)
         {
             Console.WriteLine(@"Left channel: " + e.Channel);
             JoinedChannel = null;
             Task.Factory.StartNew(() =>
             {
-                var _ = _mainWindow.Dispatcher.BeginInvoke((Action)(() =>
+                if (_mainWindow != null)
                 {
+                    var _ = _mainWindow.Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        _mainWindow.TwitchStatus = "Disconnected";
-                        _mainWindow.TwitchConnect = "Connect";
-                        _mainWindow.ChannelNameBox.IsEnabled = true;
-                    }
-                }));
+                        {
+                            _mainWindow.TwitchStatus = "Disconnected";
+                            _mainWindow.TwitchConnect = "Connect";
+                            _mainWindow.ChannelNameBox.IsEnabled = true;
+                        }
+                    }));
+                }
             });
+            return Task.CompletedTask;
         }
 
-        private void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
+        async Task Client_OnMessageReceived(object? sender, OnMessageReceivedArgs e)
         {
-            if (!Settings.Default.Verified)
+            if (!Settings.Default.Verified && e.ChatMessage.Message == "!verify" && e.ChatMessage.Username == e.ChatMessage.Channel)
             {
-                if (e.ChatMessage.Message != "!verify") return;
-                if (e.ChatMessage.Username != e.ChatMessage.Channel) return;
                 Settings.Default.Verified = true;
-                _mainWindow.TwitchStatus = "Connected";
-                _mainWindow.TwitchConnect = "Disconnect";
-                Client.SendMessage(e.ChatMessage.Channel,
+                if (_mainWindow != null)
+                {
+                    _mainWindow.TwitchStatus = "Connected";
+                    _mainWindow.TwitchConnect = "Disconnect";
+                }
+
+                await Client.SendMessageAsync(e.ChatMessage.Channel,
                     "Verification process completed! Thank you for using my bot!");
                 return;
             }
 
-            if (e.ChatMessage.Message != "!np") return;
-            if (!_mainWindow._sreader.CanRead)
+            if (_mainWindow != null && e.ChatMessage.Message == "!np" && !_mainWindow._sreader.CanRead) 
             {
-                Client.SendMessage(e.ChatMessage.Channel,
+                await Client.SendMessageAsync(e.ChatMessage.Channel,
                     @"Process 'osu.exe' could not be found running. Please launch the game before using the command");
                 return;
             }
 
-            Client.SendMessage(e.ChatMessage.Channel,
-                _mainWindow.DebugOsu.mapInfo + " | Mods: " + _mainWindow.DebugOsu.modsText + " | Download: " +
-                _mainWindow.DebugOsu.dl);
+            if (_mainWindow != null)
+                await Client.SendMessageAsync(e.ChatMessage.Channel,
+                   _mainWindow.DebugOsu.mStars + "\u2b50 | " +  _mainWindow.DebugOsu.mapInfo + " | Mods: " + _mainWindow.DebugOsu.modsText + " | Download: " +
+                    _mainWindow.DebugOsu.dl);
         }
     }
 }

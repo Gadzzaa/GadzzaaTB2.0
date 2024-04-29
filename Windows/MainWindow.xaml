@@ -3,13 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+        Style="{StaticResource MaterialDesignWindow}"
         WindowStyle="SingleBorderWindow"
         ResizeMode="CanMinimize" Visibility="Visible"
         WindowStartupLocation="CenterScreen"
         Width="1280"
         Height="720"
-        Title="GadzzaaTB | Main Menu" Background="#7f6cd2" FontFamily="Segoe UI" Foreground="#cfcefe">
+        Title="GadzzaaTB | Main Menu" FontFamily="Segoe UI" Background="#7f6cd2" Foreground="#cfcefe">
     <Grid x:Name="Grid" IsEnabled="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -31,25 +33,17 @@
             </TextBlock.Effect>
 
         </TextBlock>
-
+        <TextBlock Grid.Row="0" VerticalAlignment="Bottom" Text="v2.0" TextAlignment="Center"
+                   FontSize="20" Margin="0,5,0,0" />
+        
         <TextBox x:Name="ChannelNameBox" Grid.Row="1"
-                 Text="Loading..."
-                 TextAlignment="Center"
-                 FontSize="30" Margin="0,100,0,5"
+                 Text="Loading..." Style="{DynamicResource MaterialDesignOutlinedTextBox}"
+                 TextAlignment="Center" TextWrapping="Wrap" AcceptsReturn="False" Width="250" Height="65"
+                 FontSize="23" Margin="0,100,0,5" VerticalScrollBarVisibility="Visible"
                  GotFocus="ChannelNameBox_OnGotFocus" LostFocus="ChannelNameBox_OnLostFocus"
                  TextChanged="ChannelNameBox_OnTextChanged">
-            <TextBox.Template>
-                <ControlTemplate TargetType="TextBox">
-                    <Border Width="250" Height="65"
-                            CornerRadius="15"
-                            Background="{TemplateBinding Background}">
-                        <ScrollViewer Margin="0" x:Name="PART_ContentHost"
-                                      HorizontalAlignment="Center"
-                                      VerticalAlignment="Center" />
-                    </Border>
-                </ControlTemplate>
-            </TextBox.Template>
         </TextBox>
+
 
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -57,7 +51,6 @@
             <Button x:Name="ConnectionButton"
                     FontSize="30" Cursor="Hand"
                     Content="{Binding TwitchConnect, Mode=OneWay}" Click="ConnectionButton_OnClick">
-
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="#cfcefe" />
@@ -98,6 +91,7 @@
                        FontSize="25" />
             <TextBlock x:Name="TwitchConnection" Text="{Binding TwitchStatus, Mode=OneWay}" Margin="5,0,0,0"
                        FontSize="25" />
+
         </DockPanel>
         <DockPanel Grid.Row="5" HorizontalAlignment="Center" Margin="0,0,0,2">
             <TextBlock TextAlignment="Center" Text="osu!"
@@ -107,6 +101,7 @@
             <TextBlock Text="{Binding OsuStatus, Mode=OneWay}" Margin="5,0,0,0"
                        FontSize="25" />
         </DockPanel>
+        
         <DockPanel Grid.Row="6">
             <StackPanel
                 HorizontalAlignment="Left" VerticalAlignment="Bottom">
@@ -168,16 +163,39 @@
                 </Button>
 
             </StackPanel>
-
-
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
 
-                <TextBlock Text="v2.0" TextAlignment="Center"
-                           FontSize="35" Margin="0,0,0,5" />
-
                 <Button x:Name="BugButton" Content="Bug Report"
-                        FontSize="20"
+                        FontSize="20" Margin="0,0,0,5"
                         Click="BugButton_OnClick">
+
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#cfcefe" />
+                            <Setter Property="Cursor" Value="Hand" />
+
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#b7b5fd" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="125" Height="65"
+                                    CornerRadius="15"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="DebugButton" Content="Debug"
+                        FontSize="20"
+                        Click="DebugButton_OnClick">
 
                     <Button.Style>
                         <Style TargetType="Button">

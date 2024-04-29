@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using GadzzaaTB.Classes;
 
 namespace GadzzaaTB.Windows
@@ -17,17 +18,20 @@ namespace GadzzaaTB.Windows
         private int _mods;
         private string _modsText;
 
-        private int _mStars;
+        private double _mStars;
+        public bool IsClosing;
 
 
         public DebugOsu()
         {
             InitializeComponent();
+            IsClosing = false;
             DataContext = this;
+            Closing += OnClosing;
         }
 
         // ReSharper disable once MemberCanBePrivate.Global
-        public int mStars
+        public double mStars
         {
             get => _mStars;
             set
@@ -86,7 +90,15 @@ namespace GadzzaaTB.Windows
         {
             modsText = UpdateValue.UpdateMods(_mods);
         }
-
+        
+        private void OnClosing(object sender, CancelEventArgs e)
+        {
+            if (!IsClosing)
+            {
+                Hide();
+                e.Cancel = true;
+            }
+        }
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
