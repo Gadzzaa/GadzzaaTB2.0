@@ -6,7 +6,7 @@ namespace GadzzaaTB.Classes
 {
     public class Octokit
     {
-        public static async Task Main(string title, string description)
+        public static async Task Main(string? title, string? description)
         {
             // client initialization and authentication 
             var client = new GitHubClient(new ProductHeaderValue("Gadzzaa"));
@@ -16,9 +16,9 @@ namespace GadzzaaTB.Classes
 
 
             // user input
-            var userIssueTitle = title.Trim();
+            var userIssueTitle = title?.Trim();
 
-            var userIssue = description.Trim();
+            var userIssue = description?.Trim();
 
             // input validation
             while (string.IsNullOrEmpty(userIssue) || string.IsNullOrEmpty(userIssueTitle)) break;

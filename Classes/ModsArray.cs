@@ -4,7 +4,7 @@
     {
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int Id { get; set; }
-        public string ModName { get; set; }
+        public string? ModName { get; set; }
         public int ModValue { get; set; }
     }
 }

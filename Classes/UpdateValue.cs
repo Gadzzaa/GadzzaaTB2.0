@@ -62,33 +62,34 @@ namespace GadzzaaTB.Classes
                 if (jsonObj.Count > 0)
                 {
                     var beatmap = jsonObj[0];
-                    var starRating = (string)beatmap["difficultyrating"];
-                    stars = (double)beatmap["difficultyrating"];
-                    Console.WriteLine($"Star Rating of beatmap {beatmapId} is : {starRating}");
+                    var starRating = (string)beatmap[@"difficultyrating"];
+                    stars = (double)(beatmap["difficultyrating"] ?? throw new InvalidOperationException());
+                    Console.WriteLine($@"Star Rating of beatmap {beatmapId} is : {starRating}");
                     tested = beatmapId;
                 }
                 else
                 {
-                    Console.WriteLine($"No beatmaps found with ID {beatmapId}");
+                    Console.WriteLine($@"No beatmaps found with ID {beatmapId}");
                 }
             }
             catch(HttpRequestException ex)
             {
-                Console.WriteLine($"An error occurred when sending the request to the osu! API: {ex.Message}");
+                Console.WriteLine($@"An error occurred when sending the request to the osu! API: {ex.Message}");
             }
             catch(IndexOutOfRangeException)
             {
-                Console.WriteLine("The response did not include any beatmaps. The ID may be incorrect or the beatmap may not exist");
+                Console.WriteLine(@"The response did not include any beatmaps. The ID may be incorrect or the beatmap may not exist");
             }
             catch(Exception ex)
             {
-                Console.WriteLine($"An exception occurred when processing the response: {ex.Message}");
+                Console.WriteLine($@"An exception occurred when processing the response: {ex.Message}");
             }
         }
         
         public async void UpdateValues()
         {
             beatmapId = Data.Beatmap.Id;
+            if (MainWindow.DebugOsu is null) return;
             MainWindow.DebugOsu.dl = "https://osu.ppy.sh/beatmaps/" + beatmapId;
             MainWindow.DebugOsu.mods = Data.GeneralData.Mods;
             MainWindow.DebugOsu.mapInfo = Data.Beatmap.MapString;
@@ -99,12 +100,12 @@ namespace GadzzaaTB.Classes
             }
             catch(Exception ex)
             {
-                Console.WriteLine($"An exception occurred: {ex.Message}");
+                Console.WriteLine($@"An exception occurred: {ex.Message}");
             }
             MainWindow.DebugOsu.mStars = Math.Round(stars, 2); 
         }
 
-        public static string UpdateMods(int i)
+        public static string? UpdateMods(int i)
         {
             var modsText = "";
             modsText = "NM";

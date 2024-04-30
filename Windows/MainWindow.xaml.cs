@@ -11,6 +11,8 @@ using OsuMemoryDataProvider;
 using OsuMemoryDataProvider.OsuMemoryModels;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Windows.Input;
+using TwitchLib.Api.V5.Models.UploadVideo;
 
 // ReSharper disable RedundantCheckBeforeAssignment
 
@@ -25,14 +27,14 @@ namespace GadzzaaTB.Windows
         // ReSharper disable once InconsistentNaming
         public readonly StructuredOsuMemoryReader _sreader;
         public readonly OsuBaseAddresses BaseAddresses = new OsuBaseAddresses();
-        private string _oldText;
+        private string? _oldText;
         private string _osuStatus = "Loading...";
         private bool _settingsLoaded;
         private string _twitchButton = "Loading...";
         private string _twitchStatus = "Loading...";
-        public BugReport BugReport;
-        public DebugOsu DebugOsu;
-        public Bot Twitch;
+        public BugReport? BugReport;
+        public DebugOsu? DebugOsu;
+        public Bot? Twitch;
 
         public MainWindow()
         {
@@ -88,19 +90,19 @@ namespace GadzzaaTB.Windows
             return isConnected;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private async void OnContentRendered(object sender, EventArgs e)
         {
             ExecuteWindows();
-            DebugOsu.UpdateModsText();
+            if (DebugOsu != null) DebugOsu.UpdateModsText();
             ExecuteLabels();
             _settingsLoaded = true;
-            Console.WriteLine("Awaiting internet connection.");
+            Console.WriteLine(@"Awaiting internet connection.");
             if (!IsConnectedToInternet()) return;
-            await Twitch.Client.ConnectAsync();
+            if (Twitch != null) await Twitch.Client.ConnectAsync();
             Grid.IsEnabled = true;
-            Console.WriteLine("INITIALIZED!");
+            Console.WriteLine(@"INITIALIZED!");
             while (true) await getOsuData();
             // ReSharper disable once FunctionNeverReturns
         }
@@ -110,14 +112,22 @@ namespace GadzzaaTB.Windows
             Settings.Default.Username = ChannelNameBox.Text;
             LogManager.Shutdown();
             Settings.Default.Save();
-            BugReport.IsClosing = true;
-            DebugOsu.IsClosing = true;
-            BugReport.Close();
-            DebugOsu.Close();
-            if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
+            if (BugReport != null)
+            {
+                BugReport.IsClosing = true;
+                BugReport.Close();
+            }
+
+            if (DebugOsu != null)
+            {
+                DebugOsu.IsClosing = true;
+                DebugOsu.Close();
+            }
+
+            if (Twitch != null && Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
         }
 
-        private void ChannelNameBox_OnGotFocus(object sender, RoutedEventArgs e)
+     /*   private void ChannelNameBox_OnGotFocus(object sender, RoutedEventArgs e)
         {
             _oldText = ChannelNameBox.Text;
             ChannelNameBox.Text = "";
@@ -126,7 +136,7 @@ namespace GadzzaaTB.Windows
         private void ChannelNameBox_OnLostFocus(object sender, RoutedEventArgs e)
         {
             if (ChannelNameBox.Text == "") ChannelNameBox.Text = _oldText;
-        }
+        } */
 
         private void ChannelNameBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
@@ -166,11 +176,6 @@ namespace GadzzaaTB.Windows
 
         private async Task JoinChannel()
         {
-            if (ChannelNameBox.Text == "Channel Name")
-            {
-                Console.WriteLine(@"Channel Name invalid!");
-                return;
-            }
 
             if (!Twitch.Client.IsConnected)
             {
@@ -248,9 +253,15 @@ namespace GadzzaaTB.Windows
             DebugOsu.Show();
         }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void Grid_OnMouseDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            Grid.Focus();
+        }
+        
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        
     }
 }

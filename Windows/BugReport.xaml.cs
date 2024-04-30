@@ -8,8 +8,8 @@ namespace GadzzaaTB.Windows
 {
     public partial class BugReport
     {
-        private string _description;
-        private string _name;
+        private string? _description;
+        private string? _name;
         public bool IsClosing;
 
         public BugReport()
@@ -60,7 +60,7 @@ namespace GadzzaaTB.Windows
 
         private async void SubmitButton_OnClick(object sender, RoutedEventArgs e)
         {
-            _description = await LogFile.LoadLogFile(_description);
+          //  _description = await LogFile.LoadLogFile(_description);
             await Classes.Octokit.Main(_name, _description);
             Close();
             Process.Start(Application.ResourceAssembly.Location);
