@@ -4,7 +4,7 @@
         xmlns:classes="clr-namespace:GadzzaaTB.Classes"
         Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={classes:RatioConverter}, ConverterParameter=0.4 }"
         Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={classes:RatioConverter}, ConverterParameter=0.3 }"
-        Title="GadzzaaTB | Bug Report" Background="#7f6cd2" FontFamily="Segoe UI" Foreground="#cfcefe">
+        Title="Bug Report" Background="#7f6cd2" FontFamily="Segoe UI" Foreground="#cfcefe">
     <Viewbox>
         <Grid>
             <Grid.ColumnDefinitions>

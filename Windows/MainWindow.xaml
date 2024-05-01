@@ -4,13 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesignColors="clr-namespace:MaterialDesignColors;assembly=MaterialDesignColors"
         mc:Ignorable="d"
+        x:Name="MWindow"
         Style="{StaticResource MaterialDesignWindow}"
         ResizeMode="CanMinimize" Visibility="Visible"
         WindowStartupLocation="CenterScreen"
         Width="1280"
         Height="720" 
-        Title="GadzzaaTB | Main Menu" FontFamily="{materialDesign:MaterialDesignFont}" >
+        Title="GadzzaaTB" FontFamily="{materialDesign:MaterialDesignFont}">
     <Grid x:Name="Grid" IsEnabled="False" Focusable="True" MouseDown="Grid_OnMouseDown" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -18,78 +20,61 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <materialDesign:DrawerHost Grid.Row="0" Grid.RowSpan="7"
+        <materialDesign:DrawerHost Grid.Row="0" Grid.RowSpan="6"
+            x:Name="Drawer"
             LeftDrawerCloseOnClickAway="True" Panel.ZIndex="1"
-            Height="1000"
             IsLeftDrawerOpen="{Binding ElementName=menuToggler, Path=IsChecked}">
             <materialDesign:DrawerHost.LeftDrawerContent>
-                <StackPanel Margin="16" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+                <Grid>
                     <ToggleButton
-                        Margin="10"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 16 16 0"
                         IsChecked="{Binding ElementName=menuToggler, Path=IsChecked}"
                         Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
-                    <Button x:Name="BugButton" Content="Bug Report"
-                            FontSize="20" Margin="0,0,0,5"
-                            Click="BugButton_OnClick">
-
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="#cfcefe" />
-                            <Setter Property="Cursor" Value="Hand" />
-
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#b7b5fd" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Width="125" Height="65"
-                                    CornerRadius="15"
-                                    Background="{TemplateBinding Background}">
-                                <ContentPresenter VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center" />
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Button x:Name="DebugButton" Content="Debug"
-                        FontSize="20"
-                        Click="DebugButton_OnClick">
-
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="#cfcefe" />
-                            <Setter Property="Cursor" Value="Hand" />
-
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#b7b5fd" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Width="125" Height="65"
-                                    CornerRadius="15"
-                                    Background="{TemplateBinding Background}">
-                                <ContentPresenter VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center" />
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                </StackPanel>
+                    <StackPanel Margin="16 75 16 16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Button x:Name="BugButton" Content="Bug Report" Style="{DynamicResource MaterialDesignRaisedLightButton}"
+                                FontSize="18" Height="65"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Click="BugButton_OnClick">
+                        </Button>
+                        <Button x:Name="DebugButton" Content="Debug"
+                                FontSize="18" Height="65" Style="{DynamicResource MaterialDesignRaisedLightButton}"
+                                VerticalAlignment="Center" Margin="0 10 0 0"
+                                HorizontalAlignment="Center" Width="{Binding ElementName=BugButton, Path=ActualWidth}"
+                                Click="DebugButton_OnClick" >
+                        </Button>
+                    </StackPanel>
+                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                        <DockPanel Margin="0 0 0 10">
+                            <Button x:Name="TwitchButton" Margin="0 0 10 0"
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                    Click="TwitchButton_OnClick">
+                                <materialDesign:PackIcon     
+                                    Width="25"
+                                    Height="25" 
+                                    Kind="Twitch" />
+                            </Button>
+                            <Button x:Name="DiscordButton" Margin="10 0 0 0 "
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                    Click="DiscordButton_OnClick">
+                                <Rectangle Width="25" Height="25">
+                                    <Rectangle.Fill>
+                                        <DrawingBrush Drawing="{Binding Drawing, Source={StaticResource discordDrawingImage}}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>                        
+                            </Button>
+                        </DockPanel>
+                        <TextBlock
+                            Margin="0,0,0,15"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Center"
+                            Text="Version 2.00"
+                        />
+                    </StackPanel>
+                    
+                </Grid>
             </materialDesign:DrawerHost.LeftDrawerContent>
             <materialDesign:ColorZone
                 Padding="16"
@@ -97,18 +82,20 @@
                 ClipToBounds="False"
                 Mode="PrimaryLight"
                 FontSize="20">
-                <StackPanel
-                    Orientation="Horizontal">
+                <Grid>
                     <ToggleButton
                         x:Name="menuToggler"
                         Style="{DynamicResource MaterialDesignHamburgerToggleButton}"
+                        HorizontalAlignment="Left"
                     />
                     <TextBlock
-                        Margin="16,0,0,0"
+                        HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Text="Home"
+                        Text="GadzzaaTB"
+                        Style="{DynamicResource MaterialDesignHeadline4TextBlock}"
+                        x:Name="HomeText"
                     />
-                </StackPanel>
+                </Grid>
             </materialDesign:ColorZone>
         </materialDesign:DrawerHost>
         
@@ -117,11 +104,15 @@
                  Text="Loading..." Style="{StaticResource MaterialDesignFilledTextBox}"
                  TextWrapping="Wrap" VerticalAlignment="Top" 
                  materialDesign:HintAssist.Hint="Username"
+                 materialDesign:HintAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
+                 materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesign.Brush.Secondary}"
+                 materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
                  materialDesign:TextFieldAssist.HasClearButton="True"
+                 materialDesign:ColorZoneAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
                  ToolTip="Enter your Twitch username."
                  AcceptsReturn="True" MaxLength="16"
                  TextAlignment="Center" Width="250" Height="65"
-                 FontSize="23" Margin="0,100,0,5"
+                 FontSize="23" Margin="0,175,0,15"
                  TextChanged="ChannelNameBox_OnTextChanged">
         </TextBox>
 
@@ -155,70 +146,6 @@
                        FontSize="25" />
             <TextBlock Text="{Binding OsuStatus, Mode=OneWay}" Margin="5,0,0,0"
                        FontSize="25" />
-        </DockPanel>
-        
-        <DockPanel Grid.Row="6">
-            <StackPanel
-                HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                <Button x:Name="DiscordButton" Content="Discord" Cursor="Hand"
-                        FontSize="25" Margin="0,0,0,5"
-                        Click="DiscordButton_OnClick">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="#cfcefe" />
-                            <Setter Property="Cursor" Value="Hand" />
-
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#b7b5fd" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Width="125" Height="65"
-                                    CornerRadius="15"
-                                    Background="{TemplateBinding Background}">
-                                <ContentPresenter VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center" />
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Button x:Name="TwitchButton" Content="Twitch"
-                        FontSize="25"
-                        Click="TwitchButton_OnClick">
-
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="#cfcefe" />
-                            <Setter Property="Cursor" Value="Hand" />
-
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#b7b5fd" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Width="125" Height="65"
-                                    CornerRadius="15"
-                                    Background="{TemplateBinding Background}">
-                                <ContentPresenter VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center" />
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-
-                </Button>
-
-            </StackPanel>
-
         </DockPanel>
     </Grid>
 </Window>

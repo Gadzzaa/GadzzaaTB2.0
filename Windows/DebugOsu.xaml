@@ -7,7 +7,7 @@
         WindowStartupLocation="CenterScreen"
         Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={classes:RatioConverter}, ConverterParameter=0.45 }"
         Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={classes:RatioConverter}, ConverterParameter=0.4 }"
-        Title="GadzzaaTB | Main Menu" Background="#cfcefe" FontSize="30">
+        Title="Debug" Background="#cfcefe" FontSize="30">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />

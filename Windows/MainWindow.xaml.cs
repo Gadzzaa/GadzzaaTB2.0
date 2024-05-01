@@ -11,6 +11,7 @@ using OsuMemoryDataProvider;
 using OsuMemoryDataProvider.OsuMemoryModels;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Threading;
 using System.Windows.Input;
 using TwitchLib.Api.V5.Models.UploadVideo;
 
@@ -235,21 +236,26 @@ namespace GadzzaaTB.Windows
 
         private void BugButton_OnClick(object sender, RoutedEventArgs e)
         {
+            menuToggler.IsChecked = false;
             BugReport.Show();
         }
 
         private void DiscordButton_OnClick(object sender, RoutedEventArgs e)
         {
+            menuToggler.IsChecked = false;
             Process.Start("https://discord.gg/TtSQa944Ky");
         }
 
         private void TwitchButton_OnClick(object sender, RoutedEventArgs e)
         {
+            menuToggler.IsChecked = false;
+
             Process.Start("https://twitch.tv/gadzzaa");
         }
         
         private void DebugButton_OnClick(object sender, RoutedEventArgs e)
         {
+            menuToggler.IsChecked = false;
             DebugOsu.Show();
         }
 
