@@ -10,3 +10,4 @@ lazygit.exe
 Passwords.resx
 Passwords.Designer.cs
 *.csproj
+qodana.yaml
