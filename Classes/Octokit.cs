@@ -6,7 +6,7 @@ namespace GadzzaaTB.Classes;
 
 public class Octokit
 {
-    public static async Task Main(string? title, string? description)
+    public static async Task Main(string title, string description)
     {
         // client initialization and authentication 
         var client = new GitHubClient(new ProductHeaderValue("Gadzzaa"));

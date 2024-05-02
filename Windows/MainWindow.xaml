@@ -24,12 +24,12 @@
         <materialDesign:DrawerHost Grid.Row="0" Grid.RowSpan="6"
                                    x:Name="Drawer"
                                    LeftDrawerCloseOnClickAway="True" Panel.ZIndex="1"
-                                   IsLeftDrawerOpen="{Binding ElementName=menuToggler, Path=IsChecked}">
+                                   IsLeftDrawerOpen="{Binding ElementName=MenuToggler, Path=IsChecked}">
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <Grid>
                     <ToggleButton
                         HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 16 16 0"
-                        IsChecked="{Binding ElementName=menuToggler, Path=IsChecked}"
+                        IsChecked="{Binding ElementName=MenuToggler, Path=IsChecked}"
                         Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
                     <StackPanel Margin="16 75 16 16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Button x:Name="BugButton" Content="Bug Report"
@@ -100,7 +100,7 @@
                 FontSize="20">
                 <Grid>
                     <ToggleButton
-                        x:Name="menuToggler"
+                        x:Name="MenuToggler"
                         Style="{DynamicResource MaterialDesignHamburgerToggleButton}"
                         HorizontalAlignment="Left" />
                     <TextBlock

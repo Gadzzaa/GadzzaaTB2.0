@@ -7,8 +7,8 @@ namespace GadzzaaTB.Windows;
 
 public partial class BugReport
 {
-    private string? _description;
-    private string? _name;
+    private string _description;
+    private string _name;
     public bool IsClosing;
 
     public BugReport()

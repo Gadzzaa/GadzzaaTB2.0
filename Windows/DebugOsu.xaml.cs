@@ -10,12 +10,12 @@ namespace GadzzaaTB.Windows;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public sealed partial class DebugOsu : INotifyPropertyChanged
 {
-    private string? _dl;
+    private string _dl;
 
-    private string? _mapInfo;
+    private string _mapInfo;
 
     private int _mods;
-    private string? _modsText;
+    private string _modsText;
 
     private double _mStars;
     public bool IsClosing;
@@ -41,7 +41,7 @@ public sealed partial class DebugOsu : INotifyPropertyChanged
     }
 
     // ReSharper disable once MemberCanBePrivate.Global
-    public string? mapInfo
+    public string mapInfo
     {
         get => _mapInfo;
         set
@@ -62,7 +62,7 @@ public sealed partial class DebugOsu : INotifyPropertyChanged
         }
     }
 
-    public string? modsText
+    public string modsText
     {
         get => _modsText;
         set
@@ -73,7 +73,7 @@ public sealed partial class DebugOsu : INotifyPropertyChanged
     }
 
     // ReSharper disable once MemberCanBePrivate.Global
-    public string? dl
+    public string dl
     {
         get => _dl;
         set
@@ -83,7 +83,7 @@ public sealed partial class DebugOsu : INotifyPropertyChanged
         }
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
+    public event PropertyChangedEventHandler PropertyChanged;
 
     public void UpdateModsText()
     {
@@ -99,7 +99,7 @@ public sealed partial class DebugOsu : INotifyPropertyChanged
         }
     }
 
-    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

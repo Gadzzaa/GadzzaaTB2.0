@@ -37,7 +37,7 @@ public class UpdateValue
         new() { Id = 16, ModName = "V2", ModValue = 536870912 }
     };
 
-    public int beatmapId;
+    public int BeatmapId;
 
     private static async Task GetBeatmapStarRating(int beatmapId, string apiKey)
     {
@@ -80,15 +80,15 @@ public class UpdateValue
 
     public async void UpdateValues()
     {
-        beatmapId = Data.Beatmap.Id;
+        BeatmapId = Data.Beatmap.Id;
         if (MainWindow.DebugOsu is null) return;
-        MainWindow.DebugOsu.dl = "https://osu.ppy.sh/beatmaps/" + beatmapId;
+        MainWindow.DebugOsu.dl = "https://osu.ppy.sh/beatmaps/" + BeatmapId;
         MainWindow.DebugOsu.mods = Data.GeneralData.Mods;
         MainWindow.DebugOsu.mapInfo = Data.Beatmap.MapString;
-        Console.WriteLine(beatmapId.ToString());
+        Console.WriteLine(BeatmapId.ToString());
         try
         {
-            await GetBeatmapStarRating(beatmapId, "7113a08a3bd3de56b98b51385bfe0ead0b027ba3");
+            await GetBeatmapStarRating(BeatmapId, "7113a08a3bd3de56b98b51385bfe0ead0b027ba3");
         }
         catch (Exception ex)
         {
@@ -98,8 +98,9 @@ public class UpdateValue
         MainWindow.DebugOsu.mStars = Math.Round(stars, 2);
     }
 
-    public static string? UpdateMods(int i)
+    public static string UpdateMods(int i)
     {
+        // ReSharper disable once RedundantAssignment
         var modsText = "";
         modsText = "NM";
         while (i != 0)

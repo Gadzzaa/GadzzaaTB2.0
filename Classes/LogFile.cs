@@ -8,9 +8,9 @@ namespace GadzzaaTB.Classes;
 
 public class LogFile
 {
-    private static string? _line;
+    private static string _line;
 
-    public static async Task<string?> LoadLogFile(string? description)
+    public static async Task<string> LoadLogFile(string description)
     {
         LogManager.SuspendLogging();
         LogManager.Shutdown();

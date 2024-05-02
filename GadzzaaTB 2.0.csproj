@@ -15,7 +15,7 @@
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
         <ApplicationIcon>Images\gadzzaa_Dq1_icon.ico</ApplicationIcon>
         <LangVersion>latest</LangVersion>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
         <NuGetPackageImportStamp>
         </NuGetPackageImportStamp>
     </PropertyGroup>

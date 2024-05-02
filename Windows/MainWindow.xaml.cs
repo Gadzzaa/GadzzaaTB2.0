@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,14 +27,13 @@ public partial class MainWindow : INotifyPropertyChanged
     // ReSharper disable once InconsistentNaming
     public readonly StructuredOsuMemoryReader _sreader;
     public readonly OsuBaseAddresses BaseAddresses = new();
-    private string? _oldText;
     private string _osuStatus = "Loading...";
     private bool _settingsLoaded;
     private string _twitchButton = "Loading...";
     private string _twitchStatus = "Loading...";
-    public BugReport? BugReport;
-    public DebugOsu? DebugOsu;
-    public Bot? Twitch;
+    public BugReport BugReport;
+    public DebugOsu DebugOsu;
+    public Bot Twitch;
 
     public MainWindow()
     {
@@ -74,7 +74,7 @@ public partial class MainWindow : INotifyPropertyChanged
         }
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
+    public event PropertyChangedEventHandler PropertyChanged;
 
     public bool IsConnectedToInternet()
     {
@@ -83,7 +83,7 @@ public partial class MainWindow : INotifyPropertyChanged
         if (isConnected)
             try
             {
-                using (var client = new TcpClient("www.google.com", 80))
+                using (new TcpClient("www.google.com", 80))
                 {
                     isConnected = true;
                 }
@@ -99,15 +99,15 @@ public partial class MainWindow : INotifyPropertyChanged
     private async void OnContentRendered(object sender, EventArgs e)
     {
         ExecuteWindows();
-        if (DebugOsu != null) DebugOsu.UpdateModsText();
+        DebugOsu.UpdateModsText();
         ExecuteLabels();
         _settingsLoaded = true;
         Console.WriteLine(@"Awaiting internet connection.");
         if (!IsConnectedToInternet()) return;
-        if (Twitch != null) await Twitch.Client.ConnectAsync();
+        await Twitch.Client.ConnectAsync();
         Grid.IsEnabled = true;
         Console.WriteLine(@"INITIALIZED!");
-        while (true) await getOsuData();
+        while (true) await GetOsuData();
         // ReSharper disable once FunctionNeverReturns
     }
 
@@ -116,31 +116,13 @@ public partial class MainWindow : INotifyPropertyChanged
         Settings.Default.Username = ChannelNameBox.Text;
         LogManager.Shutdown();
         Settings.Default.Save();
-        if (BugReport != null)
-        {
-            BugReport.IsClosing = true;
-            BugReport.Close();
-        }
-
-        if (DebugOsu != null)
-        {
-            DebugOsu.IsClosing = true;
-            DebugOsu.Close();
-        }
-
-        if (Twitch != null && Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
+        BugReport.IsClosing = true;
+        BugReport.Close();
+        DebugOsu.IsClosing = true;
+        DebugOsu.Close();
+        if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
     }
-
-    /*   private void ChannelNameBox_OnGotFocus(object sender, RoutedEventArgs e)
-       {
-           _oldText = ChannelNameBox.Text;
-           ChannelNameBox.Text = "";
-       }
-
-       private void ChannelNameBox_OnLostFocus(object sender, RoutedEventArgs e)
-       {
-           if (ChannelNameBox.Text == "") ChannelNameBox.Text = _oldText;
-       } */
+    
 
     private void ChannelNameBox_OnTextChanged(object sender, TextChangedEventArgs e)
     {
@@ -197,7 +179,7 @@ public partial class MainWindow : INotifyPropertyChanged
         await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
     }
 
-    private async Task getOsuData()
+    private async Task GetOsuData()
     {
         if (!_sreader.CanRead)
         {
@@ -238,40 +220,40 @@ public partial class MainWindow : INotifyPropertyChanged
 
     private void BugButton_OnClick(object sender, RoutedEventArgs e)
     {
-        menuToggler.IsChecked = false;
+        MenuToggler.IsChecked = false;
         BugReport.Show();
     }
 
     private void DiscordButton_OnClick(object sender, RoutedEventArgs e)
     {
-        menuToggler.IsChecked = false;
+        MenuToggler.IsChecked = false;
         Process.Start("https://discord.gg/TtSQa944Ky");
     }
 
     private void TwitchButton_OnClick(object sender, RoutedEventArgs e)
     {
-        menuToggler.IsChecked = false;
+        MenuToggler.IsChecked = false;
 
         Process.Start("https://twitch.tv/gadzzaa");
     }
 
     private void GithubButton_OnClick(object sender, RoutedEventArgs e)
     {
-        menuToggler.IsChecked = false;
+        MenuToggler.IsChecked = false;
 
         Process.Start("https://github.com/Gadzzaa/GadzzaaTB2.0");
     }
 
     private void YoutubeButton_OnClick(object sender, RoutedEventArgs e)
     {
-        menuToggler.IsChecked = false;
+        MenuToggler.IsChecked = false;
 
         Process.Start("https://www.youtube.com/@gadzzaa");
     }
 
     private void DebugButton_OnClick(object sender, RoutedEventArgs e)
     {
-        menuToggler.IsChecked = false;
+        MenuToggler.IsChecked = false;
         DebugOsu.Show();
     }
 
@@ -280,7 +262,7 @@ public partial class MainWindow : INotifyPropertyChanged
         Grid.Focus();
     }
 
-    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
