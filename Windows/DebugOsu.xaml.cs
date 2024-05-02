@@ -1,107 +1,106 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using GadzzaaTB.Classes;
 
-namespace GadzzaaTB.Windows
+namespace GadzzaaTB.Windows;
+
+[SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
+[SuppressMessage("ReSharper", "RedundantCheckBeforeAssignment")]
+[SuppressMessage("ReSharper", "InconsistentNaming")]
+public sealed partial class DebugOsu : INotifyPropertyChanged
 {
-    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
-    [SuppressMessage("ReSharper", "RedundantCheckBeforeAssignment")]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public sealed partial class DebugOsu : INotifyPropertyChanged
+    private string? _dl;
+
+    private string? _mapInfo;
+
+    private int _mods;
+    private string? _modsText;
+
+    private double _mStars;
+    public bool IsClosing;
+
+
+    public DebugOsu()
     {
-        private string? _dl;
+        InitializeComponent();
+        IsClosing = false;
+        DataContext = this;
+        Closing += OnClosing;
+    }
 
-        private string? _mapInfo;
-
-        private int _mods;
-        private string? _modsText;
-
-        private double _mStars;
-        public bool IsClosing;
-
-
-        public DebugOsu()
+    // ReSharper disable once MemberCanBePrivate.Global
+    public double mStars
+    {
+        get => _mStars;
+        set
         {
-            InitializeComponent();
-            IsClosing = false;
-            DataContext = this;
-            Closing += OnClosing;
+            if (_mStars != value) _mStars = value;
+            OnPropertyChanged();
         }
+    }
 
-        // ReSharper disable once MemberCanBePrivate.Global
-        public double mStars
+    // ReSharper disable once MemberCanBePrivate.Global
+    public string? mapInfo
+    {
+        get => _mapInfo;
+        set
         {
-            get => _mStars;
-            set
-            {
-                if (_mStars != value) _mStars = value;
-                OnPropertyChanged();
-            }
+            if (_mapInfo != value) _mapInfo = value;
+            OnPropertyChanged();
         }
+    }
 
-        // ReSharper disable once MemberCanBePrivate.Global
-        public string? mapInfo
+    // ReSharper disable once MemberCanBePrivate.Global
+    public int mods
+    {
+        set
         {
-            get => _mapInfo;
-            set
-            {
-                if (_mapInfo != value) _mapInfo = value;
-                OnPropertyChanged();
-            }
+            if (_mods == value) return;
+            _mods = value;
+            UpdateModsText();
         }
+    }
 
-        // ReSharper disable once MemberCanBePrivate.Global
-        public int mods
+    public string? modsText
+    {
+        get => _modsText;
+        set
         {
-            set
-            {
-                if (_mods == value) return;
-                _mods = value;
-                UpdateModsText();
-            }
+            if (_modsText != value) _modsText = value;
+            OnPropertyChanged();
         }
+    }
 
-        public string? modsText
+    // ReSharper disable once MemberCanBePrivate.Global
+    public string? dl
+    {
+        get => _dl;
+        set
         {
-            get => _modsText;
-            set
-            {
-                if (_modsText != value) _modsText = value;
-                OnPropertyChanged();
-            }
+            if (_dl != value) _dl = value;
+            OnPropertyChanged();
         }
+    }
 
-        // ReSharper disable once MemberCanBePrivate.Global
-        public string? dl
-        {
-            get => _dl;
-            set
-            {
-                if (_dl != value) _dl = value;
-                OnPropertyChanged();
-            }
-        }
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+    public void UpdateModsText()
+    {
+        modsText = UpdateValue.UpdateMods(_mods);
+    }
 
-        public void UpdateModsText()
+    private void OnClosing(object sender, CancelEventArgs e)
+    {
+        if (!IsClosing)
         {
-            modsText = UpdateValue.UpdateMods(_mods);
+            Hide();
+            e.Cancel = true;
         }
-        
-        private void OnClosing(object sender, CancelEventArgs e)
-        {
-            if (!IsClosing)
-            {
-                Hide();
-                e.Cancel = true;
-            }
-        }
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+    }
+
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
