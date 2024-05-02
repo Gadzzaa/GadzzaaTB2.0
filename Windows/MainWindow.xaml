@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:gadzzaaTb="clr-namespace:GadzzaaTB"
+        xmlns:windows="clr-namespace:GadzzaaTB.Windows"
         mc:Ignorable="d"
         x:Name="MWindow"
         Style="{StaticResource MaterialDesignWindow}"
@@ -115,7 +117,7 @@
 
 
         <TextBox x:Name="ChannelNameBox" Grid.Row="1"
-                 Text="Loading..." Style="{StaticResource MaterialDesignFilledTextBox}"
+                 Style="{StaticResource MaterialDesignFilledTextBox}"
                  TextWrapping="Wrap" VerticalAlignment="Top"
                  materialDesign:HintAssist.Hint="Username"
                  materialDesign:HintAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
@@ -126,8 +128,9 @@
                  ToolTip="Enter your Twitch username."
                  AcceptsReturn="True" MaxLength="16"
                  TextAlignment="Center" Width="250" Height="65"
-                 FontSize="23" Margin="0,175,0,15"
-                 TextChanged="ChannelNameBox_OnTextChanged" />
+                 FontSize="23" Margin="0,175,0,25"
+                 TextChanged="ChannelNameBox_OnTextChanged" >
+        </TextBox>
 
 
         <Button x:Name="ConnectionButton" Grid.Row="2" Style="{StaticResource MaterialDesignRaisedLightButton}"
@@ -135,7 +138,6 @@
                 Content="{Binding TwitchConnect, Mode=OneWay}" Click="ConnectionButton_OnClick"
                 Width="250" Height="65" HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center" />
-
 
         <TextBlock Grid.Row="3" Text="CONNECTION STATUS:"
                    TextAlignment="Center"
