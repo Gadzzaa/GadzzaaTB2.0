@@ -47,14 +47,14 @@
                         </Button>
                     </StackPanel>
                     <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                        <DockPanel Margin="0 0 0 10">
-                            <Button x:Name="TwitchButton" Margin="0 0 10 0"
+                        <DockPanel Margin="0 0 0 15">
+                            <Button x:Name="GithubButton" Margin="0 0 10 0"
                                     Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                                    Click="TwitchButton_OnClick">
+                                    Click="GithubButton_OnClick">
                                 <materialDesign:PackIcon     
                                     Width="25"
                                     Height="25" 
-                                    Kind="Twitch" />
+                                    Kind="Github" />
                             </Button>
                             <Button x:Name="DiscordButton" Margin="10 0 0 0 "
                                     Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
@@ -64,6 +64,24 @@
                                         <DrawingBrush Drawing="{Binding Drawing, Source={StaticResource discordDrawingImage}}" />
                                     </Rectangle.Fill>
                                 </Rectangle>                        
+                            </Button>
+                        </DockPanel>
+                        <DockPanel Margin="0 0 0 15">
+                            <Button x:Name="YoutubeButton" Margin="0 0 10 0 "
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                    Click="YoutubeButton_OnClick">
+                                <materialDesign:PackIcon     
+                                    Width="25"
+                                    Height="25" 
+                                    Kind="Youtube" />                     
+                            </Button>
+                            <Button x:Name="TwitchButton" Margin="10 0 0 0"
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                    Click="TwitchButton_OnClick">
+                                <materialDesign:PackIcon     
+                                    Width="25"
+                                    Height="25" 
+                                    Kind="Twitch" />
                             </Button>
                         </DockPanel>
                         <TextBlock

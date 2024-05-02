@@ -252,6 +252,19 @@ namespace GadzzaaTB.Windows
 
             Process.Start("https://twitch.tv/gadzzaa");
         }
+        private void GithubButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            menuToggler.IsChecked = false;
+
+            Process.Start("https://github.com/Gadzzaa/GadzzaaTB2.0");        
+        }
+
+        private void YoutubeButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            menuToggler.IsChecked = false;
+
+            Process.Start("https://www.youtube.com/@gadzzaa");        
+        }
         
         private void DebugButton_OnClick(object sender, RoutedEventArgs e)
         {
