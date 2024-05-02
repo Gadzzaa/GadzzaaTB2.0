@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -122,7 +121,7 @@ public partial class MainWindow : INotifyPropertyChanged
         DebugOsu.Close();
         if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
     }
-    
+
 
     private void ChannelNameBox_OnTextChanged(object sender, TextChangedEventArgs e)
     {

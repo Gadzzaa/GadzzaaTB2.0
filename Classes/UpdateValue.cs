@@ -18,23 +18,23 @@ public class UpdateValue
 
     private static readonly List<ModsArray> ModsArray = new()
     {
-        new() { Id = 0, ModName = "NF", ModValue = 1 },
-        new() { Id = 1, ModName = "EZ", ModValue = 2 },
-        new() { Id = 2, ModName = "HD", ModValue = 8 },
-        new() { Id = 3, ModName = "HR", ModValue = 16 },
-        new() { Id = 4, ModName = "SD", ModValue = 32 },
-        new() { Id = 5, ModName = "DT", ModValue = 64 },
-        new() { Id = 6, ModName = "RX", ModValue = 128 },
-        new() { Id = 7, ModName = "HT", ModValue = 256 },
-        new() { Id = 8, ModName = "NC", ModValue = 512 },
-        new() { Id = 9, ModName = "FL", ModValue = 1024 },
-        new() { Id = 10, ModName = "AU", ModValue = 2048 },
-        new() { Id = 11, ModName = "SO", ModValue = 4096 },
-        new() { Id = 12, ModName = "AP", ModValue = 8192 },
-        new() { Id = 13, ModName = "PF", ModValue = 16416 },
-        new() { Id = 14, ModName = "CN", ModValue = 4196352 },
-        new() { Id = 15, ModName = "TP", ModValue = 8388608 },
-        new() { Id = 16, ModName = "V2", ModValue = 536870912 }
+        new ModsArray { Id = 0, ModName = "NF", ModValue = 1 },
+        new ModsArray { Id = 1, ModName = "EZ", ModValue = 2 },
+        new ModsArray { Id = 2, ModName = "HD", ModValue = 8 },
+        new ModsArray { Id = 3, ModName = "HR", ModValue = 16 },
+        new ModsArray { Id = 4, ModName = "SD", ModValue = 32 },
+        new ModsArray { Id = 5, ModName = "DT", ModValue = 64 },
+        new ModsArray { Id = 6, ModName = "RX", ModValue = 128 },
+        new ModsArray { Id = 7, ModName = "HT", ModValue = 256 },
+        new ModsArray { Id = 8, ModName = "NC", ModValue = 512 },
+        new ModsArray { Id = 9, ModName = "FL", ModValue = 1024 },
+        new ModsArray { Id = 10, ModName = "AU", ModValue = 2048 },
+        new ModsArray { Id = 11, ModName = "SO", ModValue = 4096 },
+        new ModsArray { Id = 12, ModName = "AP", ModValue = 8192 },
+        new ModsArray { Id = 13, ModName = "PF", ModValue = 16416 },
+        new ModsArray { Id = 14, ModName = "CN", ModValue = 4196352 },
+        new ModsArray { Id = 15, ModName = "TP", ModValue = 8388608 },
+        new ModsArray { Id = 16, ModName = "V2", ModValue = 536870912 }
     };
 
     public int BeatmapId;
@@ -100,20 +100,18 @@ public class UpdateValue
 
     public static string UpdateMods(int i)
     {
-        List<string> strList = new List<string>();
+        var strList = new List<string>();
         // ReSharper disable once RedundantAssignment
         var modsText = "NM";
-        if(i!=0) modsText="";
-        for (var j = ModsArray.Count - 1;i!=0 && j >= 0; j--)
+        if (i != 0) modsText = "";
+        for (var j = ModsArray.Count - 1; i != 0 && j >= 0; j--)
             if (i >= ModsArray[j].ModValue)
             {
                 i -= ModsArray[j].ModValue;
                 strList.Add(ModsArray[j].ModName);
             }
-        for (int j = strList.Count - 1; j >= 0; j--)
-        {
-            modsText += strList[j];
-        }
+
+        for (var j = strList.Count - 1; j >= 0; j--) modsText += strList[j];
 
         if (modsText.Contains("DT") && modsText.Contains("NC")) modsText = modsText.Replace("DT", "");
         return modsText;
