@@ -15,7 +15,7 @@ namespace GadzzaaTB.Classes;
 
 public class Bot
 {
-    private readonly MainWindow _mainWindow = (MainWindow)Application.Current.MainWindow;
+    private readonly MainWindow _mainWindow = Application.Current.MainWindow as MainWindow;
     public readonly TwitchClient Client;
     public string JoinedChannel;
 
@@ -90,22 +90,62 @@ public class Bot
 
     private async Task Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
     {
-        Console.WriteLine(Settings.Default.Verified);
-        Console.WriteLine(e.ChatMessage.Message);
-        Console.WriteLine(e.ChatMessage.Username);
-        Console.WriteLine(e.ChatMessage.Channel);
-        if (!Settings.Default.Verified)
+        if (e.ChatMessage.Message[0] != '!') return;
+
+        if (e.ChatMessage.Message == "!verify")
         {
-            if (e.ChatMessage.Message != "!verify") return;
-            if (e.ChatMessage.Username != e.ChatMessage.Channel) return;
+            if (Settings.Default.Verified)
+            {
+                await Client.SendMessageAsync(e.ChatMessage.Channel, "You are already verified! If you wish to unlink, use the command: '!unlink'.");
+                return;
+            }
+
+            if (e.ChatMessage.Username != e.ChatMessage.Channel)
+            {
+                await Client.SendMessageAsync(e.ChatMessage.Channel,
+                    "The owner of the channel must execute this command.");
+                return;
+            }
+
             Verifica();
             await Client.SendMessageAsync(e.ChatMessage.Channel,
                 "Verification process completed! Thank you for using my bot!");
             return;
+
+        }
+
+        if (e.ChatMessage.Message == "!commands" || e.ChatMessage.Message == "!help")
+        {
+            await Client.SendMessageAsync(e.ChatMessage.Channel,
+                "This is the list of the available commands: !help, !commands, !verify, !unlink, !np\nIf you require assistance setting the bot up, i recommend checking my Discord server: https://discord.com/invite/TtSQa944Ky");
+            return;
+        }
+        
+        if (e.ChatMessage.Message == "!unlink")
+        {
+            if (!Settings.Default.Verified)
+            {
+                await Client.SendMessageAsync(e.ChatMessage.Channel,
+                    "You are not verified! Please use '!verify' in order to access other commands.");
+                return;
+            }
+            if (e.ChatMessage.Username != e.ChatMessage.Channel)
+            {
+                await Client.SendMessageAsync(e.ChatMessage.Channel,
+                    "The owner of the channel must execute this command.");
+                return;
+            }
+            _mainWindow.Disconnected();
         }
 
         if (e.ChatMessage.Message == "!np")
         {
+            if (!Settings.Default.Verified)
+            {
+                await Client.SendMessageAsync(e.ChatMessage.Channel,
+                    "You are not verified! Please use '!verify' in order to access other commands.");
+                return;
+            }
             if (_mainWindow.DebugOsu == null) return;
             if (!_mainWindow._sreader.CanRead)
             {

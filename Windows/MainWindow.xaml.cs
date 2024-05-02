@@ -217,6 +217,15 @@ public partial class MainWindow : INotifyPropertyChanged
         ChannelNameBox.Text = Settings.Default.Username;
     }
 
+    public async void Disconnected()
+    {
+        Settings.Default.Verified = false;
+        if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
+        TwitchStatus = "Disconnected";
+        if (!Settings.Default.Verified) TwitchStatus = "Verification Required";
+        TwitchConnect = "Connect";
+    }
+
     private void BugButton_OnClick(object sender, RoutedEventArgs e)
     {
         MenuToggler.IsChecked = false;
