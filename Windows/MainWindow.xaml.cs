@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
@@ -10,7 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using GadzzaaTB.Classes;
-using MaterialDesignThemes.Wpf;
 using NLog;
 using OsuMemoryDataProvider;
 using OsuMemoryDataProvider.OsuMemoryModels;
@@ -122,6 +120,7 @@ public partial class MainWindow : INotifyPropertyChanged
         DebugOsu.IsClosing = true;
         DebugOsu.Close();
         if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
+        NLog.LogManager.Shutdown();
     }
 
 
