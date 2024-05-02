@@ -37,11 +37,11 @@
             <TextBlock Text="{Binding mapInfo, Mode=OneWay}" />
         </DockPanel>
         <DockPanel Grid.Column="1" Grid.Row="3">
-            <TextBlock Text="mods: " />
+            <TextBlock Text="Mods: " />
             <TextBlock Text="{Binding modsText, Mode=OneWay}" />
         </DockPanel>
         <DockPanel Grid.Column="1" Grid.Row="4">
-            <TextBlock Text="dl: " />
+            <TextBlock Text="Download: " />
             <TextBlock Text="{Binding dl, Mode=OneWay}" />
         </DockPanel>
     </Grid>

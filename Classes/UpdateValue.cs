@@ -100,16 +100,20 @@ public class UpdateValue
 
     public static string UpdateMods(int i)
     {
+        List<string> strList = new List<string>();
         // ReSharper disable once RedundantAssignment
-        var modsText = "";
-        modsText = "NM";
-        while (i != 0)
-            for (var j = ModsArray.Count - 1; j >= 0; j--)
-                if (i >= ModsArray[j].ModValue)
-                {
-                    i -= ModsArray[j].ModValue;
-                    modsText += ModsArray[j].ModName;
-                }
+        var modsText = "NM";
+        if(i!=0) modsText="";
+        for (var j = ModsArray.Count - 1;i!=0 && j >= 0; j--)
+            if (i >= ModsArray[j].ModValue)
+            {
+                i -= ModsArray[j].ModValue;
+                strList.Add(ModsArray[j].ModName);
+            }
+        for (int j = strList.Count - 1; j >= 0; j--)
+        {
+            modsText += strList[j];
+        }
 
         if (modsText.Contains("DT") && modsText.Contains("NC")) modsText = modsText.Replace("DT", "");
         return modsText;

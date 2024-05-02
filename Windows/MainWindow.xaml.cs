@@ -191,7 +191,7 @@ public partial class MainWindow : INotifyPropertyChanged
             if (OsuStatus != "Running") OsuStatus = "Running";
             _sreader.TryRead(BaseAddresses.Beatmap);
             //      _sreader.TryRead(BaseAddresses.Skin);
-            //      _sreader.TryRead(BaseAddresses.GeneralData);
+            _sreader.TryRead(BaseAddresses.GeneralData);
             if (BaseAddresses.GeneralData.OsuStatus == OsuMemoryStatus.SongSelect)
                 _sreader.TryRead(BaseAddresses.SongSelectionScores);
             else
