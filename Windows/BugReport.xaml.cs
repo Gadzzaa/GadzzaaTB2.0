@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace GadzzaaTB.Windows;
 
@@ -42,12 +43,21 @@ public partial class BugReport
 
     private async void SubmitButton_OnClick(object sender, RoutedEventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(ReportName.Text) || string.IsNullOrWhiteSpace(ReportDescription.Text))
+        {
+            MessageBox.Show("Text box can't be empty.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
         //  _description = await LogFile.LoadLogFile(_description);
-        //  await Classes.Octokit.Main(_name, _description);
+          await Classes.Octokit.Main(_name, _description);
         Close();
-        string executableLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+        string executableLocation = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location);
         Process.Start(executableLocation + "\\GadzzaaTB.exe");
         Application.Current.Shutdown();
     }
 
+    private void Grid_OnMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        Grid.Focus();
+    }
 }

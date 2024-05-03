@@ -7,7 +7,7 @@
         Width="1280"
         Height="720"
         Title="Bug Report">
-        <Grid>
+        <Grid x:Name="Grid" Focusable="True" MouseDown="Grid_OnMouseDown" Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -30,7 +30,7 @@
                         x:Name="BugReportText" />
                 </Grid>
             </materialDesign:ColorZone> 
-            <TextBox x:Name="ReportName" Grid.Row="1"
+            <TextBox x:Name="ReportName" Grid.Row="1" Height="75" VerticalAlignment="Top"
                      FontSize="23" Margin="0,175,0,25" Style="{DynamicResource MaterialDesignFilledTextBox}"
                      materialDesign:HintAssist.Hint="Report Name"
                      materialDesign:HintAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
@@ -41,21 +41,19 @@
                      ToolTip="Enter your title."
                      MaxWidth="250"
                      TextChanged="ReportName_OnTextChanged" />
-            <ScrollViewer Grid.Row="2" FontSize="23" Margin="0,0,0,10" Height="250" Width="700" VerticalScrollBarVisibility="Disabled" >
-                <TextBox x:Name="ReportDescription"
-                         AcceptsReturn="True"
-                         Style="{DynamicResource MaterialDesignFilledTextBox}"
-                         materialDesign:HintAssist.Hint="Description Name"
-                         materialDesign:HintAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
-                         materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesign.Brush.Secondary}"
-                         materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                         materialDesign:TextFieldAssist.HasClearButton="True"
-                         materialDesign:ColorZoneAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
-                         ToolTip="Enter your Description."
-                         VerticalAlignment="Stretch"
-                         TextWrapping="Wrap"
-                         TextChanged="ReportDescription_OnTextChanged" />
-            </ScrollViewer>
+            <TextBox x:Name="ReportDescription" Height="275" Padding="30 30 10 10"
+                     AcceptsReturn="True" Grid.Row="2" FontSize="20" Margin="0,0,0,10" Width="700"
+                     Style="{DynamicResource MaterialDesignFilledTextBox}"
+                     materialDesign:HintAssist.Hint="Description"
+                     materialDesign:HintAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
+                     materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesign.Brush.Secondary}"
+                     materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+                     materialDesign:TextFieldAssist.HasClearButton="True"
+                     materialDesign:ColorZoneAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
+                     ToolTip="Enter your Description."
+                     VerticalAlignment="Top"
+                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                     TextChanged="ReportDescription_OnTextChanged" />
             <Button x:Name="SubmitButton" Style="{DynamicResource MaterialDesignRaisedLightButton}"
                     Grid.Row="3" Margin="0,0,0,10"
                     Content="Submit" FontSize="25" Width="150" Height="50"
