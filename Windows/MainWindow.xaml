@@ -6,6 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:gadzzaaTb="clr-namespace:GadzzaaTB"
         xmlns:windows="clr-namespace:GadzzaaTB.Windows"
+        xmlns:classes="clr-namespace:GadzzaaTB.Classes"
         mc:Ignorable="d"
         x:Name="MWindow"
         Style="{StaticResource MaterialDesignWindow}"
@@ -119,7 +120,6 @@
         <TextBox x:Name="ChannelNameBox" Grid.Row="1"
                  Style="{StaticResource MaterialDesignFilledTextBox}"
                  TextWrapping="Wrap" VerticalAlignment="Top"
-                 materialDesign:HintAssist.Hint="Username"
                  materialDesign:HintAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
                  materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesign.Brush.Secondary}"
                  materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
@@ -127,9 +127,29 @@
                  materialDesign:ColorZoneAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
                  ToolTip="Enter your Twitch username."
                  MaxLength="16"
-                 Width="250" Height="65" TextAlignment="Center"
+                 Width="250" Height="65" TextAlignment="Left"
                  FontSize="23" Margin="0,175,0,25"
                  TextChanged="ChannelNameBox_OnTextChanged" >
+            <materialDesign:HintAssist.Hint>
+                <StackPanel
+                    Orientation="Horizontal">
+                    <materialDesign:PackIcon Margin="0 0 3 0"
+                         Width="25"
+                         Height="25"
+                        Kind="Account" />
+                    <TextBlock
+                        Text="Username" />
+                </StackPanel>
+            </materialDesign:HintAssist.Hint>
+            <TextBox.Text>
+                <Binding Path="ChannelNameTxt"
+                         UpdateSourceTrigger="Explicit">
+                    <Binding.ValidationRules>
+                        <classes:NotEmptyValidationRule
+                            ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
         </TextBox>
 
 

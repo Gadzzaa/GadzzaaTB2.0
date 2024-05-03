@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
+using TwitchLib.Api.Helix.Models.Search;
 
 // ReSharper disable RedundantCheckBeforeAssignment
 
@@ -32,6 +34,8 @@ public partial class MainWindow : INotifyPropertyChanged
     public BugReport BugReport;
     public DebugOsu DebugOsu;
     public Bot Twitch;
+    private string channelNameTxt;
+
     public MainWindow()
     {
         InitializeComponent();
@@ -39,6 +43,12 @@ public partial class MainWindow : INotifyPropertyChanged
         _sreader = StructuredOsuMemoryReader.Instance;
         ContentRendered += OnContentRendered;
         Closing += OnClosing;
+    }
+    
+    public String ChannelNameTxt
+    {
+        get { return channelNameTxt; }
+        set { channelNameTxt = value; OnPropertyChanged(); }
     }
 
     public string OsuStatus
@@ -95,6 +105,8 @@ public partial class MainWindow : INotifyPropertyChanged
 
     private async void OnContentRendered(object sender, EventArgs e)
     {
+        ChannelNameBox.Text = "a";
+        VerifyChannelNameBox();
         ExecuteWindows();
         DebugOsu.UpdateModsText();
         ExecuteLabels();
@@ -126,14 +138,19 @@ public partial class MainWindow : INotifyPropertyChanged
         Settings.Default.Verified = false;
         TwitchStatus = "Verification Required";
     }
+    private void VerifyChannelNameBox()
+    {            
+        var myBindingExpression = ChannelNameBox.GetBindingExpression(TextBox.TextProperty);
+        var myBinding = myBindingExpression.ParentBinding;
+        myBinding.UpdateSourceExceptionFilter = ReturnExceptionHandler;
+        myBindingExpression.UpdateSource();
+        
+    }
 
     private async void ConnectionButton_OnClick(object sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(ChannelNameBox.Text))
-        {
-            MessageBox.Show("Text box can't be empty.", "Validation Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
-            return;
-        }
+        VerifyChannelNameBox();
+        if (string.IsNullOrWhiteSpace(ChannelNameBox.Text)) return;
         if (TwitchConnect == "Abort")
         {
             Abort();
@@ -152,6 +169,8 @@ public partial class MainWindow : INotifyPropertyChanged
         }
         else await Twitch.Client.LeaveChannelAsync(ChannelNameBox.Text);
     }
+
+    private object ReturnExceptionHandler(object bindingExpression, Exception exception) => "This is from the UpdateSourceExceptionFilterCallBack.";
 
     private async void Verify()
     {

@@ -4,7 +4,7 @@
         xmlns:classes="clr-namespace:GadzzaaTB.Classes"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Style="{DynamicResource MaterialDesignWindow}"
-        Width="1280"  ResizeMode="CanMinimize" Visibility="Hidden"
+        Width="1280" 
         Height="720"
         Title="Bug Report">
         <Grid x:Name="Grid" Focusable="True" MouseDown="Grid_OnMouseDown" Background="Transparent">
@@ -40,7 +40,17 @@
                      materialDesign:ColorZoneAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
                      ToolTip="Enter your title."
                      MaxWidth="250"
-                     TextChanged="ReportName_OnTextChanged" />
+                     TextChanged="ReportName_OnTextChanged" >
+                <TextBox.Text>
+                    <Binding Path="ReportNameTxt"
+                             UpdateSourceTrigger="Explicit">
+                        <Binding.ValidationRules>
+                            <classes:NotEmptyValidationRule
+                                ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <TextBox x:Name="ReportDescription" Height="275" Padding="30 30 10 10"
                      AcceptsReturn="True" Grid.Row="2" FontSize="20" Margin="0,0,0,10" Width="700"
                      Style="{DynamicResource MaterialDesignFilledTextBox}"
