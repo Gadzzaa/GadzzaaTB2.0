@@ -1,10 +1,10 @@
-﻿using System;
+﻿using GadzzaaTB.Windows;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using GadzzaaTB.Windows;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
@@ -121,7 +121,7 @@ public class Bot
                 "This is the list of the available commands: !help, !commands, !verify, !unlink, !np\nIf you require assistance setting the bot up, i recommend checking my Discord server: https://discord.com/invite/TtSQa944Ky");
             return;
         }
-        
+
         if (e.ChatMessage.Message == "!unlink")
         {
             if (!Settings.Default.Verified)

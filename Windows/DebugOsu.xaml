@@ -4,10 +4,10 @@
         xmlns:classes="clr-namespace:GadzzaaTB.Classes"
         WindowStyle="SingleBorderWindow"
         ResizeMode="CanMinimize" Visibility="Hidden"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterScreen" Style="{DynamicResource MaterialDesignWindow}"
         Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={classes:RatioConverter}, ConverterParameter=0.45 }"
         Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={classes:RatioConverter}, ConverterParameter=0.4 }"
-        Title="Debug" Background="#cfcefe" FontSize="30">
+        Title="Debug" FontSize="30">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />

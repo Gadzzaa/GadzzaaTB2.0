@@ -1,10 +1,10 @@
-﻿using System;
+﻿using GadzzaaTB.Windows;
+using Newtonsoft.Json.Linq;
+using OsuMemoryDataProvider.OsuMemoryModels;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using GadzzaaTB.Windows;
-using Newtonsoft.Json.Linq;
-using OsuMemoryDataProvider.OsuMemoryModels;
 using Application = System.Windows.Application;
 
 namespace GadzzaaTB.Classes;

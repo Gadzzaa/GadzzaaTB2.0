@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,6 +12,7 @@ public partial class BugReport
     private string _description;
     private string _name;
     public bool IsClosing;
+    private readonly MainWindow _mainWindow = Application.Current.MainWindow as MainWindow;
 
     public BugReport()
     {
@@ -27,29 +30,9 @@ public partial class BugReport
         }
     }
 
-    private void ReportName_OnGotFocus(object sender, RoutedEventArgs e)
-    {
-        if (ReportName.Text == "Report Name") ReportName.Clear();
-    }
-
-    private void ReportName_OnLostFocus(object sender, RoutedEventArgs e)
-    {
-        if (ReportName.Text == "") ReportName.Undo();
-    }
-
     private void ReportName_OnTextChanged(object sender, TextChangedEventArgs e)
     {
         _name = ReportName.Text;
-    }
-
-    private void ReportDescription_OnGotFocus(object sender, RoutedEventArgs e)
-    {
-        if (ReportDescription.Text == "Report Description") ReportDescription.Clear();
-    }
-
-    private void ReportDescription_OnLostFocus(object sender, RoutedEventArgs e)
-    {
-        if (ReportDescription.Text == "") ReportDescription.Undo();
     }
 
     private void ReportDescription_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -60,9 +43,11 @@ public partial class BugReport
     private async void SubmitButton_OnClick(object sender, RoutedEventArgs e)
     {
         //  _description = await LogFile.LoadLogFile(_description);
-        await Classes.Octokit.Main(_name, _description);
+        //  await Classes.Octokit.Main(_name, _description);
         Close();
-        Process.Start(Application.ResourceAssembly.Location);
+        string executableLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+        Process.Start(executableLocation + "\\GadzzaaTB.exe");
         Application.Current.Shutdown();
     }
+
 }

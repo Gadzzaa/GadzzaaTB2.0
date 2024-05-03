@@ -1,13 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Threading;
-using Castle.Windsor;
-using GadzzaaTB.Classes;
-using GadzzaaTB.Windows;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Serilog;
-using ILogger = Serilog.ILogger;
 
 
 namespace GadzzaaTB;

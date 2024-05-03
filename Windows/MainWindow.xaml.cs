@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GadzzaaTB.Classes;
+using OsuMemoryDataProvider;
+using OsuMemoryDataProvider.OsuMemoryModels;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
@@ -8,10 +11,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using GadzzaaTB.Classes;
-using Microsoft.Extensions.Logging;
-using OsuMemoryDataProvider;
-using OsuMemoryDataProvider.OsuMemoryModels;
 
 // ReSharper disable RedundantCheckBeforeAssignment
 
@@ -33,7 +32,6 @@ public partial class MainWindow : INotifyPropertyChanged
     public BugReport BugReport;
     public DebugOsu DebugOsu;
     public Bot Twitch;
-    private readonly ILogger<MainWindow> _logger;
     public MainWindow()
     {
         InitializeComponent();
@@ -106,7 +104,7 @@ public partial class MainWindow : INotifyPropertyChanged
         await Twitch.Client.ConnectAsync();
         Grid.IsEnabled = true;
         Console.WriteLine(@"INITIALIZED!");
-        while(true) await GetOsuData();
+        while (true) await GetOsuData();
         // ReSharper disable once FunctionNeverReturns
     }
 
@@ -150,7 +148,7 @@ public partial class MainWindow : INotifyPropertyChanged
 
         if (TwitchConnect == "Connect")
         {
-            await JoinChannel(); 
+            await JoinChannel();
         }
         else await Twitch.Client.LeaveChannelAsync(ChannelNameBox.Text);
     }
@@ -278,7 +276,7 @@ public partial class MainWindow : INotifyPropertyChanged
     {
         Grid.Focus();
     }
-    
+
 
     private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {

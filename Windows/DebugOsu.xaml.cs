@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
+﻿using GadzzaaTB.Classes;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using GadzzaaTB.Classes;
 
 namespace GadzzaaTB.Windows;
 
