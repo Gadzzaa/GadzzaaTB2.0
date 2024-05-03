@@ -1,7 +1,13 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Threading;
+using Castle.Windsor;
+using GadzzaaTB.Classes;
+using GadzzaaTB.Windows;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using ILogger = Serilog.ILogger;
 
 
 namespace GadzzaaTB;
@@ -10,15 +16,7 @@ namespace GadzzaaTB;
 ///     Interaction logic for App.xaml
 /// </summary>
 public partial class App : Application
-{    
-    private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-
-    public App()
-    {
-        Logger.Trace("Neata");
-    }
-
-
+{
     private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
         MessageBox.Show(

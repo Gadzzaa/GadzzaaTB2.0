@@ -81,6 +81,7 @@ public class Bot
                 {
                     _mainWindow.TwitchStatus = "Disconnected";
                     _mainWindow.TwitchConnect = "Connect";
+                    _mainWindow.OsuStatus = "Disconnected";
                     _mainWindow.ChannelNameBox.IsEnabled = true;
                 }
             }));

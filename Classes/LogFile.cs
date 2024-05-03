@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using NLog;
 
 namespace GadzzaaTB.Classes;
 
@@ -12,8 +11,6 @@ public class LogFile
 
     public static async Task<string> LoadLogFile(string description)
     {
-        LogManager.SuspendLogging();
-        LogManager.Shutdown();
         var directory =
             new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) +
                               "\\GadzzaaTB\\logs\\");

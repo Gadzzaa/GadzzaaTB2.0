@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using GadzzaaTB.Classes;
-using NLog;
+using Microsoft.Extensions.Logging;
 using OsuMemoryDataProvider;
 using OsuMemoryDataProvider.OsuMemoryModels;
 
@@ -26,14 +26,14 @@ public partial class MainWindow : INotifyPropertyChanged
     // ReSharper disable once InconsistentNaming
     public readonly StructuredOsuMemoryReader _sreader;
     public readonly OsuBaseAddresses BaseAddresses = new();
-    private string _osuStatus = "Loading...";
+    private string _osuStatus = "Disconnected";
     private bool _settingsLoaded;
     private string _twitchButton = "Loading...";
     private string _twitchStatus = "Loading...";
     public BugReport BugReport;
     public DebugOsu DebugOsu;
     public Bot Twitch;
-
+    private readonly ILogger<MainWindow> _logger;
     public MainWindow()
     {
         InitializeComponent();
@@ -106,21 +106,19 @@ public partial class MainWindow : INotifyPropertyChanged
         await Twitch.Client.ConnectAsync();
         Grid.IsEnabled = true;
         Console.WriteLine(@"INITIALIZED!");
-        while (true) await GetOsuData();
+        while(true) await GetOsuData();
         // ReSharper disable once FunctionNeverReturns
     }
 
     private async void OnClosing(object sender, EventArgs e)
     {
         Settings.Default.Username = ChannelNameBox.Text;
-        LogManager.Shutdown();
         Settings.Default.Save();
         BugReport.IsClosing = true;
         BugReport.Close();
         DebugOsu.IsClosing = true;
         DebugOsu.Close();
         if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
-        NLog.LogManager.Shutdown();
     }
 
 
@@ -150,7 +148,10 @@ public partial class MainWindow : INotifyPropertyChanged
             return;
         }
 
-        if (TwitchConnect == "Connect") await JoinChannel();
+        if (TwitchConnect == "Connect")
+        {
+            await JoinChannel(); 
+        }
         else await Twitch.Client.LeaveChannelAsync(ChannelNameBox.Text);
     }
 
@@ -186,6 +187,8 @@ public partial class MainWindow : INotifyPropertyChanged
 
     private async Task GetOsuData()
     {
+        await Task.Delay(_readDelay);
+        if (Twitch.JoinedChannel == null) return;
         if (!_sreader.CanRead)
         {
             if (OsuStatus != "Process not found!") OsuStatus = "Process not found!";
@@ -204,7 +207,6 @@ public partial class MainWindow : INotifyPropertyChanged
             if (BaseAddresses.GeneralData.OsuStatus == OsuMemoryStatus.ResultsScreen)
                 _sreader.TryRead(BaseAddresses.ResultsScreen);
             new UpdateValue().UpdateValues();
-            await Task.Delay(_readDelay);
         }
     }
 
@@ -230,6 +232,7 @@ public partial class MainWindow : INotifyPropertyChanged
         TwitchStatus = "Disconnected";
         if (!Settings.Default.Verified) TwitchStatus = "Verification Required";
         TwitchConnect = "Connect";
+        OsuStatus = "Disconncted";
     }
 
     private void BugButton_OnClick(object sender, RoutedEventArgs e)
