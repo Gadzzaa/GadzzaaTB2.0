@@ -4,7 +4,7 @@
         xmlns:classes="clr-namespace:GadzzaaTB.Classes"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Style="{DynamicResource MaterialDesignWindow}"
-        Width="1280"
+        Width="1280"  ResizeMode="CanMinimize" Visibility="Hidden"
         Height="720"
         Title="Bug Report">
         <Grid x:Name="Grid" Focusable="True" MouseDown="Grid_OnMouseDown" Background="Transparent">
