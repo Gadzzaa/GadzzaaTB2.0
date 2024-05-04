@@ -109,25 +109,30 @@ public partial class MainPage : INotifyPropertyChanged
 
     private async void ConnectionButton_OnClick(object sender, RoutedEventArgs e)
     {
+        asd.ValidatesOnTargetUpdated = true;
         VerifyChannelNameBox();
         if (string.IsNullOrWhiteSpace(ChannelNameBox.Text)) return;
         if (TwitchConnect == "Abort")
         {
             Abort();
+            asd.ValidatesOnTargetUpdated = false;
             return;
         }
 
         if (!Settings.Default.Verified)
         {
             Verify();
+            asd.ValidatesOnTargetUpdated = false;
             return;
         }
 
         if (TwitchConnect == "Connect")
         {
             await JoinChannel();
+            asd.ValidatesOnTargetUpdated = false;
         }
         else await _mainWindow.Twitch.Client.LeaveChannelAsync(ChannelNameBox.Text);
+        asd.ValidatesOnTargetUpdated = false;
     }
 
     private object ReturnExceptionHandler(object bindingExpression, Exception exception) => "This is from the UpdateSourceExceptionFilterCallBack.";

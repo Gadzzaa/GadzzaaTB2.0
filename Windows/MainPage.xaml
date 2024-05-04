@@ -51,8 +51,8 @@
                 <Binding Path="ChannelNameTxt"
                          UpdateSourceTrigger="Explicit">
                     <Binding.ValidationRules>
-                        <classes:NotEmptyValidationRule
-                            ValidatesOnTargetUpdated="True"/>
+                        <classes:NotEmptyValidationRule x:Name="asd"
+                            ValidatesOnTargetUpdated="False"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
