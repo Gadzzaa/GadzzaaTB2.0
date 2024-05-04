@@ -8,9 +8,7 @@
         xmlns:windows="clr-namespace:GadzzaaTB.Windows"
         xmlns:classes="clr-namespace:GadzzaaTB.Classes"
         mc:Ignorable="d"
-        x:Name="MWindow" Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
-        Width="1280"
-        Height="720"
+        x:Name="MWindow" Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
         Title="GadzzaaTB" FontFamily="{materialDesign:MaterialDesignFont}">
     
     <Grid x:Name="Grid" Focusable="True" MouseDown="Grid_OnMouseDown" Background="Transparent">

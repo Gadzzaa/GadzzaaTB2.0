@@ -4,9 +4,37 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:GadzzaaTB.Windows"
-      mc:Ignorable="d"
-      Title="Settings" Height="450" Width="800">
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+      Title="Settings" FontFamily="{materialDesign:MaterialDesignFont}">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
+                <TextBlock Text="Minimize instead of closing:"
+                           FontSize="30"/>
+                <ToggleButton Style="{DynamicResource MaterialDesignSwitchToggleButton}"
+                              Margin="30 0 0 0"
+                              ToolTip="MaterialDesignSwitchDarkToggleButton" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
+                <TextBlock Text="Start with Windows:"
+                           FontSize="30"/>
+                <ToggleButton Style="{DynamicResource MaterialDesignSwitchToggleButton}"
+                              Margin="30 0 0 0"
+                              ToolTip="MaterialDesignSwitchDarkToggleButton" />
+            </StackPanel>            
+            <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
+                <TextBlock Text="Auto-Connect to Twitch servers:"
+                           FontSize="30"/>
+                <ToggleButton Style="{DynamicResource MaterialDesignSwitchToggleButton}"
+                              Margin="30 0 0 0"
+                              ToolTip="MaterialDesignSwitchDarkToggleButton" />
+            </StackPanel>
+        </StackPanel>
         
     </Grid>
 </Page>

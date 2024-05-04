@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:classes="clr-namespace:GadzzaaTB.Classes"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Bug Report" Foreground="{DynamicResource MaterialDesign.Brush.Secondary}">
+        Title="Bug Report" Foreground="{DynamicResource MaterialDesign.Brush.Foreground}">
         <Grid x:Name="Grid" Focusable="True" MouseDown="Grid_OnMouseDown" Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
