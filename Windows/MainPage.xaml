@@ -39,11 +39,11 @@
             <materialDesign:HintAssist.Hint>
                 <StackPanel
                     Orientation="Horizontal">
-                    <materialDesign:PackIcon Margin="0 0 3 0"
-                         Width="25"
-                         Height="25"
+                    <materialDesign:PackIcon VerticalAlignment="Center"
+                         Width="20"
+                         Height="20"
                         Kind="Account" />
-                    <TextBlock
+                    <TextBlock Margin="2 0 0 0"
                         Text="Username" />
                 </StackPanel>
             </materialDesign:HintAssist.Hint>
