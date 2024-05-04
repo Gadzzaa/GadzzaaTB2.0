@@ -4,20 +4,20 @@
         xmlns:classes="clr-namespace:GadzzaaTB.Classes"
         Title="Debug" FontSize="30" Foreground="{DynamicResource MaterialDesign.Brush.Secondary}">
     <Grid>
-        <StackPanel>
-            <DockPanel >
+        <StackPanel Margin="10 0 0 0 ">
+            <DockPanel Margin="0 10 0 0">
                 <TextBlock Text="mStars: " />
                 <TextBlock Text="{Binding mStars, Mode=OneWay}" />
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="0 10 0 0 ">
                 <TextBlock Text="Map Info: " />
                 <TextBlock Text="{Binding mapInfo, Mode=OneWay}" />
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="0 10 0 0 ">
                 <TextBlock Text="Mods: " />
                 <TextBlock Text="{Binding modsText, Mode=OneWay}" />
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="0 10 0 0 ">
                 <TextBlock Text="Download: " />
                 <TextBlock Text="{Binding dl, Mode=OneWay}" />
             </DockPanel>

@@ -18,13 +18,11 @@ public sealed partial class DebugOsu : INotifyPropertyChanged
     private string _modsText;
 
     private double _mStars;
-    public bool IsClosing;
 
 
     public DebugOsu()
     {
         InitializeComponent();
-        IsClosing = false;
         DataContext = this;
     }
 

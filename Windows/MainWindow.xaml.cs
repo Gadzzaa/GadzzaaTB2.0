@@ -12,6 +12,7 @@ namespace GadzzaaTB.Windows;
 public partial class MainWindow : Window
 {
     public MainPage Main;
+    public SettingsPage SettingsP;
     public DebugOsu DebugOsu;
     public BugReport BugReport;
     public Bot Twitch;
@@ -24,11 +25,13 @@ public partial class MainWindow : Window
     private async void OnContentRendered(object sender, EventArgs eventArgs)
     {
         ExecuteWindows();
-        DebugOsu.UpdateModsText();
         Console.WriteLine(@"Awaiting internet connection.");
         if (!IsConnectedToInternet()) return;
         await Twitch.Client.ConnectAsync();
         Grid.IsEnabled = true;
+        Main.RenderMain();
+        DebugOsu.UpdateModsText();
+        BugReport.RenderBugReport();
         Console.WriteLine(@"INITIALIZED!");
         while (true) await Main.GetOsuData();
         // ReSharper disable once FunctionNeverReturns
@@ -45,12 +48,19 @@ public partial class MainWindow : Window
         Twitch = new Bot();
         BugReport = new BugReport();
         DebugOsu = new DebugOsu();
+        SettingsP = new SettingsPage();
         frame.NavigationService.Navigate(Main);
     }
 
     private void HomeButton_OnClick(object sender, RoutedEventArgs e)
     {
         frame.NavigationService.Navigate(Main);
+    }
+
+    private void SettingsButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        MenuToggler.IsChecked = false;
+        frame.NavigationService.Navigate(SettingsP);
     }
     
     private void BugButton_OnClick(object sender, RoutedEventArgs e)

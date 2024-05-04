@@ -22,11 +22,10 @@ public partial class BugReport : INotifyPropertyChanged
     {
         InitializeComponent();
         DataContext = this;
-        IsClosing = false;
-        Loaded += OnContentRendered;
     }
+    
 
-    private void OnContentRendered(object sender, EventArgs e)
+    public void RenderBugReport()
     {
         ReportName.Text = "A";
         VerifyReportName();
@@ -69,7 +68,7 @@ public partial class BugReport : INotifyPropertyChanged
     }
     
     private void VerifyReportName()
-    {            
+    {          
         var myBindingExpression = ReportName.GetBindingExpression(TextBox.TextProperty);
         var myBinding = myBindingExpression.ParentBinding;
         myBinding.UpdateSourceExceptionFilter = ReturnExceptionHandler;

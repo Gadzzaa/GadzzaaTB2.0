@@ -40,7 +40,6 @@ public partial class MainPage : INotifyPropertyChanged
         InitializeComponent();
         DataContext = this;
         _sreader = StructuredOsuMemoryReader.Instance;
-        Loaded += OnContentRendered;
     }
     public String ChannelNameTxt
     {
@@ -81,7 +80,7 @@ public partial class MainPage : INotifyPropertyChanged
     public event PropertyChangedEventHandler PropertyChanged;
     
 
-    private async void OnContentRendered(object sender, EventArgs e)
+    public void RenderMain()
     {
         ChannelNameBox.Text = "a";
         VerifyChannelNameBox();

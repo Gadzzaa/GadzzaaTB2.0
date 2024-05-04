@@ -64,7 +64,7 @@
                 FontSize="30" Cursor="Hand" ToolTip="Connect to the Twitch servers."
                 Content="{Binding TwitchConnect, Mode=OneWay}" Click="ConnectionButton_OnClick"
                 Width="250" Height="65" HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center" />
+                VerticalContentAlignment="Center" materialDesign:ButtonAssist.CornerRadius="5"/>
         </StackPanel>
         
 
