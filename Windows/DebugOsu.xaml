@@ -4,40 +4,23 @@
         xmlns:classes="clr-namespace:GadzzaaTB.Classes"
         Title="Debug" FontSize="30" Foreground="{DynamicResource MaterialDesign.Brush.Secondary}">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="20" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="20" />
-        </Grid.RowDefinitions>
-        <DockPanel Grid.Column="1" Grid.Row="1">
-            <TextBlock Text="mStars: " />
-            <TextBlock Text="{Binding mStars, Mode=OneWay}" />
-        </DockPanel>
-        <DockPanel Grid.Column="1" Grid.Row="2">
-            <TextBlock Text="Map Info: " />
-            <TextBlock Text="{Binding mapInfo, Mode=OneWay}" />
-        </DockPanel>
-        <DockPanel Grid.Column="1" Grid.Row="3">
-            <TextBlock Text="Mods: " />
-            <TextBlock Text="{Binding modsText, Mode=OneWay}" />
-        </DockPanel>
-        <DockPanel Grid.Column="1" Grid.Row="4">
-            <TextBlock Text="Download: " />
-            <TextBlock Text="{Binding dl, Mode=OneWay}" />
-        </DockPanel>
+        <StackPanel>
+            <DockPanel >
+                <TextBlock Text="mStars: " />
+                <TextBlock Text="{Binding mStars, Mode=OneWay}" />
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Map Info: " />
+                <TextBlock Text="{Binding mapInfo, Mode=OneWay}" />
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Mods: " />
+                <TextBlock Text="{Binding modsText, Mode=OneWay}" />
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Download: " />
+                <TextBlock Text="{Binding dl, Mode=OneWay}" />
+            </DockPanel>
+        </StackPanel>
     </Grid>
 </Page>

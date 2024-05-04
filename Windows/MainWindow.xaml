@@ -13,10 +13,33 @@
         Height="720"
         Title="GadzzaaTB" FontFamily="{materialDesign:MaterialDesignFont}">
         <Grid x:Name="Grid">
-                <materialDesign:DrawerHost Grid.Row="0"
-                                   x:Name="Drawer"
-                                   LeftDrawerCloseOnClickAway="True" Panel.ZIndex="1"
-                                   IsLeftDrawerOpen="{Binding ElementName=MenuToggler, Path=IsChecked}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="73" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <materialDesign:ColorZone
+                Padding="16"
+                materialDesign:ElevationAssist.Elevation="Dp4"
+                ClipToBounds="False"
+                Mode="PrimaryLight"
+                FontSize="20">
+                <Grid>
+                    <ToggleButton
+                        x:Name="MenuToggler"
+                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}"
+                        HorizontalAlignment="Left" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="GadzzaaTB"
+                        Style="{DynamicResource MaterialDesignHeadline4TextBlock}"
+                        x:Name="HomeText" />
+                </Grid>
+            </materialDesign:ColorZone>
+            <materialDesign:DrawerHost Grid.Row="0" Grid.RowSpan="2"
+                                       x:Name="Drawer"
+                                       LeftDrawerCloseOnClickAway="True" Panel.ZIndex="1"
+                                       IsLeftDrawerOpen="{Binding ElementName=MenuToggler, Path=IsChecked}">
                 <materialDesign:DrawerHost.LeftDrawerContent>
                     <Grid>
                         <ToggleButton
@@ -86,26 +109,7 @@
 
                     </Grid>
                 </materialDesign:DrawerHost.LeftDrawerContent>
-                <materialDesign:ColorZone
-                    Padding="16"
-                    materialDesign:ElevationAssist.Elevation="Dp4"
-                    ClipToBounds="False"
-                    Mode="PrimaryLight"
-                    FontSize="20">
-                    <Grid>
-                        <ToggleButton
-                            x:Name="MenuToggler"
-                            Style="{DynamicResource MaterialDesignHamburgerToggleButton}"
-                            HorizontalAlignment="Left" />
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Text="GadzzaaTB"
-                            Style="{DynamicResource MaterialDesignHeadline4TextBlock}"
-                            x:Name="HomeText" />
-                    </Grid>
-                </materialDesign:ColorZone>
             </materialDesign:DrawerHost>
-            <Frame x:Name="frame" />
+            <Frame x:Name="frame" Grid.Row="1" NavigationUIVisibility="Hidden" />
         </Grid>
 </Window>
