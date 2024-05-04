@@ -14,10 +14,10 @@
         Title="GadzzaaTB" FontFamily="{materialDesign:MaterialDesignFont}">
         <Grid x:Name="Grid">
             <Grid.RowDefinitions>
-                <RowDefinition Height="73" />
+                <RowDefinition Height="{Binding ElementName=ColorZone, Path=ActualHeight}" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <materialDesign:ColorZone
+            <materialDesign:ColorZone x:Name="ColorZone"
                 Padding="16"
                 materialDesign:ElevationAssist.Elevation="Dp4"
                 ClipToBounds="False"

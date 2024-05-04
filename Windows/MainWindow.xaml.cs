@@ -50,11 +50,13 @@ public partial class MainWindow : Window
     
     private void BugButton_OnClick(object sender, RoutedEventArgs e)
     {
+        MenuToggler.IsChecked = false;
         frame.NavigationService.Navigate(BugReport);
     }
 
     private void DebugButton_OnClick(object sender, RoutedEventArgs e)
     {
+        MenuToggler.IsChecked = false;
         frame.NavigationService.Navigate(DebugOsu);
     }
     
