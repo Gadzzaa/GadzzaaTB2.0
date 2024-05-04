@@ -6,33 +6,44 @@
       xmlns:local="clr-namespace:GadzzaaTB.Windows"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
-      Title="Settings" FontFamily="{materialDesign:MaterialDesignFont}">
+      Title="Settings" FontFamily="{materialDesign:MaterialDesignFont}"
+      FontSize="30">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
-                <TextBlock Text="Minimize instead of closing:"
-                           FontSize="30"/>
+                <TextBlock x:Name="Text1" Text="Minimize instead of closing:"
+                           />
                 <ToggleButton Style="{DynamicResource MaterialDesignSwitchToggleButton}"
-                              Margin="30 0 0 0"
-                              ToolTip="MaterialDesignSwitchDarkToggleButton" />
+                              Margin="20 0 0 0"
+                              ToolTip="When exiting the app, minimize instead of closing it." />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
                 <TextBlock Text="Start with Windows:"
-                           FontSize="30"/>
+                           />
                 <ToggleButton Style="{DynamicResource MaterialDesignSwitchToggleButton}"
-                              Margin="30 0 0 0"
-                              ToolTip="MaterialDesignSwitchDarkToggleButton" />
+                              Margin="20 0 0 0"
+                              ToolTip="Automatically start GadzzaaTB alongside Windows." />
             </StackPanel>            
             <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
-                <TextBlock Text="Auto-Connect to Twitch servers:"
-                           FontSize="30"/>
+                <TextBlock Text="Auto-Connect to Twitch servers:" HorizontalAlignment="Center"
+                           />
                 <ToggleButton Style="{DynamicResource MaterialDesignSwitchToggleButton}"
-                              Margin="30 0 0 0"
-                              ToolTip="MaterialDesignSwitchDarkToggleButton" />
+                              Margin="20 0 0 0"
+                              ToolTip="Automatically connect your channel on start." />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
+                <TextBlock x:Name="NpCommandText" Text="Now Playing command:"
+                           />
+                <TextBox Margin="20 0 0 0" Padding="5 -10 0 0"
+                    VerticalAlignment="Top" Height="{Binding ElementName=NpCommandText, Path=ActualHeight}"
+                    materialDesign:HintAssist.Hint="Coming Soon™"
+                    IsEnabled="False" FontSize="15" Width="125" HorizontalContentAlignment="Center"
+                    Style="{StaticResource MaterialDesignFilledTextBox}"
+                    TextWrapping="Wrap"/>
             </StackPanel>
         </StackPanel>
         
