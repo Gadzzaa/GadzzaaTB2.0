@@ -47,6 +47,11 @@ public partial class MainWindow : Window
         DebugOsu = new DebugOsu();
         frame.NavigationService.Navigate(Main);
     }
+
+    private void HomeButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        frame.NavigationService.Navigate(Main);
+    }
     
     private void BugButton_OnClick(object sender, RoutedEventArgs e)
     {
@@ -126,5 +131,4 @@ public partial class MainWindow : Window
         };
         Process.Start(psi);
     }
-    
 }

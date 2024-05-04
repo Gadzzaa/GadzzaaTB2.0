@@ -24,10 +24,22 @@
                 Mode="PrimaryLight"
                 FontSize="20">
                 <Grid>
-                    <ToggleButton
-                        x:Name="MenuToggler"
-                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}"
-                        HorizontalAlignment="Left" />
+                    <StackPanel Orientation="Horizontal">
+                        <ToggleButton
+                            x:Name="MenuToggler"
+                            Style="{DynamicResource MaterialDesignHamburgerToggleButton}"
+                            HorizontalAlignment="Left" />
+                        <Button x:Name="HomeButton"
+                            Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+                            ToolTip="Home" Margin="15 0 0 0"
+                            BorderThickness="0" Background="Transparent"
+                            BorderBrush="Transparent" Click="HomeButton_OnClick">
+                            <materialDesign:PackIcon
+                                Width="25"
+                                Height="25"
+                                Kind="Home" />
+                        </Button>
+                    </StackPanel>
                     <TextBlock
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
