@@ -1,12 +1,9 @@
-﻿<Window x:Class="GadzzaaTB.Windows.BugReport"
+﻿<Page x:Class="GadzzaaTB.Windows.BugReport"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:classes="clr-namespace:GadzzaaTB.Classes"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Style="{DynamicResource MaterialDesignWindow}"
-        Width="1280" 
-        Height="720"
-        Title="Bug Report">
+        Title="Bug Report" Foreground="{DynamicResource MaterialDesign.Brush.Secondary}">
         <Grid x:Name="Grid" Focusable="True" MouseDown="Grid_OnMouseDown" Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -15,21 +12,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <materialDesign:ColorZone
-                Padding="16"
-                materialDesign:ElevationAssist.Elevation="Dp4"
-                ClipToBounds="False"
-                Mode="PrimaryLight"
-                FontSize="20">
-                <Grid>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Text="Bug Report"
-                        Style="{DynamicResource MaterialDesignHeadline4TextBlock}"
-                        x:Name="BugReportText" />
-                </Grid>
-            </materialDesign:ColorZone> 
             <TextBox x:Name="ReportName" Grid.Row="1" Height="75" VerticalAlignment="Top"
                      FontSize="23" Margin="0,175,0,25" Style="{DynamicResource MaterialDesignFilledTextBox}"
                      materialDesign:HintAssist.Hint="Report Name"
@@ -69,4 +51,4 @@
                     Content="Submit" FontSize="25" Width="150" Height="50"
                     Cursor="Hand" Click="SubmitButton_OnClick" />
         </Grid>
-</Window>
+</Page>

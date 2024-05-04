@@ -14,7 +14,7 @@ public partial class BugReport : INotifyPropertyChanged
     private string _description;
     private string _name;
     public bool IsClosing;
-    private readonly MainWindow _mainWindow = Application.Current.MainWindow as MainWindow;
+   // private readonly MainWindow _mainWindow = Application.Current.MainWindow as MainWindow;
     private string reportNametxt;
     private bool firsttime = true;
 
@@ -23,8 +23,7 @@ public partial class BugReport : INotifyPropertyChanged
         InitializeComponent();
         DataContext = this;
         IsClosing = false;
-        ContentRendered += OnContentRendered;
-        Closing += OnClosing;
+        Loaded += OnContentRendered;
     }
 
     private void OnContentRendered(object sender, EventArgs e)
@@ -44,14 +43,6 @@ public partial class BugReport : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
     public event PropertyChangedEventHandler PropertyChanged;
-    private void OnClosing(object sender, CancelEventArgs e)
-    {
-        if (!IsClosing)
-        {
-            Hide();
-            e.Cancel = true;
-        }
-    }
 
     private void ReportName_OnTextChanged(object sender, TextChangedEventArgs e)
     {
@@ -72,7 +63,6 @@ public partial class BugReport : INotifyPropertyChanged
         }
         //  _description = await LogFile.LoadLogFile(_description);
         await Classes.Octokit.Main(_name, _description);
-        Close();
         string executableLocation = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location);
         Process.Start(executableLocation + "\\GadzzaaTB.exe");
         Application.Current.Shutdown();

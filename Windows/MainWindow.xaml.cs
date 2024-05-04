@@ -1,87 +1,63 @@
-﻿using GadzzaaTB.Classes;
-using OsuMemoryDataProvider;
-using OsuMemoryDataProvider.OsuMemoryModels;
-using System;
-using System.ComponentModel;
+﻿using System;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Navigation;
-using TwitchLib.Api.Helix.Models.Search;
-
-// ReSharper disable RedundantCheckBeforeAssignment
-
-// ReSharper disable MemberCanBePrivate.Global
+using GadzzaaTB.Classes;
 
 namespace GadzzaaTB.Windows;
 
-public partial class MainWindow : INotifyPropertyChanged
+public partial class MainWindow : Window
 {
-    private readonly int _readDelay = 500;
-
-    // ReSharper disable once InconsistentNaming
-    public readonly StructuredOsuMemoryReader _sreader;
-    public readonly OsuBaseAddresses BaseAddresses = new();
-    private string _osuStatus = "Disconnected";
-    private bool _settingsLoaded;
-    private string _twitchButton = "Loading...";
-    private string _twitchStatus = "Loading...";
-    public BugReport BugReport;
+    public MainPage Main;
     public DebugOsu DebugOsu;
+    public BugReport BugReport;
     public Bot Twitch;
-    private string channelNameTxt;
-
     public MainWindow()
     {
         InitializeComponent();
-        DataContext = this;
-        _sreader = StructuredOsuMemoryReader.Instance;
         ContentRendered += OnContentRendered;
         Closing += OnClosing;
     }
+    private async void OnContentRendered(object sender, EventArgs eventArgs)
+    {
+        ExecuteWindows();
+        DebugOsu.UpdateModsText();
+        Console.WriteLine(@"Awaiting internet connection.");
+        if (!IsConnectedToInternet()) return;
+        await Twitch.Client.ConnectAsync();
+        Grid.IsEnabled = true;
+        Console.WriteLine(@"INITIALIZED!");
+        while (true) await Main.GetOsuData();
+        // ReSharper disable once FunctionNeverReturns
+    }
+    private async void OnClosing(object sender, EventArgs e)
+    {
+        Settings.Default.Username = Main.ChannelNameBox.Text;
+        Settings.Default.Save();
+        if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
+    }
+    private void ExecuteWindows()
+    {
+        Main = new MainPage();
+        Twitch = new Bot();
+        BugReport = new BugReport();
+        DebugOsu = new DebugOsu();
+        frame.NavigationService.Navigate(Main);
+    }
     
-    public String ChannelNameTxt
+    private void BugButton_OnClick(object sender, RoutedEventArgs e)
     {
-        get { return channelNameTxt; }
-        set { channelNameTxt = value; OnPropertyChanged(); }
+        frame.NavigationService.Navigate(BugReport);
     }
 
-    public string OsuStatus
+    private void DebugButton_OnClick(object sender, RoutedEventArgs e)
     {
-        get => _osuStatus;
-        set
-        {
-            if (_osuStatus != value) _osuStatus = value;
-            OnPropertyChanged();
-        }
+        frame.NavigationService.Navigate(DebugOsu);
     }
-
-    public string TwitchStatus
-    {
-        get => _twitchStatus;
-        set
-        {
-            if (_twitchStatus != value) _twitchStatus = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public string TwitchConnect
-    {
-        get => _twitchButton;
-        set
-        {
-            if (_twitchButton != value) _twitchButton = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
+    
 
     public bool IsConnectedToInternet()
     {
@@ -102,203 +78,50 @@ public partial class MainWindow : INotifyPropertyChanged
 
         return isConnected;
     }
-
-    private async void OnContentRendered(object sender, EventArgs e)
-    {
-        ChannelNameBox.Text = "a";
-        VerifyChannelNameBox();
-        ExecuteWindows();
-        DebugOsu.UpdateModsText();
-        ExecuteLabels();
-        _settingsLoaded = true;
-        Console.WriteLine(@"Awaiting internet connection.");
-        if (!IsConnectedToInternet()) return;
-        await Twitch.Client.ConnectAsync();
-        Grid.IsEnabled = true;
-        Console.WriteLine(@"INITIALIZED!");
-        while (true) await GetOsuData();
-        // ReSharper disable once FunctionNeverReturns
-    }
-
-    private async void OnClosing(object sender, EventArgs e)
-    {
-        Settings.Default.Username = ChannelNameBox.Text;
-        Settings.Default.Save();
-        BugReport.IsClosing = true;
-        BugReport.Close();
-        DebugOsu.IsClosing = true;
-        DebugOsu.Close();
-        if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
-    }
-
-
-    private void ChannelNameBox_OnTextChanged(object sender, TextChangedEventArgs e)
-    {
-        if (!_settingsLoaded) return;
-        Settings.Default.Verified = false;
-        TwitchStatus = "Verification Required";
-    }
-    private void VerifyChannelNameBox()
-    {            
-        var myBindingExpression = ChannelNameBox.GetBindingExpression(TextBox.TextProperty);
-        var myBinding = myBindingExpression.ParentBinding;
-        myBinding.UpdateSourceExceptionFilter = ReturnExceptionHandler;
-        myBindingExpression.UpdateSource();
-        
-    }
-
-    private async void ConnectionButton_OnClick(object sender, RoutedEventArgs e)
-    {
-        VerifyChannelNameBox();
-        if (string.IsNullOrWhiteSpace(ChannelNameBox.Text)) return;
-        if (TwitchConnect == "Abort")
-        {
-            Abort();
-            return;
-        }
-
-        if (!Settings.Default.Verified)
-        {
-            Verify();
-            return;
-        }
-
-        if (TwitchConnect == "Connect")
-        {
-            await JoinChannel();
-        }
-        else await Twitch.Client.LeaveChannelAsync(ChannelNameBox.Text);
-    }
-
-    private object ReturnExceptionHandler(object bindingExpression, Exception exception) => "This is from the UpdateSourceExceptionFilterCallBack.";
-
-    private async void Verify()
-    {
-        await JoinChannel();
-        TwitchConnect = "Abort";
-        ChannelNameBox.IsEnabled = false;
-        TwitchStatus = "Awaiting verification...";
-        await Twitch.Client.SendMessageAsync(ChannelNameBox.Text,
-            "Please type '!verify' in order to confirm that you are the owner of the channel.");
-        Console.WriteLine(@"Verification message has been sent, awaiting confirmation...");
-    }
-
-    private async Task JoinChannel()
-    {
-        if (!Twitch.Client.IsConnected)
-        {
-            Console.WriteLine(@"Twitch connection error!");
-            return;
-        }
-
-        if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
-        await Twitch.Client.JoinChannelAsync(ChannelNameBox.Text);
-    }
-
-    private async void Abort()
-    {
-        await Twitch.Client.SendMessageAsync(ChannelNameBox.Text, "Verification process aborted.");
-        Console.WriteLine(@"Verification process aborted.");
-        await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
-    }
-
-    private async Task GetOsuData()
-    {
-        await Task.Delay(_readDelay);
-        if (Twitch.JoinedChannel == null) return;
-        if (!_sreader.CanRead)
-        {
-            if (OsuStatus != "Process not found!") OsuStatus = "Process not found!";
-            await Task.Delay(_readDelay);
-        }
-        else
-        {
-            if (OsuStatus != "Running") OsuStatus = "Running";
-            _sreader.TryRead(BaseAddresses.Beatmap);
-            //      _sreader.TryRead(BaseAddresses.Skin);
-            _sreader.TryRead(BaseAddresses.GeneralData);
-            if (BaseAddresses.GeneralData.OsuStatus == OsuMemoryStatus.SongSelect)
-                _sreader.TryRead(BaseAddresses.SongSelectionScores);
-            else
-                BaseAddresses.SongSelectionScores.Scores.Clear();
-            if (BaseAddresses.GeneralData.OsuStatus == OsuMemoryStatus.ResultsScreen)
-                _sreader.TryRead(BaseAddresses.ResultsScreen);
-            new UpdateValue().UpdateValues();
-        }
-    }
-
-    private void ExecuteWindows()
-    {
-        Twitch = new Bot();
-        BugReport = new BugReport();
-        DebugOsu = new DebugOsu();
-    }
-
-    private void ExecuteLabels()
-    {
-        TwitchStatus = "Disconnected";
-        if (!Settings.Default.Verified) TwitchStatus = "Verification Required";
-        TwitchConnect = "Connect";
-        ChannelNameBox.Text = Settings.Default.Username;
-    }
-
-    public async void Disconnected()
-    {
-        Settings.Default.Verified = false;
-        if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
-        TwitchStatus = "Disconnected";
-        if (!Settings.Default.Verified) TwitchStatus = "Verification Required";
-        TwitchConnect = "Connect";
-        OsuStatus = "Disconncted";
-    }
-
-    private void BugButton_OnClick(object sender, RoutedEventArgs e)
-    {
-        MenuToggler.IsChecked = false;
-        BugReport.Show();
-    }
-
     private void DiscordButton_OnClick(object sender, RoutedEventArgs e)
     {
         MenuToggler.IsChecked = false;
-        Process.Start("https://discord.gg/TtSQa944Ky");
+        var psi = new ProcessStartInfo
+        {
+            FileName = "https://discord.gg/TtSQa944Ky",
+            UseShellExecute = true
+        };
+        Process.Start(psi);
     }
 
     private void TwitchButton_OnClick(object sender, RoutedEventArgs e)
     {
         MenuToggler.IsChecked = false;
 
-        Process.Start("https://twitch.tv/gadzzaa");
+        var psi = new ProcessStartInfo
+        {
+            FileName = "https://twitch.tv/gadzzaa",
+            UseShellExecute = true
+        };
+        Process.Start(psi);
     }
 
     private void GithubButton_OnClick(object sender, RoutedEventArgs e)
     {
         MenuToggler.IsChecked = false;
 
-        Process.Start("https://github.com/Gadzzaa/GadzzaaTB2.0");
+        var psi = new ProcessStartInfo
+        {
+            FileName = "https://github.com/Gadzzaa/GadzzaaTB2.0",
+            UseShellExecute = true
+        };
+        Process.Start(psi);
     }
 
     private void YoutubeButton_OnClick(object sender, RoutedEventArgs e)
     {
         MenuToggler.IsChecked = false;
 
-        Process.Start("https://www.youtube.com/@gadzzaa");
-    }
-
-    private void DebugButton_OnClick(object sender, RoutedEventArgs e)
-    {
-        MenuToggler.IsChecked = false;
-        DebugOsu.Show();
-    }
-
-    private void Grid_OnMouseDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-    {
-        Grid.Focus();
-    }
-
-
-    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        var psi = new ProcessStartInfo
+        {
+            FileName = "https://www.youtube.com/@gadzzaa",
+            UseShellExecute = true
+        };
+        Process.Start(psi);
     }
 }

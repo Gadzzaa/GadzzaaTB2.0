@@ -1,13 +1,8 @@
-﻿<Window x:Class="GadzzaaTB.Windows.DebugOsu"
+﻿<Page x:Class="GadzzaaTB.Windows.DebugOsu"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:classes="clr-namespace:GadzzaaTB.Classes"
-        WindowStyle="SingleBorderWindow"
-        ResizeMode="CanMinimize" Visibility="Hidden"
-        WindowStartupLocation="CenterScreen" Style="{DynamicResource MaterialDesignWindow}"
-        Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={classes:RatioConverter}, ConverterParameter=0.45 }"
-        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={classes:RatioConverter}, ConverterParameter=0.4 }"
-        Title="Debug" FontSize="30">
+        Title="Debug" FontSize="30" Foreground="{DynamicResource MaterialDesign.Brush.Secondary}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
@@ -45,4 +40,4 @@
             <TextBlock Text="{Binding dl, Mode=OneWay}" />
         </DockPanel>
     </Grid>
-</Window>
+</Page>

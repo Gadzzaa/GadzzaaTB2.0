@@ -26,7 +26,6 @@ public sealed partial class DebugOsu : INotifyPropertyChanged
         InitializeComponent();
         IsClosing = false;
         DataContext = this;
-        Closing += OnClosing;
     }
 
     // ReSharper disable once MemberCanBePrivate.Global
@@ -89,15 +88,7 @@ public sealed partial class DebugOsu : INotifyPropertyChanged
     {
         modsText = UpdateValue.UpdateMods(_mods);
     }
-
-    private void OnClosing(object sender, CancelEventArgs e)
-    {
-        if (!IsClosing)
-        {
-            Hide();
-            e.Cancel = true;
-        }
-    }
+    
 
     private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {

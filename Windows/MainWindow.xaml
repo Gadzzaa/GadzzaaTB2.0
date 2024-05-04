@@ -1,185 +1,111 @@
 ﻿<Window x:Class="GadzzaaTB.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:GadzzaaTB.Windows"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:gadzzaaTb="clr-namespace:GadzzaaTB"
-        xmlns:windows="clr-namespace:GadzzaaTB.Windows"
-        xmlns:classes="clr-namespace:GadzzaaTB.Classes"
         mc:Ignorable="d"
-        x:Name="MWindow"
         Style="{StaticResource MaterialDesignWindow}"
         ResizeMode="CanMinimize" Visibility="Visible"
         WindowStartupLocation="CenterScreen"
         Width="1280"
         Height="720"
         Title="GadzzaaTB" FontFamily="{materialDesign:MaterialDesignFont}">
-    <Grid x:Name="Grid" IsEnabled="False" Focusable="True" MouseDown="Grid_OnMouseDown" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <materialDesign:DrawerHost Grid.Row="0" Grid.RowSpan="6"
+        <Grid x:Name="Grid">
+                <materialDesign:DrawerHost Grid.Row="0"
                                    x:Name="Drawer"
                                    LeftDrawerCloseOnClickAway="True" Panel.ZIndex="1"
                                    IsLeftDrawerOpen="{Binding ElementName=MenuToggler, Path=IsChecked}">
-            <materialDesign:DrawerHost.LeftDrawerContent>
-                <Grid>
-                    <ToggleButton
-                        HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 16 16 0"
-                        IsChecked="{Binding ElementName=MenuToggler, Path=IsChecked}"
-                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
-                    <StackPanel Margin="16 75 16 16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <Button x:Name="BugButton" Content="Bug Report"
-                                Style="{DynamicResource MaterialDesignRaisedLightButton}"
-                                FontSize="18" Height="65"
-                                VerticalAlignment="Center"
+                <materialDesign:DrawerHost.LeftDrawerContent>
+                    <Grid>
+                        <ToggleButton
+                            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 16 16 0"
+                            IsChecked="{Binding ElementName=MenuToggler, Path=IsChecked}"
+                            Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+                        <StackPanel Margin="16 75 16 16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Button x:Name="BugButton" Content="Bug Report"
+                                    Style="{DynamicResource MaterialDesignRaisedLightButton}"
+                                    FontSize="18" Height="65"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Click="BugButton_OnClick"
+                                     />
+                            <Button x:Name="DebugButton" Content="Debug"
+                                    FontSize="18" Height="65" Style="{DynamicResource MaterialDesignRaisedLightButton}"
+                                    VerticalAlignment="Center" Margin="0 10 0 0"
+                                    HorizontalAlignment="Center" Width="{Binding ElementName=BugButton, Path=ActualWidth}"
+                                    Click="DebugButton_OnClick" 
+                                    />
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                            <DockPanel Margin="0 0 0 15">
+                                <Button x:Name="GithubButton" Margin="0 0 10 0"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                        Click="GithubButton_OnClick">
+                                    <materialDesign:PackIcon
+                                        Width="25"
+                                        Height="25"
+                                        Kind="Github" />
+                                </Button>
+                                <Button x:Name="DiscordButton" Margin="10 0 0 0 "
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                        Click="DiscordButton_OnClick">
+                                    <Rectangle Width="25" Height="25">
+                                        <Rectangle.Fill>
+                                            <DrawingBrush
+                                                Drawing="{Binding Drawing, Source={StaticResource discordDrawingImage}}" />
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </Button>
+                            </DockPanel>
+                            <DockPanel Margin="0 0 0 15">
+                                <Button x:Name="YoutubeButton" Margin="0 0 10 0 "
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                        Click="YoutubeButton_OnClick">
+                                    <materialDesign:PackIcon
+                                        Width="25"
+                                        Height="25"
+                                        Kind="Youtube" />
+                                </Button>
+                                <Button x:Name="TwitchButton" Margin="10 0 0 0"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                        Click="TwitchButton_OnClick">
+                                    <materialDesign:PackIcon
+                                        Width="25"
+                                        Height="25"
+                                        Kind="Twitch" />
+                                </Button>
+                            </DockPanel>
+                            <TextBlock
+                                Margin="0,0,0,15"
+                                VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center"
-                                Click="BugButton_OnClick" />
-                        <Button x:Name="DebugButton" Content="Debug"
-                                FontSize="18" Height="65" Style="{DynamicResource MaterialDesignRaisedLightButton}"
-                                VerticalAlignment="Center" Margin="0 10 0 0"
-                                HorizontalAlignment="Center" Width="{Binding ElementName=BugButton, Path=ActualWidth}"
-                                Click="DebugButton_OnClick" />
-                    </StackPanel>
-                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                        <DockPanel Margin="0 0 0 15">
-                            <Button x:Name="GithubButton" Margin="0 0 10 0"
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                                    Click="GithubButton_OnClick">
-                                <materialDesign:PackIcon
-                                    Width="25"
-                                    Height="25"
-                                    Kind="Github" />
-                            </Button>
-                            <Button x:Name="DiscordButton" Margin="10 0 0 0 "
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                                    Click="DiscordButton_OnClick">
-                                <Rectangle Width="25" Height="25">
-                                    <Rectangle.Fill>
-                                        <DrawingBrush
-                                            Drawing="{Binding Drawing, Source={StaticResource discordDrawingImage}}" />
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </Button>
-                        </DockPanel>
-                        <DockPanel Margin="0 0 0 15">
-                            <Button x:Name="YoutubeButton" Margin="0 0 10 0 "
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                                    Click="YoutubeButton_OnClick">
-                                <materialDesign:PackIcon
-                                    Width="25"
-                                    Height="25"
-                                    Kind="Youtube" />
-                            </Button>
-                            <Button x:Name="TwitchButton" Margin="10 0 0 0"
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                                    Click="TwitchButton_OnClick">
-                                <materialDesign:PackIcon
-                                    Width="25"
-                                    Height="25"
-                                    Kind="Twitch" />
-                            </Button>
-                        </DockPanel>
+                                Text="Version 2.00" />
+                        </StackPanel>
+
+                    </Grid>
+                </materialDesign:DrawerHost.LeftDrawerContent>
+                <materialDesign:ColorZone
+                    Padding="16"
+                    materialDesign:ElevationAssist.Elevation="Dp4"
+                    ClipToBounds="False"
+                    Mode="PrimaryLight"
+                    FontSize="20">
+                    <Grid>
+                        <ToggleButton
+                            x:Name="MenuToggler"
+                            Style="{DynamicResource MaterialDesignHamburgerToggleButton}"
+                            HorizontalAlignment="Left" />
                         <TextBlock
-                            Margin="0,0,0,15"
-                            VerticalAlignment="Bottom"
                             HorizontalAlignment="Center"
-                            Text="Version 2.00" />
-                    </StackPanel>
-
-                </Grid>
-            </materialDesign:DrawerHost.LeftDrawerContent>
-            <materialDesign:ColorZone
-                Padding="16"
-                materialDesign:ElevationAssist.Elevation="Dp4"
-                ClipToBounds="False"
-                Mode="PrimaryLight"
-                FontSize="20">
-                <Grid>
-                    <ToggleButton
-                        x:Name="MenuToggler"
-                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}"
-                        HorizontalAlignment="Left" />
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Text="GadzzaaTB"
-                        Style="{DynamicResource MaterialDesignHeadline4TextBlock}"
-                        x:Name="HomeText" />
-                </Grid>
-            </materialDesign:ColorZone>
-        </materialDesign:DrawerHost>
-
-
-        <TextBox x:Name="ChannelNameBox" Grid.Row="1"
-                 Style="{StaticResource MaterialDesignFilledTextBox}"
-                 TextWrapping="Wrap" VerticalAlignment="Top"
-                 materialDesign:HintAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
-                 materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesign.Brush.Secondary}"
-                 materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                 materialDesign:TextFieldAssist.HasClearButton="True"
-                 materialDesign:ColorZoneAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
-                 ToolTip="Enter your Twitch username."
-                 MaxLength="16"
-                 Width="250" Height="65" TextAlignment="Left"
-                 FontSize="23" Margin="0,175,0,25"
-                 TextChanged="ChannelNameBox_OnTextChanged" >
-            <materialDesign:HintAssist.Hint>
-                <StackPanel
-                    Orientation="Horizontal">
-                    <materialDesign:PackIcon Margin="0 0 3 0"
-                         Width="25"
-                         Height="25"
-                        Kind="Account" />
-                    <TextBlock
-                        Text="Username" />
-                </StackPanel>
-            </materialDesign:HintAssist.Hint>
-            <TextBox.Text>
-                <Binding Path="ChannelNameTxt"
-                         UpdateSourceTrigger="Explicit">
-                    <Binding.ValidationRules>
-                        <classes:NotEmptyValidationRule
-                            ValidatesOnTargetUpdated="True"/>
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-
-
-        <Button x:Name="ConnectionButton" Grid.Row="2" Style="{StaticResource MaterialDesignRaisedLightButton}"
-                FontSize="30" Cursor="Hand" ToolTip="Connect to the Twitch servers."
-                Content="{Binding TwitchConnect, Mode=OneWay}" Click="ConnectionButton_OnClick"
-                Width="250" Height="65" HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center" />
-
-        <TextBlock Grid.Row="3" Text="CONNECTION STATUS:"
-                   TextAlignment="Center"
-                   FontSize="35" FontWeight="Bold"
-                   Margin="0,30,0,2" />
-
-        <DockPanel Grid.Row="4" HorizontalAlignment="Center" Margin="0,15,0,0">
-            <TextBlock TextAlignment="Center" Text="Twitch"
-                       FontSize="25" />
-            <TextBlock Text="-" Margin="5,0,0,0"
-                       FontSize="25" />
-            <TextBlock x:Name="TwitchConnection" Text="{Binding TwitchStatus, Mode=OneWay}" Margin="5,0,0,0"
-                       FontSize="25" />
-
-        </DockPanel>
-        <DockPanel Grid.Row="5" HorizontalAlignment="Center" Margin="0,0,0,2">
-            <TextBlock TextAlignment="Center" Text="osu!"
-                       FontSize="25" />
-            <TextBlock Text="-" Margin="5,0,0,0"
-                       FontSize="25" />
-            <TextBlock Text="{Binding OsuStatus, Mode=OneWay}" Margin="5,0,0,0"
-                       FontSize="25" />
-        </DockPanel>
-    </Grid>
+                            VerticalAlignment="Center"
+                            Text="GadzzaaTB"
+                            Style="{DynamicResource MaterialDesignHeadline4TextBlock}"
+                            x:Name="HomeText" />
+                    </Grid>
+                </materialDesign:ColorZone>
+            </materialDesign:DrawerHost>
+            <Frame x:Name="frame" />
+        </Grid>
 </Window>
