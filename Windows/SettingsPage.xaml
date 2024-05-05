@@ -20,7 +20,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
-                <TextBlock x:Name="Text1" Text="Minimize instead of closing:" VerticalAlignment="Top"
+                <TextBlock Text="Minimize instead of closing:" VerticalAlignment="Top"
                            TextAlignment="Center" />
                 <ToggleButton Style="{DynamicResource MaterialDesignSwitchLightToggleButton}"
                               Margin="10 1 0 0"
@@ -39,10 +39,11 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
                 <TextBlock Text="Start with Windows:" VerticalAlignment="Top" />
-                <ToggleButton
+                <ToggleButton x:Name="WindowsStart"
                     Margin="10 3 0 0" Style="{DynamicResource MaterialDesignSwitchLightToggleButton}"
                     ToolTip="Automatically start GadzzaaTB alongside Windows."
-                    IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=AutoStart}">
+                    IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=AutoStart}"
+                    Click="WindowsStart_OnClick">
                     <ToggleButton.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
