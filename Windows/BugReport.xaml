@@ -6,14 +6,14 @@
       Title="Bug Report" Foreground="{DynamicResource MaterialDesign.Brush.Foreground}">
     <Grid x:Name="Grid" Focusable="True" MouseDown="Grid_OnMouseDown" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="100" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBox x:Name="ReportName" Grid.Row="1" Height="75" VerticalAlignment="Top"
-                 FontSize="23" Margin="0,175,0,25" Style="{DynamicResource MaterialDesignFilledTextBox}"
+                 FontSize="23" Margin="0,0,0,25" Style="{DynamicResource MaterialDesignFilledTextBox}"
                  materialDesign:HintAssist.Hint="Report Name"
                  materialDesign:HintAssist.Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
                  materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesign.Brush.Secondary}"

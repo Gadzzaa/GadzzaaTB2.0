@@ -31,12 +31,12 @@ public partial class MainWindow : Window
     {
         ExecuteWindows();
         Main.RenderMain();
-        BugReport.RenderBugReport();
         frame.NavigationService.Navigate(Main);
         Console.WriteLine(@"Awaiting internet connection.");
         if (!IsConnectedToInternet()) return;
         await Twitch.Client.ConnectAsync();
         Grid.IsEnabled = true;
+        BugReport.RenderBugReport();
         Console.WriteLine(@"INITIALIZED!");
         while (true) await Main.GetOsuData();
         // ReSharper disable once FunctionNeverReturns
