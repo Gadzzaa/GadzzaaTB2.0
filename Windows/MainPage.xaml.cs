@@ -1,19 +1,13 @@
-﻿using GadzzaaTB.Classes;
-using OsuMemoryDataProvider;
-using OsuMemoryDataProvider.OsuMemoryModels;
-using System;
+﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Navigation;
-using TwitchLib.Api.Helix.Models.Search;
+using GadzzaaTB.Classes;
+using OsuMemoryDataProvider;
+using OsuMemoryDataProvider.OsuMemoryModels;
 
 // ReSharper disable RedundantCheckBeforeAssignment
 
@@ -23,6 +17,7 @@ namespace GadzzaaTB.Windows;
 
 public partial class MainPage : INotifyPropertyChanged
 {
+    private static readonly MainWindow _mainWindow = (MainWindow)Application.Current.MainWindow;
     private readonly int _readDelay = 500;
 
     // ReSharper disable once InconsistentNaming
@@ -33,7 +28,6 @@ public partial class MainPage : INotifyPropertyChanged
     private string _twitchButton = "Loading...";
     private string _twitchStatus = "Loading...";
     private string channelNameTxt;
-    private static readonly MainWindow _mainWindow = (MainWindow)Application.Current.MainWindow;
 
     public MainPage()
     {
@@ -41,10 +35,15 @@ public partial class MainPage : INotifyPropertyChanged
         DataContext = this;
         _sreader = StructuredOsuMemoryReader.Instance;
     }
-    public String ChannelNameTxt
+
+    public string ChannelNameTxt
     {
-        get { return channelNameTxt; }
-        set { channelNameTxt = value; OnPropertyChanged(); }
+        get => channelNameTxt;
+        set
+        {
+            channelNameTxt = value;
+            OnPropertyChanged();
+        }
     }
 
     public string OsuStatus
@@ -68,7 +67,7 @@ public partial class MainPage : INotifyPropertyChanged
     }
 
     public string TwitchConnect
-        
+
     {
         get => _twitchButton;
         set
@@ -79,7 +78,7 @@ public partial class MainPage : INotifyPropertyChanged
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
-    
+
 
     public void RenderMain()
     {
@@ -95,13 +94,13 @@ public partial class MainPage : INotifyPropertyChanged
         Settings.Default.Verified = false;
         TwitchStatus = "Verification Required";
     }
+
     private void VerifyChannelNameBox()
-    {            
+    {
         var myBindingExpression = ChannelNameBox.GetBindingExpression(TextBox.TextProperty);
         var myBinding = myBindingExpression.ParentBinding;
         myBinding.UpdateSourceExceptionFilter = ReturnExceptionHandler;
         myBindingExpression.UpdateSource();
-        
     }
 
     private async void ConnectionButton_OnClick(object sender, RoutedEventArgs e)
@@ -128,11 +127,18 @@ public partial class MainPage : INotifyPropertyChanged
             await JoinChannel();
             asd.ValidatesOnTargetUpdated = false;
         }
-        else await _mainWindow.Twitch.Client.LeaveChannelAsync(ChannelNameBox.Text);
+        else
+        {
+            await _mainWindow.Twitch.Client.LeaveChannelAsync(ChannelNameBox.Text);
+        }
+
         asd.ValidatesOnTargetUpdated = false;
     }
 
-    private object ReturnExceptionHandler(object bindingExpression, Exception exception) => "This is from the UpdateSourceExceptionFilterCallBack.";
+    private object ReturnExceptionHandler(object bindingExpression, Exception exception)
+    {
+        return "This is from the UpdateSourceExceptionFilterCallBack.";
+    }
 
     private async void Verify()
     {
@@ -153,7 +159,8 @@ public partial class MainPage : INotifyPropertyChanged
             return;
         }
 
-        if (_mainWindow.Twitch.JoinedChannel != null) await _mainWindow.Twitch.Client.LeaveChannelAsync(_mainWindow.Twitch.JoinedChannel);
+        if (_mainWindow.Twitch.JoinedChannel != null)
+            await _mainWindow.Twitch.Client.LeaveChannelAsync(_mainWindow.Twitch.JoinedChannel);
         await _mainWindow.Twitch.Client.JoinChannelAsync(ChannelNameBox.Text);
     }
 
@@ -188,7 +195,7 @@ public partial class MainPage : INotifyPropertyChanged
             new UpdateValue().UpdateValues();
         }
     }
-    
+
 
     private void ExecuteLabels()
     {
@@ -201,13 +208,14 @@ public partial class MainPage : INotifyPropertyChanged
     public async void Disconnected()
     {
         Settings.Default.Verified = false;
-        if (_mainWindow.Twitch.JoinedChannel != null) await _mainWindow.Twitch.Client.LeaveChannelAsync(_mainWindow.Twitch.JoinedChannel);
+        if (_mainWindow.Twitch.JoinedChannel != null)
+            await _mainWindow.Twitch.Client.LeaveChannelAsync(_mainWindow.Twitch.JoinedChannel);
         TwitchStatus = "Disconnected";
         if (!Settings.Default.Verified) TwitchStatus = "Verification Required";
         TwitchConnect = "Connect";
         OsuStatus = "Disconncted";
     }
-    
+
 
     private void Grid_OnMouseDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
     {

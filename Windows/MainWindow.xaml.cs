@@ -1,27 +1,32 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 using GadzzaaTB.Classes;
+using Hardcodet.Wpf.TaskbarNotification;
 
 namespace GadzzaaTB.Windows;
 
 public partial class MainWindow : Window
 {
+    public BugReport BugReport;
+    public DebugOsu DebugOsu;
     public MainPage Main;
     public SettingsPage SettingsP;
-    public DebugOsu DebugOsu;
-    public BugReport BugReport;
+    private readonly TaskbarIcon tb;
     public Bot Twitch;
+
     public MainWindow()
     {
         InitializeComponent();
+        tb = (TaskbarIcon)FindResource("MyNotifyIcon");
         ContentRendered += OnContentRendered;
         Closing += OnClosing;
     }
+
+
     private async void OnContentRendered(object sender, EventArgs eventArgs)
     {
         ExecuteWindows();
@@ -36,12 +41,17 @@ public partial class MainWindow : Window
         while (true) await Main.GetOsuData();
         // ReSharper disable once FunctionNeverReturns
     }
-    private async void OnClosing(object sender, EventArgs e)
+
+    private async void OnClosing(object sender, CancelEventArgs e)
     {
+        tb.Visibility = Visibility.Visible;
+  //      Hide();
+  //      e.Cancel = true;
         Settings.Default.Username = Main.ChannelNameBox.Text;
         Settings.Default.Save();
         if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
     }
+
     private void ExecuteWindows()
     {
         Main = new MainPage();
@@ -61,7 +71,7 @@ public partial class MainWindow : Window
         MenuToggler.IsChecked = false;
         frame.NavigationService.Navigate(SettingsP);
     }
-    
+
     private void BugButton_OnClick(object sender, RoutedEventArgs e)
     {
         MenuToggler.IsChecked = false;
@@ -73,7 +83,7 @@ public partial class MainWindow : Window
         MenuToggler.IsChecked = false;
         frame.NavigationService.Navigate(DebugOsu);
     }
-    
+
 
     public bool IsConnectedToInternet()
     {
@@ -94,6 +104,7 @@ public partial class MainWindow : Window
 
         return isConnected;
     }
+
     private void DiscordButton_OnClick(object sender, RoutedEventArgs e)
     {
         MenuToggler.IsChecked = false;

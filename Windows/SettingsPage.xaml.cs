@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace GadzzaaTB.Windows;
 
@@ -9,5 +8,4 @@ public partial class SettingsPage : Page
     {
         InitializeComponent();
     }
-    
 }

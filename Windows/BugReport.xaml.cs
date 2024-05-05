@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -13,17 +14,31 @@ public partial class BugReport : INotifyPropertyChanged
 {
     private string _description;
     private string _name;
-    public bool IsClosing;
-   // private readonly MainWindow _mainWindow = Application.Current.MainWindow as MainWindow;
-    private string reportNametxt;
     private bool firsttime = true;
+
+    public bool IsClosing;
+
+    // private readonly MainWindow _mainWindow = Application.Current.MainWindow as MainWindow;
+    private string reportNametxt;
 
     public BugReport()
     {
         InitializeComponent();
         DataContext = this;
     }
-    
+
+    public string ReportNameTxt
+    {
+        get => reportNametxt;
+        set
+        {
+            reportNametxt = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
 
     public void RenderBugReport()
     {
@@ -31,17 +46,10 @@ public partial class BugReport : INotifyPropertyChanged
         VerifyReportName();
     }
 
-    public String ReportNameTxt
-    {
-        get { return reportNametxt; }
-        set { reportNametxt = value; OnPropertyChanged(); }
-    }
-    
     private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-    public event PropertyChangedEventHandler PropertyChanged;
 
     private void ReportName_OnTextChanged(object sender, TextChangedEventArgs e)
     {
@@ -59,22 +67,25 @@ public partial class BugReport : INotifyPropertyChanged
         if (string.IsNullOrWhiteSpace(ReportName.Text)) return;
         //  _description = await LogFile.LoadLogFile(_description);
         await Classes.Octokit.Main(_name, _description);
-        string executableLocation = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location);
+        var executableLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location);
         Process.Start(executableLocation + "\\GadzzaaTB.exe");
         Application.Current.Shutdown();
     }
-    
+
     private void VerifyReportName()
-    {          
+    {
         var myBindingExpression = ReportName.GetBindingExpression(TextBox.TextProperty);
         var myBinding = myBindingExpression.ParentBinding;
         myBinding.UpdateSourceExceptionFilter = ReturnExceptionHandler;
         myBindingExpression.UpdateSource();
-        if(firsttime) ReportName.Text = "";
+        if (firsttime) ReportName.Text = "";
         firsttime = false;
     }
-    
-    private object ReturnExceptionHandler(object bindingExpression, Exception exception) => "This is from the UpdateSourceExceptionFilterCallBack.";
+
+    private object ReturnExceptionHandler(object bindingExpression, Exception exception)
+    {
+        return "This is from the UpdateSourceExceptionFilterCallBack.";
+    }
 
 
     private void Grid_OnMouseDown(object sender, MouseButtonEventArgs e)

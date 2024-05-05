@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:GadzzaaTB.Windows"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Style="{StaticResource MaterialDesignWindow}"
@@ -12,146 +11,147 @@
         Width="1280"
         Height="720"
         Title="GadzzaaTB" FontFamily="{materialDesign:MaterialDesignFont}">
-        <Grid x:Name="Grid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="{Binding ElementName=ColorZone, Path=ActualHeight}" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <materialDesign:ColorZone x:Name="ColorZone"
-                Padding="16"
-                materialDesign:ElevationAssist.Elevation="Dp4"
-                ClipToBounds="False"
-                Mode="PrimaryLight"
-                FontSize="20">
-                <Grid>
-                    <StackPanel Orientation="Horizontal">
-                        <ToggleButton
-                            x:Name="MenuToggler"
-                            Style="{DynamicResource MaterialDesignHamburgerToggleButton}"
-                            HorizontalAlignment="Left" />
-                        <Button x:Name="HomeButton"
+    <Grid x:Name="Grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding ElementName=ColorZone, Path=ActualHeight}" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <materialDesign:ColorZone x:Name="ColorZone"
+                                  Padding="16"
+                                  materialDesign:ElevationAssist.Elevation="Dp4"
+                                  ClipToBounds="False"
+                                  Mode="PrimaryLight"
+                                  FontSize="20">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <ToggleButton
+                        x:Name="MenuToggler"
+                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}"
+                        HorizontalAlignment="Left" />
+                    <Button x:Name="HomeButton"
                             Style="{StaticResource MaterialDesignFloatingActionLightButton}"
                             ToolTip="Home" Margin="15 0 0 0"
                             BorderThickness="0" Background="Transparent"
                             BorderBrush="Transparent" Click="HomeButton_OnClick">
-                            <materialDesign:PackIcon
-                                Width="25"
-                                Height="25"
-                                Kind="Home" />
+                        <materialDesign:PackIcon
+                            Width="25"
+                            Height="25"
+                            Kind="Home" />
+                    </Button>
+                </StackPanel>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="GadzzaaTB"
+                    Style="{DynamicResource MaterialDesignHeadline4TextBlock}"
+                    x:Name="HomeText" />
+            </Grid>
+        </materialDesign:ColorZone>
+        <materialDesign:DrawerHost Grid.Row="0" Grid.RowSpan="2"
+                                   x:Name="Drawer"
+                                   LeftDrawerCloseOnClickAway="True" Panel.ZIndex="1"
+                                   IsLeftDrawerOpen="{Binding ElementName=MenuToggler, Path=IsChecked}">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <Grid>
+                    <ToggleButton
+                        HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 16 16 0"
+                        IsChecked="{Binding ElementName=MenuToggler, Path=IsChecked}"
+                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+                    <StackPanel Margin="16 75 16 16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Button x:Name="SettingsButton"
+                                Style="{DynamicResource MaterialDesignRaisedLightButton}"
+                                FontSize="18" Height="65" materialDesign:ButtonAssist.CornerRadius="10"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Click="SettingsButton_OnClick">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon VerticalAlignment="Center"
+                                                         Kind="Cog"
+                                                         Width="20"
+                                                         Height="20" />
+                                <TextBlock Text="Configuration" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BugButton"
+                                Style="{DynamicResource MaterialDesignRaisedLightButton}"
+                                FontSize="18" Height="65" Margin="0 10 0 0"
+                                VerticalAlignment="Center"
+                                Width="{Binding ElementName=SettingsButton, Path=ActualWidth}"
+                                HorizontalAlignment="Center" materialDesign:ButtonAssist.CornerRadius="10"
+                                Click="BugButton_OnClick">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon VerticalAlignment="Center"
+                                                         Kind="Bug"
+                                                         Width="20"
+                                                         Height="20" />
+                                <TextBlock Text="Bug Report" Margin="2 0 0 0" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="DebugButton"
+                                FontSize="18" Height="65" Style="{DynamicResource MaterialDesignRaisedLightButton}"
+                                VerticalAlignment="Center" Margin="0 10 0 0"
+                                materialDesign:ButtonAssist.CornerRadius="10"
+                                HorizontalAlignment="Center"
+                                Width="{Binding ElementName=SettingsButton, Path=ActualWidth}"
+                                Click="DebugButton_OnClick">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon VerticalAlignment="Center"
+                                                         Kind="AccountHardHat"
+                                                         Width="20"
+                                                         Height="20" />
+                                <TextBlock Text="Debug" Margin="2 0 0 0" />
+                            </StackPanel>
                         </Button>
                     </StackPanel>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Text="GadzzaaTB"
-                        Style="{DynamicResource MaterialDesignHeadline4TextBlock}"
-                        x:Name="HomeText" />
-                </Grid>
-            </materialDesign:ColorZone>
-            <materialDesign:DrawerHost Grid.Row="0" Grid.RowSpan="2"
-                                       x:Name="Drawer"
-                                       LeftDrawerCloseOnClickAway="True" Panel.ZIndex="1"
-                                       IsLeftDrawerOpen="{Binding ElementName=MenuToggler, Path=IsChecked}">
-                <materialDesign:DrawerHost.LeftDrawerContent>
-                    <Grid>
-                        <ToggleButton
-                            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 16 16 0"
-                            IsChecked="{Binding ElementName=MenuToggler, Path=IsChecked}"
-                            Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
-                        <StackPanel Margin="16 75 16 16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Button x:Name="SettingsButton"
-                                    Style="{DynamicResource MaterialDesignRaisedLightButton}"
-                                    FontSize="18" Height="65" materialDesign:ButtonAssist.CornerRadius="10"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Center"
-                                    Click="SettingsButton_OnClick"
-                            >
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon VerticalAlignment="Center"
-                                                             Kind="Cog"
-                                                             Width="20"
-                                                             Height="20"/>
-                                    <TextBlock Text="Configuration" Margin="2 0 0 0"/>
-                                </StackPanel>
+                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                        <DockPanel Margin="0 0 0 15">
+                            <Button x:Name="GithubButton" Margin="0 0 10 0"
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                    Click="GithubButton_OnClick">
+                                <materialDesign:PackIcon
+                                    Width="25"
+                                    Height="25"
+                                    Kind="Github" />
                             </Button>
-                            <Button x:Name="BugButton"
-                                    Style="{DynamicResource MaterialDesignRaisedLightButton}"
-                                    FontSize="18" Height="65" Margin="0 10 0 0"
-                                    VerticalAlignment="Center" Width="{Binding ElementName=SettingsButton, Path=ActualWidth}"
-                                    HorizontalAlignment="Center" materialDesign:ButtonAssist.CornerRadius="10"
-                                    Click="BugButton_OnClick"
-                            >
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon VerticalAlignment="Center"
-                                        Kind="Bug"
-                                        Width="20"
-                                        Height="20"/>
-                                    <TextBlock Text="Bug Report" Margin="2 0 0 0"/>
-                                </StackPanel>
+                            <Button x:Name="DiscordButton" Margin="10 0 0 0 "
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                    Click="DiscordButton_OnClick">
+                                <Rectangle Width="25" Height="25">
+                                    <Rectangle.Fill>
+                                        <DrawingBrush
+                                            Drawing="{Binding Drawing, Source={StaticResource discordDrawingImage}}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
                             </Button>
-                            <Button x:Name="DebugButton"
-                                    FontSize="18" Height="65" Style="{DynamicResource MaterialDesignRaisedLightButton}"
-                                    VerticalAlignment="Center" Margin="0 10 0 0" materialDesign:ButtonAssist.CornerRadius="10"
-                                    HorizontalAlignment="Center" Width="{Binding ElementName=SettingsButton, Path=ActualWidth}"
-                                    Click="DebugButton_OnClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon VerticalAlignment="Center"
-                                                             Kind="AccountHardHat"
-                                                             Width="20"
-                                                             Height="20"/>
-                                    <TextBlock Text="Debug" Margin="2 0 0 0"/>
-                                </StackPanel>
+                        </DockPanel>
+                        <DockPanel Margin="0 0 0 15">
+                            <Button x:Name="YoutubeButton" Margin="0 0 10 0 "
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                    Click="YoutubeButton_OnClick">
+                                <materialDesign:PackIcon
+                                    Width="25"
+                                    Height="25"
+                                    Kind="Youtube" />
                             </Button>
-                        </StackPanel>
-                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                            <DockPanel Margin="0 0 0 15">
-                                <Button x:Name="GithubButton" Margin="0 0 10 0"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                                        Click="GithubButton_OnClick">
-                                    <materialDesign:PackIcon
-                                        Width="25"
-                                        Height="25"
-                                        Kind="Github" />
-                                </Button>
-                                <Button x:Name="DiscordButton" Margin="10 0 0 0 "
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                                        Click="DiscordButton_OnClick">
-                                    <Rectangle Width="25" Height="25">
-                                        <Rectangle.Fill>
-                                            <DrawingBrush
-                                                Drawing="{Binding Drawing, Source={StaticResource discordDrawingImage}}" />
-                                        </Rectangle.Fill>
-                                    </Rectangle>
-                                </Button>
-                            </DockPanel>
-                            <DockPanel Margin="0 0 0 15">
-                                <Button x:Name="YoutubeButton" Margin="0 0 10 0 "
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                                        Click="YoutubeButton_OnClick">
-                                    <materialDesign:PackIcon
-                                        Width="25"
-                                        Height="25"
-                                        Kind="Youtube" />
-                                </Button>
-                                <Button x:Name="TwitchButton" Margin="10 0 0 0"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                                        Click="TwitchButton_OnClick">
-                                    <materialDesign:PackIcon
-                                        Width="25"
-                                        Height="25"
-                                        Kind="Twitch" />
-                                </Button>
-                            </DockPanel>
-                            <TextBlock
-                                Margin="0,0,0,15"
-                                VerticalAlignment="Bottom"
-                                HorizontalAlignment="Center"
-                                Text="Version 2.00" />
-                        </StackPanel>
+                            <Button x:Name="TwitchButton" Margin="10 0 0 0"
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                    Click="TwitchButton_OnClick">
+                                <materialDesign:PackIcon
+                                    Width="25"
+                                    Height="25"
+                                    Kind="Twitch" />
+                            </Button>
+                        </DockPanel>
+                        <TextBlock
+                            Margin="0,0,0,15"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Center"
+                            Text="Version 2.00" />
+                    </StackPanel>
 
-                    </Grid>
-                </materialDesign:DrawerHost.LeftDrawerContent>
-            </materialDesign:DrawerHost>
-            <Frame x:Name="frame" Grid.Row="1" NavigationUIVisibility="Hidden" />
-        </Grid>
+                </Grid>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+        </materialDesign:DrawerHost>
+        <Frame x:Name="frame" Grid.Row="1" NavigationUIVisibility="Hidden" />
+    </Grid>
 </Window>

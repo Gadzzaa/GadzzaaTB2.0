@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:GadzzaaTB.Windows"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:properties="clr-namespace:GadzzaaTB"
 
@@ -12,73 +11,74 @@
       FontSize="25">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
-                <TextBlock x:Name="Text1" Text="Minimize instead of closing:" VerticalAlignment="Top" TextAlignment="Center"
-                           />
+                <TextBlock x:Name="Text1" Text="Minimize instead of closing:" VerticalAlignment="Top"
+                           TextAlignment="Center" />
                 <ToggleButton Style="{DynamicResource MaterialDesignSwitchLightToggleButton}"
-                   Margin="10 1 0 0" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=MinimizeX}"
-                              ToolTip="When exiting the app, minimize instead of closing it." RenderTransformOrigin="0.5,0.5" >
+                              Margin="10 1 0 0"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=MinimizeX}"
+                              ToolTip="When exiting the app, minimize instead of closing it."
+                              RenderTransformOrigin="0.5,0.5">
                     <ToggleButton.RenderTransform>
                         <TransformGroup>
-                            <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
+                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                            <SkewTransform />
+                            <RotateTransform />
+                            <TranslateTransform />
                         </TransformGroup>
                     </ToggleButton.RenderTransform>
                 </ToggleButton>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
-                <TextBlock Text="Start with Windows:" VerticalAlignment="Top"
-                           />
-                <ToggleButton 
-                              Margin="10 3 0 0" Style="{DynamicResource MaterialDesignSwitchLightToggleButton}"
-                              ToolTip="Automatically start GadzzaaTB alongside Windows." IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=AutoStart}">
+                <TextBlock Text="Start with Windows:" VerticalAlignment="Top" />
+                <ToggleButton
+                    Margin="10 3 0 0" Style="{DynamicResource MaterialDesignSwitchLightToggleButton}"
+                    ToolTip="Automatically start GadzzaaTB alongside Windows."
+                    IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=AutoStart}">
                     <ToggleButton.RenderTransform>
                         <TransformGroup>
-                            <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </ToggleButton.RenderTransform>
-                </ToggleButton>
-            </StackPanel>            
-            <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
-                <TextBlock Text="Auto-Connect to Twitch servers:" HorizontalAlignment="Center"
-                           />
-                <ToggleButton Style="{DynamicResource MaterialDesignSwitchLightToggleButton}"
-                              Margin="10 3 0 0" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=AutoConnect}"
-                              ToolTip="Automatically connect your channel on start." >
-                    <ToggleButton.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
+                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                            <SkewTransform />
+                            <RotateTransform />
+                            <TranslateTransform />
                         </TransformGroup>
                     </ToggleButton.RenderTransform>
                 </ToggleButton>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
-                <TextBlock x:Name="NpCommandText" Text="Now Playing command:"
-                           />
+                <TextBlock Text="Auto-Connect to Twitch servers:" HorizontalAlignment="Center" />
+                <ToggleButton Style="{DynamicResource MaterialDesignSwitchLightToggleButton}"
+                              Margin="10 3 0 0"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=AutoConnect}"
+                              ToolTip="Automatically connect your channel on start.">
+                    <ToggleButton.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                            <SkewTransform />
+                            <RotateTransform />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </ToggleButton.RenderTransform>
+                </ToggleButton>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
+                <TextBlock x:Name="NpCommandText" Text="Now Playing command:" />
                 <TextBox Margin="20 0 0 0" Padding="5 -10 0 0"
-                    VerticalAlignment="Top" Height="{Binding ElementName=NpCommandText, Path=ActualHeight}"
-                    materialDesign:HintAssist.Hint="Coming Soon™"
-                    IsEnabled="False" FontSize="15" Width="125" HorizontalContentAlignment="Center"
-                    Style="{StaticResource MaterialDesignFilledTextBox}"
-                    TextWrapping="Wrap"/>
+                         VerticalAlignment="Top" Height="{Binding ElementName=NpCommandText, Path=ActualHeight}"
+                         materialDesign:HintAssist.Hint="Coming Soon™"
+                         IsEnabled="False" FontSize="15" Width="125" HorizontalContentAlignment="Center"
+                         Style="{StaticResource MaterialDesignFilledTextBox}"
+                         TextWrapping="Wrap" />
             </StackPanel>
         </StackPanel>
-        
+
     </Grid>
 </Page>

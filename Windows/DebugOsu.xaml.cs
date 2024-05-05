@@ -1,5 +1,4 @@
-﻿using GadzzaaTB.Classes;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
@@ -72,7 +71,7 @@ public sealed partial class DebugOsu : INotifyPropertyChanged
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
-    
+
 
     private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {

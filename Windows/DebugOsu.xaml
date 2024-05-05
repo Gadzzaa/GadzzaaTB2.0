@@ -1,8 +1,7 @@
 ﻿<Page x:Class="GadzzaaTB.Windows.DebugOsu"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:classes="clr-namespace:GadzzaaTB.Classes"
-        Title="Debug" FontSize="30" Foreground="{DynamicResource MaterialDesign.Brush.Foreground}">
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Debug" FontSize="30" Foreground="{DynamicResource MaterialDesign.Brush.Foreground}">
     <Grid>
         <StackPanel Margin="10 0 0 0 ">
             <DockPanel Margin="0 10 0 0">

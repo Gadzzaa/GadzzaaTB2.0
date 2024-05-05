@@ -43,9 +43,6 @@
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Images\Background.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
@@ -58,6 +55,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="MaterialDesignColors" Version="3.1.0-ci619" />
     <PackageReference Include="MaterialDesignThemes" Version="5.0.1-ci619" />
     <PackageReference Include="MaterialDesignThemes.MahApps" Version="3.1.0-ci619" />
@@ -808,5 +806,9 @@
     <Compile Remove="packages\TwitchLib.3.5.3\TwitchLib.PubSub\TwitchLib.PubSub\obj\Debug\netstandard2.0\.NETStandard,Version=v2.0.AssemblyAttributes.cs" />
     <Compile Remove="packages\TwitchLib.3.5.3\TwitchLib.PubSub\TwitchLib.PubSub\obj\Debug\netstandard2.0\TwitchLib.PubSub.AssemblyInfo.cs" />
     <Compile Remove="packages\TwitchLib.3.5.3\TwitchLib.PubSub\TwitchLib.PubSub\TwitchPubSub.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Images\gadzzaa_Dq1_icon.ico" />
+    <Resource Include="Images\gadzzaa_Dq1_icon.ico" />
   </ItemGroup>
 </Project>
