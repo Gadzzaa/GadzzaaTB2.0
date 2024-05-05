@@ -49,15 +49,6 @@ public sealed partial class DebugOsu : INotifyPropertyChanged
     }
 
     // ReSharper disable once MemberCanBePrivate.Global
-    public int mods
-    {
-        set
-        {
-            if (_mods == value) return;
-            _mods = value;
-            UpdateModsText();
-        }
-    }
 
     public string modsText
     {
@@ -81,11 +72,6 @@ public sealed partial class DebugOsu : INotifyPropertyChanged
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
-
-    public void UpdateModsText()
-    {
-        modsText = UpdateValue.UpdateMods(_mods);
-    }
     
 
     private void OnPropertyChanged([CallerMemberName] string propertyName = null)

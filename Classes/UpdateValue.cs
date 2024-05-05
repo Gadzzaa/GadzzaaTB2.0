@@ -87,7 +87,7 @@ public class UpdateValue
         BeatmapId = Data.Beatmap.Id;
         if (_mainWindow.DebugOsu is null) return;
         _mainWindow.DebugOsu.dl = "https://osu.ppy.sh/beatmaps/" + BeatmapId;
-        _mainWindow.DebugOsu.mods = Data.GeneralData.Mods;
+        _mainWindow.DebugOsu.modsText = UpdateMods(Data.GeneralData.Mods);
         _mainWindow.DebugOsu.mapInfo = Data.Beatmap.MapString;
         Console.WriteLine(BeatmapId.ToString());
         try

@@ -30,7 +30,6 @@ public partial class MainWindow : Window
         await Twitch.Client.ConnectAsync();
         Grid.IsEnabled = true;
         Main.RenderMain();
-        DebugOsu.UpdateModsText();
         BugReport.RenderBugReport();
         Console.WriteLine(@"INITIALIZED!");
         while (true) await Main.GetOsuData();

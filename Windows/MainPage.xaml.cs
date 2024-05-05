@@ -68,6 +68,7 @@ public partial class MainPage : INotifyPropertyChanged
     }
 
     public string TwitchConnect
+        
     {
         get => _twitchButton;
         set
@@ -82,9 +83,6 @@ public partial class MainPage : INotifyPropertyChanged
 
     public void RenderMain()
     {
-        ChannelNameBox.Text = "a";
-        VerifyChannelNameBox();
-        _mainWindow.DebugOsu.UpdateModsText();
         ExecuteLabels();
         _settingsLoaded = true;
         // ReSharper disable once FunctionNeverReturns
