@@ -44,6 +44,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         frame.NavigationService.Navigate(Main);
         Grid.IsEnabled = true;
         Console.WriteLine(@"INITIALIZED!");
+        if (Settings.Default.AutoConnect) await Main.JoinChannel();
         while (true) await Main.GetOsuData();
         // ReSharper disable once FunctionNeverReturns
     }

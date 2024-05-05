@@ -9,6 +9,8 @@ public partial class SettingsPage : Page
     public SettingsPage()
     {
         InitializeComponent();
+        if (!Settings.Default.Verified) AutoC.IsChecked = false;
+
     }
 
     private void WindowsStart_OnClick(object sender, RoutedEventArgs e)

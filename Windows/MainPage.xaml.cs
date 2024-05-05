@@ -92,10 +92,11 @@ public partial class MainPage : INotifyPropertyChanged
     {
         if (!_settingsLoaded) return;
         Settings.Default.Verified = false;
+        _mainWindow.SettingsP.AutoC.IsChecked = false;
         TwitchStatus = "Verification Required";
     }
 
-    private void VerifyChannelNameBox()
+    public void VerifyChannelNameBox()
     {
         var myBindingExpression = ChannelNameBox.GetBindingExpression(TextBox.TextProperty);
         var myBinding = myBindingExpression.ParentBinding;
@@ -130,9 +131,8 @@ public partial class MainPage : INotifyPropertyChanged
         else
         {
             await _mainWindow.Twitch.Client.LeaveChannelAsync(ChannelNameBox.Text);
+            asd.ValidatesOnTargetUpdated = false;
         }
-
-        asd.ValidatesOnTargetUpdated = false;
     }
 
     private object ReturnExceptionHandler(object bindingExpression, Exception exception)
@@ -140,7 +140,7 @@ public partial class MainPage : INotifyPropertyChanged
         return "This is from the UpdateSourceExceptionFilterCallBack.";
     }
 
-    private async void Verify()
+    public async void Verify()
     {
         await JoinChannel();
         TwitchConnect = "Abort";
@@ -151,7 +151,7 @@ public partial class MainPage : INotifyPropertyChanged
         Console.WriteLine(@"Verification message has been sent, awaiting confirmation...");
     }
 
-    private async Task JoinChannel()
+    public async Task JoinChannel()
     {
         if (!_mainWindow.Twitch.Client.IsConnected)
         {

@@ -56,8 +56,8 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
                 <TextBlock Text="Auto-Connect to Twitch servers:" HorizontalAlignment="Center" />
-                <ToggleButton Style="{DynamicResource MaterialDesignSwitchLightToggleButton}"
-                              Margin="10 3 0 0"
+                <ToggleButton x:Name="AutoC" Style="{DynamicResource MaterialDesignSwitchLightToggleButton}"
+                              Margin="10 3 0 0" IsEnabled="{Binding Source={x:Static properties:Settings.Default}, Path=Verified}"
                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=AutoConnect}"
                               ToolTip="Automatically connect your channel on start.">
                     <ToggleButton.RenderTransform>
