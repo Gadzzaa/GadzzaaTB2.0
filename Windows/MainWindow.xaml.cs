@@ -1,11 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using System.Windows;
 using GadzzaaTB.Classes;
-using Hardcodet.Wpf.TaskbarNotification;
 
 namespace GadzzaaTB.Windows;
 
@@ -15,13 +16,12 @@ public partial class MainWindow : Window
     public DebugOsu DebugOsu;
     public MainPage Main;
     public SettingsPage SettingsP;
-    private readonly TaskbarIcon tb;
     public Bot Twitch;
+    public bool closing = false;
 
     public MainWindow()
     {
         InitializeComponent();
-        tb = (TaskbarIcon)FindResource("MyNotifyIcon");
         ContentRendered += OnContentRendered;
         Closing += OnClosing;
     }
@@ -44,13 +44,15 @@ public partial class MainWindow : Window
 
     private async void OnClosing(object sender, CancelEventArgs e)
     {
-        tb.Visibility = Visibility.Visible;
-  //      Hide();
-  //      e.Cancel = true;
+        if (Settings.Default.MinimizeX && !closing)
+        {
+            App.Me._notifyIcon.Visible = true;
+            Hide();
+            e.Cancel = true;
+        }
         Settings.Default.Username = Main.ChannelNameBox.Text;
         Settings.Default.Save();
-        if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
-    }
+        if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);    }
 
     private void ExecuteWindows()
     {

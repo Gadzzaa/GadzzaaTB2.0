@@ -37,7 +37,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-    <UseWindowsForms>False</UseWindowsForms>
+    <UseWindowsForms>True</UseWindowsForms>
     <StartupObject></StartupObject>
     <SignAssembly>False</SignAssembly>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
@@ -55,7 +55,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="MaterialDesignColors" Version="3.1.0-ci619" />
     <PackageReference Include="MaterialDesignThemes" Version="5.0.1-ci619" />
     <PackageReference Include="MaterialDesignThemes.MahApps" Version="3.1.0-ci619" />
