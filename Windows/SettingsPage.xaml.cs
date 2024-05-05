@@ -9,9 +9,5 @@ public partial class SettingsPage : Page
     {
         InitializeComponent();
     }
-
-    private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-    {
-        throw new System.NotImplementedException();
-    }
+    
 }

@@ -28,9 +28,10 @@ public partial class MainWindow : Window
         Console.WriteLine(@"Awaiting internet connection.");
         if (!IsConnectedToInternet()) return;
         await Twitch.Client.ConnectAsync();
-        Grid.IsEnabled = true;
         Main.RenderMain();
         BugReport.RenderBugReport();
+        Grid.IsEnabled = true;
+        frame.NavigationService.Navigate(Main);
         Console.WriteLine(@"INITIALIZED!");
         while (true) await Main.GetOsuData();
         // ReSharper disable once FunctionNeverReturns
@@ -48,7 +49,6 @@ public partial class MainWindow : Window
         BugReport = new BugReport();
         DebugOsu = new DebugOsu();
         SettingsP = new SettingsPage();
-        frame.NavigationService.Navigate(Main);
     }
 
     private void HomeButton_OnClick(object sender, RoutedEventArgs e)

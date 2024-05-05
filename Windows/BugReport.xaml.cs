@@ -56,10 +56,7 @@ public partial class BugReport : INotifyPropertyChanged
     private async void SubmitButton_OnClick(object sender, RoutedEventArgs e)
     {
         VerifyReportName();
-        if (string.IsNullOrWhiteSpace(ReportName.Text))
-        {
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(ReportName.Text)) return;
         //  _description = await LogFile.LoadLogFile(_description);
         await Classes.Octokit.Main(_name, _description);
         string executableLocation = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location);
