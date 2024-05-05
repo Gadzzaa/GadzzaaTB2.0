@@ -4,13 +4,16 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using GadzzaaTB.Classes;
 
 namespace GadzzaaTB.Windows;
 
-public partial class MainWindow : Window
+public partial class MainWindow : Window, INotifyPropertyChanged
 {
     public BugReport BugReport;
     public DebugOsu DebugOsu;
@@ -22,6 +25,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        DataContext = this;
         ContentRendered += OnContentRendered;
         Closing += OnClosing;
     }
@@ -30,13 +34,15 @@ public partial class MainWindow : Window
     private async void OnContentRendered(object sender, EventArgs eventArgs)
     {
         ExecuteWindows();
-        Main.RenderMain();
-        frame.NavigationService.Navigate(Main);
         Console.WriteLine(@"Awaiting internet connection.");
         if (!IsConnectedToInternet()) return;
         await Twitch.Client.ConnectAsync();
-        Grid.IsEnabled = true;
+        Main.RenderMain();
         BugReport.RenderBugReport();
+        Loading.Visibility = Visibility.Collapsed;
+        await Task.Delay(100);
+        frame.NavigationService.Navigate(Main);
+        Grid.IsEnabled = true;
         Console.WriteLine(@"INITIALIZED!");
         while (true) await Main.GetOsuData();
         // ReSharper disable once FunctionNeverReturns
@@ -63,25 +69,29 @@ public partial class MainWindow : Window
         SettingsP = new SettingsPage();
     }
 
-    private void HomeButton_OnClick(object sender, RoutedEventArgs e)
+    private async void HomeButton_OnClick(object sender, RoutedEventArgs e)
     {
+        await Task.Delay(100);
         frame.NavigationService.Navigate(Main);
     }
 
-    private void SettingsButton_OnClick(object sender, RoutedEventArgs e)
+    private async void SettingsButton_OnClick(object sender, RoutedEventArgs e)
     {
+        await Task.Delay(100);
         MenuToggler.IsChecked = false;
         frame.NavigationService.Navigate(SettingsP);
     }
 
-    private void BugButton_OnClick(object sender, RoutedEventArgs e)
+    private async void BugButton_OnClick(object sender, RoutedEventArgs e)
     {
+        await Task.Delay(100);
         MenuToggler.IsChecked = false;
         frame.NavigationService.Navigate(BugReport);
     }
 
-    private void DebugButton_OnClick(object sender, RoutedEventArgs e)
+    private async void DebugButton_OnClick(object sender, RoutedEventArgs e)
     {
+        await Task.Delay(100);
         MenuToggler.IsChecked = false;
         frame.NavigationService.Navigate(DebugOsu);
     }
@@ -152,5 +162,10 @@ public partial class MainWindow : Window
             UseShellExecute = true
         };
         Process.Start(psi);
+    }
+    public event PropertyChangedEventHandler PropertyChanged;
+    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

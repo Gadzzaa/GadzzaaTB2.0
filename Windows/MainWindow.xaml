@@ -17,6 +17,15 @@
             <RowDefinition Height="{Binding ElementName=ColorZone, Path=ActualHeight}" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Grid x:Name="Loading" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ProgressBar Width="200" Height="200"
+                         Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
+                         IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}">
+                
+            </ProgressBar>
+            <TextBlock FontSize="25" Text="Loading"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
         <materialDesign:ColorZone x:Name="ColorZone"
                                   Padding="16"
                                   materialDesign:ElevationAssist.Elevation="Dp4"
