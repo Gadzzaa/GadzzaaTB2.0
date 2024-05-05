@@ -30,13 +30,13 @@ public partial class MainWindow : Window
     private async void OnContentRendered(object sender, EventArgs eventArgs)
     {
         ExecuteWindows();
+        Main.RenderMain();
+        BugReport.RenderBugReport();
+        frame.NavigationService.Navigate(Main);
         Console.WriteLine(@"Awaiting internet connection.");
         if (!IsConnectedToInternet()) return;
         await Twitch.Client.ConnectAsync();
-        Main.RenderMain();
-        BugReport.RenderBugReport();
         Grid.IsEnabled = true;
-        frame.NavigationService.Navigate(Main);
         Console.WriteLine(@"INITIALIZED!");
         while (true) await Main.GetOsuData();
         // ReSharper disable once FunctionNeverReturns

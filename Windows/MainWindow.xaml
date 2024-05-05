@@ -12,7 +12,7 @@
         Width="1280"
         Height="720"
         Title="GadzzaaTB" FontFamily="{materialDesign:MaterialDesignFont}">
-    <Grid x:Name="Grid">
+    <Grid x:Name="Grid" IsEnabled="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="{Binding ElementName=ColorZone, Path=ActualHeight}" />
             <RowDefinition Height="*" />

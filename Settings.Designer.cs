@@ -48,7 +48,7 @@ namespace GadzzaaTB {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool MinimizeX {
             get {
                 return ((bool)(this["MinimizeX"]));
