@@ -13,6 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
@@ -79,6 +80,10 @@
                          Style="{StaticResource MaterialDesignFilledTextBox}"
                          TextWrapping="Wrap" />
             </StackPanel>
+            <Button x:Name="ThrowException" Width="{Binding ElementName=NpCommandText, Path=ActualWidth}" 
+                    Margin="0 10 0 0" Click="ThrowException_OnClick">
+                Test Exception / Crash
+            </Button>
         </StackPanel>
 
     </Grid>

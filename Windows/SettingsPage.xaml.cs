@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 
@@ -27,5 +28,11 @@ public partial class SettingsPage : Page
             RegistryKey key = Registry.CurrentUser.OpenSubKey(path, true);
             key.DeleteValue("GadzzaaTB", false);
         }
+    }
+
+    private void ThrowException_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new InvalidOperationException("This is a test exception.");
+        
     }
 }

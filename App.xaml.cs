@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using GadzzaaTB.Windows;
@@ -17,12 +19,11 @@ namespace GadzzaaTB;
 public partial class App : Application
 {
     public static App Me => ((App) Application.Current);
-
     public readonly Forms.NotifyIcon _notifyIcon;
     private MainWindow mainW;
-
     public App()
     {
+        SetupUnhandledExceptionHandling();
         _notifyIcon = new Forms.NotifyIcon();
         Startup += OnStartup;
     }
@@ -53,12 +54,37 @@ public partial class App : Application
         _notifyIcon.Visible = false;
     }
 
-    private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    private void SetupUnhandledExceptionHandling()
     {
-        MessageBox.Show(
-            e.Exception.Message + @" A log file has been created. Check '%localappdata%\GadzzaaTB\logs'",
-            "Exception Occured!", MessageBoxButton.OK, MessageBoxImage.Error);
-        e.Handled = false; //TO:DO ADD TRUE 
-        Current.Shutdown();
+        // Catch exceptions from all threads in the AppDomain.
+        AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+            ShowUnhandledException(args.ExceptionObject as Exception, "AppDomain.CurrentDomain.UnhandledException", false);
+
+        // Catch exceptions from each AppDomain that uses a task scheduler for async operations.
+        TaskScheduler.UnobservedTaskException += (sender, args) =>
+            ShowUnhandledException(args.Exception, "TaskScheduler.UnobservedTaskException", false);
+        // Catch exceptions from the main UI dispatcher thread.
+        // Typically we only need to catch this OR the Dispatcher.UnhandledException.
+        // Handling both can result in the exception getting handled twice.
+        //Application.Current.DispatcherUnhandledException += (sender, args) =>
+        //{
+        //	// If we are debugging, let Visual Studio handle the exception and take us to the code that threw it.
+        //	if (!Debugger.IsAttached)
+        //	{
+        //		args.Handled = true;
+        //		ShowUnhandledException(args.Exception, "Application.Current.DispatcherUnhandledException", true);
+        //	}
+        //};
+    }
+    void ShowUnhandledException(Exception e, string unhandledExceptionType, bool promptUserForShutdown)
+    {
+        var messageBoxTitle = $"Unexpected Error Occurred: {unhandledExceptionType}";
+        var messageBoxMessage = $"The following exception occurred:\n\n{e}";
+        var messageBoxButtons = MessageBoxButton.OK;
+        // Let the user decide if the app should die or not (if applicable).
+        if (MessageBox.Show(messageBoxMessage, messageBoxTitle, messageBoxButtons) == MessageBoxResult.Yes)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
