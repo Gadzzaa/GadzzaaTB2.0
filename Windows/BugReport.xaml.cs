@@ -14,12 +14,12 @@ public partial class BugReport : INotifyPropertyChanged
 {
     private string _description;
     private string _name;
-    private bool firsttime = true;
+    private bool _firstTime = true;
 
     public bool IsClosing;
 
     // private readonly MainWindow _mainWindow = Application.Current.MainWindow as MainWindow;
-    private string reportNametxt;
+    private string _reportNametxt;
 
     public BugReport()
     {
@@ -29,10 +29,10 @@ public partial class BugReport : INotifyPropertyChanged
 
     public string ReportNameTxt
     {
-        get => reportNametxt;
+        get => _reportNametxt;
         set
         {
-            reportNametxt = value;
+            _reportNametxt = value;
             OnPropertyChanged();
         }
     }
@@ -78,8 +78,8 @@ public partial class BugReport : INotifyPropertyChanged
         var myBinding = myBindingExpression.ParentBinding;
         myBinding.UpdateSourceExceptionFilter = ReturnExceptionHandler;
         myBindingExpression.UpdateSource();
-        if (firsttime) ReportName.Text = "";
-        firsttime = false;
+        if (_firstTime) ReportName.Text = "";
+        _firstTime = false;
     }
 
     private object ReturnExceptionHandler(object bindingExpression, Exception exception)

@@ -23,7 +23,7 @@
             <TextBlock FontSize="25" Text="Loading"
                        HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>
-        <materialDesign:ColorZone x:Name="ColorZone"
+        <materialDesign:ColorZone Grid.Row="0" x:Name="ColorZone"
                                   Padding="16"
                                   materialDesign:ElevationAssist.Elevation="Dp4"
                                   ClipToBounds="False"
@@ -159,6 +159,6 @@
                 </Grid>
             </materialDesign:DrawerHost.LeftDrawerContent>
         </materialDesign:DrawerHost>
-        <Frame x:Name="frame" Grid.Row="1" NavigationUIVisibility="Hidden" />
+        <Frame x:Name="Frame" Grid.Row="1" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

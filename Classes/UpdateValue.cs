@@ -11,8 +11,8 @@ namespace GadzzaaTB.Classes;
 
 public class UpdateValue
 {
-    private static readonly MainWindow _mainWindow = (MainWindow)Application.Current.MainWindow;
-    private static readonly MainPage Main = _mainWindow.Main;
+    private static readonly MainWindow MainWindow = (MainWindow)Application.Current.MainWindow;
+    private static readonly MainPage Main = MainWindow.Main;
     private static readonly OsuBaseAddresses Data = Main.BaseAddresses;
     public static double stars;
     public static int tested;
@@ -82,10 +82,10 @@ public class UpdateValue
     public async void UpdateValues()
     {
         BeatmapId = Data.Beatmap.Id;
-        if (_mainWindow.DebugOsu is null) return;
-        _mainWindow.DebugOsu.dl = "https://osu.ppy.sh/beatmaps/" + BeatmapId;
-        _mainWindow.DebugOsu.modsText = UpdateMods(Data.GeneralData.Mods);
-        _mainWindow.DebugOsu.mapInfo = Data.Beatmap.MapString;
+        if (MainWindow.DebugOsu is null) return;
+        MainWindow.DebugOsu.dl = "https://osu.ppy.sh/beatmaps/" + BeatmapId;
+        MainWindow.DebugOsu.modsText = UpdateMods(Data.GeneralData.Mods);
+        MainWindow.DebugOsu.mapInfo = Data.Beatmap.MapString;
         Console.WriteLine(BeatmapId.ToString());
         try
         {
@@ -96,7 +96,7 @@ public class UpdateValue
             Console.WriteLine($@"An exception occurred: {ex.Message}");
         }
 
-        _mainWindow.DebugOsu.mStars = Math.Round(stars, 2);
+        MainWindow.DebugOsu.mStars = Math.Round(stars, 2);
     }
 
     public static string UpdateMods(int i)

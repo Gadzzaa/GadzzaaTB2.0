@@ -17,7 +17,7 @@ namespace GadzzaaTB.Windows;
 
 public partial class MainPage : INotifyPropertyChanged
 {
-    private static readonly MainWindow _mainWindow = (MainWindow)Application.Current.MainWindow;
+    private static readonly MainWindow MainWindow = (MainWindow)Application.Current.MainWindow;
     private readonly int _readDelay = 500;
 
     // ReSharper disable once InconsistentNaming
@@ -27,7 +27,7 @@ public partial class MainPage : INotifyPropertyChanged
     private bool _settingsLoaded;
     private string _twitchButton = "Loading...";
     private string _twitchStatus = "Loading...";
-    private string channelNameTxt;
+    private string _channelNameTxt;
 
     public MainPage()
     {
@@ -38,10 +38,10 @@ public partial class MainPage : INotifyPropertyChanged
 
     public string ChannelNameTxt
     {
-        get => channelNameTxt;
+        get => _channelNameTxt;
         set
         {
-            channelNameTxt = value;
+            _channelNameTxt = value;
             OnPropertyChanged();
         }
     }
@@ -92,46 +92,50 @@ public partial class MainPage : INotifyPropertyChanged
     {
         if (!_settingsLoaded) return;
         Settings.Default.Verified = false;
-        _mainWindow.SettingsP.AutoC.IsChecked = false;
+        MainWindow.SettingsP.AutoC.IsChecked = false;
         TwitchStatus = "Verification Required";
     }
 
     public void VerifyChannelNameBox()
     {
         var myBindingExpression = ChannelNameBox.GetBindingExpression(TextBox.TextProperty);
-        var myBinding = myBindingExpression.ParentBinding;
-        myBinding.UpdateSourceExceptionFilter = ReturnExceptionHandler;
+        if (myBindingExpression != null)
+        {
+            var myBinding = myBindingExpression.ParentBinding;
+            myBinding.UpdateSourceExceptionFilter = ReturnExceptionHandler;
+        }
+
         myBindingExpression.UpdateSource();
     }
 
     private async void ConnectionButton_OnClick(object sender, RoutedEventArgs e)
     {
-        asd.ValidatesOnTargetUpdated = true;
+        ValidOnTargetUpd.ValidatesOnTargetUpdated = true;
         VerifyChannelNameBox();
         if (string.IsNullOrWhiteSpace(ChannelNameBox.Text)) return;
         if (TwitchConnect == "Abort")
         {
             Abort();
-            asd.ValidatesOnTargetUpdated = false;
+            ValidOnTargetUpd.ValidatesOnTargetUpdated = false;
             return;
         }
 
         if (!Settings.Default.Verified)
         {
             Verify();
-            asd.ValidatesOnTargetUpdated = false;
+            ValidOnTargetUpd.ValidatesOnTargetUpdated = false;
             return;
         }
 
         if (TwitchConnect == "Connect")
         {
             await JoinChannel();
-            asd.ValidatesOnTargetUpdated = false;
+            ValidOnTargetUpd.ValidatesOnTargetUpdated = false;
         }
         else
         {
-            await _mainWindow.Twitch.Client.LeaveChannelAsync(ChannelNameBox.Text);
-            asd.ValidatesOnTargetUpdated = false;
+            await MainWindow.Twitch.Client.LeaveChannelAsync(ChannelNameBox.Text);
+            ValidOnTargetUpd.ValidatesOnTargetUpdated = false;
         }
     }
 
@@ -146,35 +150,35 @@ public partial class MainPage : INotifyPropertyChanged
         TwitchConnect = "Abort";
         ChannelNameBox.IsEnabled = false;
         TwitchStatus = "Awaiting verification...";
-        await _mainWindow.Twitch.Client.SendMessageAsync(ChannelNameBox.Text,
+        await MainWindow.Twitch.Client.SendMessageAsync(ChannelNameBox.Text,
             "Please type '!verify' in order to confirm that you are the owner of the channel.");
         Console.WriteLine(@"Verification message has been sent, awaiting confirmation...");
     }
 
     public async Task JoinChannel()
     {
-        if (!_mainWindow.Twitch.Client.IsConnected)
+        if (!MainWindow.Twitch.Client.IsConnected)
         {
             Console.WriteLine(@"Twitch connection error!");
             return;
         }
 
-        if (_mainWindow.Twitch.JoinedChannel != null)
-            await _mainWindow.Twitch.Client.LeaveChannelAsync(_mainWindow.Twitch.JoinedChannel);
-        await _mainWindow.Twitch.Client.JoinChannelAsync(ChannelNameBox.Text);
+        if (MainWindow.Twitch.JoinedChannel != null)
+            await MainWindow.Twitch.Client.LeaveChannelAsync(MainWindow.Twitch.JoinedChannel);
+        await MainWindow.Twitch.Client.JoinChannelAsync(ChannelNameBox.Text);
     }
 
     private async void Abort()
     {
-        await _mainWindow.Twitch.Client.SendMessageAsync(ChannelNameBox.Text, "Verification process aborted.");
+        await MainWindow.Twitch.Client.SendMessageAsync(ChannelNameBox.Text, "Verification process aborted.");
         Console.WriteLine(@"Verification process aborted.");
-        await _mainWindow.Twitch.Client.LeaveChannelAsync(_mainWindow.Twitch.JoinedChannel);
+        await MainWindow.Twitch.Client.LeaveChannelAsync(MainWindow.Twitch.JoinedChannel);
     }
 
     public async Task GetOsuData()
     {
         await Task.Delay(_readDelay);
-        if (_mainWindow.Twitch.JoinedChannel == null) return;
+        if (MainWindow.Twitch.JoinedChannel == null) return;
         if (!_sreader.CanRead)
         {
             if (OsuStatus != "Process not found!") OsuStatus = "Process not found!";
@@ -208,8 +212,8 @@ public partial class MainPage : INotifyPropertyChanged
     public async void Disconnected()
     {
         Settings.Default.Verified = false;
-        if (_mainWindow.Twitch.JoinedChannel != null)
-            await _mainWindow.Twitch.Client.LeaveChannelAsync(_mainWindow.Twitch.JoinedChannel);
+        if (MainWindow.Twitch.JoinedChannel != null)
+            await MainWindow.Twitch.Client.LeaveChannelAsync(MainWindow.Twitch.JoinedChannel);
         TwitchStatus = "Disconnected";
         if (!Settings.Default.Verified) TwitchStatus = "Verification Required";
         TwitchConnect = "Connect";

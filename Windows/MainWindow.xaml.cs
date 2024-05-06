@@ -4,16 +4,15 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace GadzzaaTB.Windows;
 
-public partial class MainWindow : Window, INotifyPropertyChanged
+public partial class MainWindow
 {
     public BugReport BugReport;
-    public bool closing = false;
+    public bool ClosingApp = false;
     public DebugOsu DebugOsu;
     public MainPage Main;
     public SettingsPage SettingsP;
@@ -27,9 +26,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         Closing += OnClosing;
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-
-
     private async void OnContentRendered(object sender, EventArgs eventArgs)
     {
         ExecuteWindows();
@@ -40,7 +36,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         BugReport.RenderBugReport();
         Loading.Visibility = Visibility.Collapsed;
         await Task.Delay(100);
-        frame.NavigationService.Navigate(Main);
+        Frame.NavigationService.Navigate(Main);
         Grid.IsEnabled = true;
         Console.WriteLine(@"INITIALIZED!");
         if (Settings.Default.AutoConnect) await Main.JoinChannel();
@@ -50,9 +46,9 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private async void OnClosing(object sender, CancelEventArgs e)
     {
-        if (Settings.Default.MinimizeX && !closing)
+        if (Settings.Default.MinimizeX && !ClosingApp)
         {
-            App.Me._notifyIcon.Visible = true;
+            App.Me.NotifyIcon.Visible = true;
             Hide();
             e.Cancel = true;
         }
@@ -74,28 +70,28 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     private async void HomeButton_OnClick(object sender, RoutedEventArgs e)
     {
         await Task.Delay(100);
-        frame.NavigationService.Navigate(Main);
+        Frame.NavigationService.Navigate(Main);
     }
 
     private async void SettingsButton_OnClick(object sender, RoutedEventArgs e)
     {
         await Task.Delay(100);
         MenuToggler.IsChecked = false;
-        frame.NavigationService.Navigate(SettingsP);
+        Frame.NavigationService.Navigate(SettingsP);
     }
 
     private async void BugButton_OnClick(object sender, RoutedEventArgs e)
     {
         await Task.Delay(100);
         MenuToggler.IsChecked = false;
-        frame.NavigationService.Navigate(BugReport);
+        Frame.NavigationService.Navigate(BugReport);
     }
 
     private async void DebugButton_OnClick(object sender, RoutedEventArgs e)
     {
         await Task.Delay(100);
         MenuToggler.IsChecked = false;
-        frame.NavigationService.Navigate(DebugOsu);
+        Frame.NavigationService.Navigate(DebugOsu);
     }
 
 
@@ -108,7 +104,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             {
                 using (new TcpClient("www.google.com", 80))
                 {
-                    isConnected = true;
                 }
             }
             catch (Exception)
@@ -164,10 +159,5 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             UseShellExecute = true
         };
         Process.Start(psi);
-    }
-
-    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

@@ -47,7 +47,7 @@
                 <Binding Path="ChannelNameTxt"
                          UpdateSourceTrigger="Explicit">
                     <Binding.ValidationRules>
-                        <classes:NotEmptyValidationRule x:Name="asd"
+                        <classes:NotEmptyValidationRule x:Name="ValidOnTargetUpd"
                                                         ValidatesOnTargetUpdated="False" />
                     </Binding.ValidationRules>
                 </Binding>

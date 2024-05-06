@@ -15,15 +15,15 @@ namespace GadzzaaTB;
 ///     Interaction logic for App.xaml
 /// </summary>
 [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
-public partial class App : Application
+public partial class App
 {
-    public readonly Forms.NotifyIcon _notifyIcon;
-    private MainWindow mainW;
+    public readonly Forms.NotifyIcon NotifyIcon;
+    private MainWindow _mainW;
 
     public App()
     {
         SetupUnhandledExceptionHandling();
-        _notifyIcon = new Forms.NotifyIcon();
+        NotifyIcon = new Forms.NotifyIcon();
         Startup += OnStartup;
     }
 
@@ -31,40 +31,39 @@ public partial class App : Application
 
     private void OnStartup(object sender, StartupEventArgs e)
     {
-        _notifyIcon.Icon = new Icon(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+        NotifyIcon.Icon = new Icon(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
                                     + "../../../../Images/gadzzaa_Dq1_icon.ico"); // TODO: Find simpler way to do this
-        _notifyIcon.Text = "GadzzaaTB";
-        _notifyIcon.DoubleClick += NotifyIconOnClick;
+        NotifyIcon.Text = @"GadzzaaTB";
+        NotifyIcon.DoubleClick += NotifyIconOnClick;
 
-        _notifyIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
-        _notifyIcon.ContextMenuStrip.Items.Add("Quit", null, OnClick);
-        _notifyIcon.Visible = false;
+        NotifyIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
+        NotifyIcon.ContextMenuStrip.Items.Add("Quit", null, OnClick);
+        NotifyIcon.Visible = false;
 
-        mainW = new MainWindow();
+        _mainW = new MainWindow();
     }
 
     private void OnClick(object sender, EventArgs e)
     {
-        mainW.closing = true;
-        mainW.Close();
+        _mainW.ClosingApp = true;
+        _mainW.Close();
     }
 
     private void NotifyIconOnClick(object sender, EventArgs e)
     {
         MainWindow.Show();
-        _notifyIcon.Visible = false;
+        NotifyIcon.Visible = false;
     }
 
     private void SetupUnhandledExceptionHandling()
     {
         // Catch exceptions from all threads in the AppDomain.
-        AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
-            ShowUnhandledException(args.ExceptionObject as Exception, "AppDomain.CurrentDomain.UnhandledException",
-                false);
+        AppDomain.CurrentDomain.UnhandledException += (_, args) =>
+            ShowUnhandledException(args.ExceptionObject as Exception, "AppDomain.CurrentDomain.UnhandledException");
 
         // Catch exceptions from each AppDomain that uses a task scheduler for async operations.
-        TaskScheduler.UnobservedTaskException += (sender, args) =>
-            ShowUnhandledException(args.Exception, "TaskScheduler.UnobservedTaskException", false);
+        TaskScheduler.UnobservedTaskException += (_, args) =>
+            ShowUnhandledException(args.Exception, "TaskScheduler.UnobservedTaskException");
         // Catch exceptions from the main UI dispatcher thread.
         // Typically we only need to catch this OR the Dispatcher.UnhandledException.
         // Handling both can result in the exception getting handled twice.
@@ -79,7 +78,7 @@ public partial class App : Application
         //};
     }
 
-    private void ShowUnhandledException(Exception e, string unhandledExceptionType, bool promptUserForShutdown)
+    private void ShowUnhandledException(Exception e, string unhandledExceptionType)
     {
         var messageBoxTitle = $"Unexpected Error Occurred: {unhandledExceptionType}";
         var messageBoxMessage = $"The following exception occurred:\n\n{e}";

@@ -15,9 +15,9 @@ namespace GadzzaaTB.Classes;
 
 public class Bot
 {
-    private static readonly MainWindow _mainWindow = (MainWindow)Application.Current.MainWindow;
+    private static readonly MainWindow MainWindow = (MainWindow)Application.Current.MainWindow;
     public readonly TwitchClient Client;
-    private readonly MainPage Main = _mainWindow.Main;
+    private readonly MainPage _main = MainWindow.Main;
     public string JoinedChannel;
 
     public Bot()
@@ -60,12 +60,12 @@ public class Bot
         await Client.SendMessageAsync(e.Channel, "Bot online!");
         await Task.Factory.StartNew(() =>
         {
-            var _ = _mainWindow.Dispatcher.BeginInvoke((Action)(() =>
+            var _ = MainWindow.Dispatcher.BeginInvoke((Action)(() =>
             {
                 {
-                    Main.TwitchStatus = "Connected";
-                    Main.TwitchConnect = "Disconnect";
-                    Main.ChannelNameBox.IsEnabled = false;
+                    _main.TwitchStatus = "Connected";
+                    _main.TwitchConnect = "Disconnect";
+                    _main.ChannelNameBox.IsEnabled = false;
                 }
             }));
         });
@@ -77,13 +77,13 @@ public class Bot
         JoinedChannel = null;
         Task.Factory.StartNew(() =>
         {
-            var _ = Main.Dispatcher.BeginInvoke((Action)(() =>
+            var _ = _main.Dispatcher.BeginInvoke((Action)(() =>
             {
                 {
-                    Main.TwitchStatus = "Disconnected";
-                    Main.TwitchConnect = "Connect";
-                    Main.OsuStatus = "Disconnected";
-                    Main.ChannelNameBox.IsEnabled = true;
+                    _main.TwitchStatus = "Disconnected";
+                    _main.TwitchConnect = "Connect";
+                    _main.OsuStatus = "Disconnected";
+                    _main.ChannelNameBox.IsEnabled = true;
                 }
             }));
         });
@@ -141,7 +141,7 @@ public class Bot
 
             await Client.SendMessageAsync(e.ChatMessage.Channel,
                 "Succesfully unlinked!");
-            Main.Disconnected();
+            _main.Disconnected();
         }
 
         if (e.ChatMessage.Message == "!np")
@@ -153,8 +153,8 @@ public class Bot
                 return;
             }
 
-            if (_mainWindow.DebugOsu == null) return;
-            if (!Main._sreader.CanRead)
+            if (MainWindow.DebugOsu == null) return;
+            if (!_main._sreader.CanRead)
             {
                 await Client.SendMessageAsync(e.ChatMessage.Channel,
                     @"Process 'osu.exe' could not be found running. Please launch the game before using the command");
@@ -162,16 +162,16 @@ public class Bot
             }
 
             await Client.SendMessageAsync(e.ChatMessage.Channel,
-                _mainWindow.DebugOsu.mStars + "\u2b50 | " + _mainWindow.DebugOsu.mapInfo + " | Mods: " +
-                _mainWindow.DebugOsu.modsText + " | Download: " +
-                _mainWindow.DebugOsu.dl);
+                MainWindow.DebugOsu.mStars + "\u2b50 | " + MainWindow.DebugOsu.mapInfo + " | Mods: " +
+                MainWindow.DebugOsu.modsText + " | Download: " +
+                MainWindow.DebugOsu.dl);
         }
     }
 
     private void Verifica()
     {
         Settings.Default.Verified = true;
-        Main.TwitchStatus = "Connected";
-        Main.TwitchConnect = "Disconnect";
+        _main.TwitchStatus = "Connected";
+        _main.TwitchConnect = "Disconnect";
     }
 }
