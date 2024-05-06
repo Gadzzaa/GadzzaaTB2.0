@@ -43,7 +43,7 @@ public partial class App : Application
         mainW = new MainWindow();
     }
 
-    private async void OnClick(object sender, EventArgs e)
+    private void OnClick(object sender, EventArgs e)
     {
         mainW.closing = true;
         mainW.Close();

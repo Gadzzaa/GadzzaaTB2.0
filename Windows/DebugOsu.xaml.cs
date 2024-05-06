@@ -12,8 +12,7 @@ public sealed partial class DebugOsu : INotifyPropertyChanged
     private string _dl;
 
     private string _mapInfo;
-
-    private int _mods;
+    
     private string _modsText;
 
     private double _mStars;
