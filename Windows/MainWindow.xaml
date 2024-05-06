@@ -4,7 +4,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:tb="http://www.hardcodet.net/taskbar"
         mc:Ignorable="d"
         Style="{StaticResource MaterialDesignWindow}"
         ResizeMode="CanMinimize" Visibility="Visible"
@@ -20,11 +19,9 @@
         <Grid x:Name="Loading" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <ProgressBar Width="200" Height="200"
                          Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
-                         IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}">
-                
-            </ProgressBar>
+                         IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" />
             <TextBlock FontSize="25" Text="Loading"
-                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                       HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>
         <materialDesign:ColorZone x:Name="ColorZone"
                                   Padding="16"

@@ -4,8 +4,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using Octokit;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
@@ -18,8 +16,8 @@ namespace GadzzaaTB.Classes;
 public class Bot
 {
     private static readonly MainWindow _mainWindow = (MainWindow)Application.Current.MainWindow;
-    private readonly MainPage Main = _mainWindow.Main;
     public readonly TwitchClient Client;
+    private readonly MainPage Main = _mainWindow.Main;
     public string JoinedChannel;
 
     public Bot()
@@ -100,7 +98,8 @@ public class Bot
         {
             if (Settings.Default.Verified)
             {
-                await Client.SendMessageAsync(e.ChatMessage.Channel, "You are already verified! If you wish to unlink, use the command: '!unlink'.");
+                await Client.SendMessageAsync(e.ChatMessage.Channel,
+                    "You are already verified! If you wish to unlink, use the command: '!unlink'.");
                 return;
             }
 
@@ -115,7 +114,6 @@ public class Bot
             await Client.SendMessageAsync(e.ChatMessage.Channel,
                 "Verification process completed! Thank you for using my bot!");
             return;
-
         }
 
         if (e.ChatMessage.Message == "!commands" || e.ChatMessage.Message == "!help")
@@ -133,12 +131,14 @@ public class Bot
                     "You are not verified! Please use '!verify' in order to access other commands.");
                 return;
             }
+
             if (e.ChatMessage.Username != e.ChatMessage.Channel)
             {
                 await Client.SendMessageAsync(e.ChatMessage.Channel,
                     "The owner of the channel must execute this command.");
                 return;
             }
+
             await Client.SendMessageAsync(e.ChatMessage.Channel,
                 "Succesfully unlinked!");
             Main.Disconnected();
@@ -152,6 +152,7 @@ public class Bot
                     "You are not verified! Please use '!verify' in order to access other commands.");
                 return;
             }
+
             if (_mainWindow.DebugOsu == null) return;
             if (!Main._sreader.CanRead)
             {
@@ -172,6 +173,5 @@ public class Bot
         Settings.Default.Verified = true;
         Main.TwitchStatus = "Connected";
         Main.TwitchConnect = "Disconnect";
-        
     }
 }

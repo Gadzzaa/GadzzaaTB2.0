@@ -1,26 +1,23 @@
-﻿using System;
+﻿using GadzzaaTB.Classes;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using GadzzaaTB.Classes;
 
 namespace GadzzaaTB.Windows;
 
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
     public BugReport BugReport;
+    public bool closing = false;
     public DebugOsu DebugOsu;
     public MainPage Main;
     public SettingsPage SettingsP;
     public Bot Twitch;
-    public bool closing = false;
 
     public MainWindow()
     {
@@ -29,6 +26,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         ContentRendered += OnContentRendered;
         Closing += OnClosing;
     }
+
+    public event PropertyChangedEventHandler PropertyChanged;
 
 
     private async void OnContentRendered(object sender, EventArgs eventArgs)
@@ -57,9 +56,11 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             Hide();
             e.Cancel = true;
         }
+
         Settings.Default.Username = Main.ChannelNameBox.Text;
         Settings.Default.Save();
-        if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);    }
+        if (Twitch.JoinedChannel != null) await Twitch.Client.LeaveChannelAsync(Twitch.JoinedChannel);
+    }
 
     private void ExecuteWindows()
     {
@@ -164,7 +165,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         };
         Process.Start(psi);
     }
-    public event PropertyChangedEventHandler PropertyChanged;
+
     private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

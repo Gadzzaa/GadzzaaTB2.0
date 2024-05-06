@@ -1,13 +1,12 @@
-﻿using System;
-using System.Diagnostics;
+﻿using GadzzaaTB.Windows;
+using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
-using GadzzaaTB.Windows;
-using TwitchLib.Api.Helix.Models.ChannelPoints;
-using Forms=System.Windows.Forms;
+using Forms = System.Windows.Forms;
 
 
 namespace GadzzaaTB;
@@ -18,9 +17,9 @@ namespace GadzzaaTB;
 [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
 public partial class App : Application
 {
-    public static App Me => ((App) Application.Current);
     public readonly Forms.NotifyIcon _notifyIcon;
     private MainWindow mainW;
+
     public App()
     {
         SetupUnhandledExceptionHandling();
@@ -28,17 +27,19 @@ public partial class App : Application
         Startup += OnStartup;
     }
 
+    public static App Me => (App)Current;
+
     private void OnStartup(object sender, StartupEventArgs e)
     {
-        _notifyIcon.Icon = new System.Drawing.Icon(    System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)
-        + "../../../../Images/gadzzaa_Dq1_icon.ico"); // TODO: Find simpler way to do this
+        _notifyIcon.Icon = new Icon(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+                                    + "../../../../Images/gadzzaa_Dq1_icon.ico"); // TODO: Find simpler way to do this
         _notifyIcon.Text = "GadzzaaTB";
         _notifyIcon.DoubleClick += NotifyIconOnClick;
 
         _notifyIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
         _notifyIcon.ContextMenuStrip.Items.Add("Quit", null, OnClick);
         _notifyIcon.Visible = false;
-        
+
         mainW = new MainWindow();
     }
 
@@ -58,7 +59,8 @@ public partial class App : Application
     {
         // Catch exceptions from all threads in the AppDomain.
         AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
-            ShowUnhandledException(args.ExceptionObject as Exception, "AppDomain.CurrentDomain.UnhandledException", false);
+            ShowUnhandledException(args.ExceptionObject as Exception, "AppDomain.CurrentDomain.UnhandledException",
+                false);
 
         // Catch exceptions from each AppDomain that uses a task scheduler for async operations.
         TaskScheduler.UnobservedTaskException += (sender, args) =>
@@ -76,15 +78,14 @@ public partial class App : Application
         //	}
         //};
     }
-    void ShowUnhandledException(Exception e, string unhandledExceptionType, bool promptUserForShutdown)
+
+    private void ShowUnhandledException(Exception e, string unhandledExceptionType, bool promptUserForShutdown)
     {
         var messageBoxTitle = $"Unexpected Error Occurred: {unhandledExceptionType}";
         var messageBoxMessage = $"The following exception occurred:\n\n{e}";
         var messageBoxButtons = MessageBoxButton.OK;
         // Let the user decide if the app should die or not (if applicable).
         if (MessageBox.Show(messageBoxMessage, messageBoxTitle, messageBoxButtons) == MessageBoxResult.Yes)
-        {
-            Application.Current.Shutdown();
-        }
+            Current.Shutdown();
     }
 }

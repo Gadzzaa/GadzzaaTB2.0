@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Win32;
 
 namespace GadzzaaTB.Windows;
 
@@ -11,7 +13,6 @@ public partial class SettingsPage : Page
     {
         InitializeComponent();
         if (!Settings.Default.Verified) AutoC.IsChecked = false;
-
     }
 
     private void WindowsStart_OnClick(object sender, RoutedEventArgs e)
@@ -19,13 +20,14 @@ public partial class SettingsPage : Page
         if (WindowsStart.IsChecked.Value)
         {
             var path = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(path, true);
-            key.SetValue("GadzzaaTB",  System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\GadzzaaTB.exe");
+            var key = Registry.CurrentUser.OpenSubKey(path, true);
+            key.SetValue("GadzzaaTB",
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\GadzzaaTB.exe");
         }
         else
         {
             var path = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(path, true);
+            var key = Registry.CurrentUser.OpenSubKey(path, true);
             key.DeleteValue("GadzzaaTB", false);
         }
     }
@@ -33,6 +35,5 @@ public partial class SettingsPage : Page
     private void ThrowException_OnClick(object sender, RoutedEventArgs e)
     {
         throw new InvalidOperationException("This is a test exception.");
-        
     }
 }

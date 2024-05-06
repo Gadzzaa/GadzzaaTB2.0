@@ -41,10 +41,10 @@
             <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
                 <TextBlock Text="Start with Windows:" VerticalAlignment="Top" />
                 <ToggleButton x:Name="WindowsStart"
-                    Margin="10 3 0 0" Style="{DynamicResource MaterialDesignSwitchLightToggleButton}"
-                    ToolTip="Automatically start GadzzaaTB alongside Windows."
-                    IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=AutoStart}"
-                    Click="WindowsStart_OnClick">
+                              Margin="10 3 0 0" Style="{DynamicResource MaterialDesignSwitchLightToggleButton}"
+                              ToolTip="Automatically start GadzzaaTB alongside Windows."
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=AutoStart}"
+                              Click="WindowsStart_OnClick">
                     <ToggleButton.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
@@ -58,7 +58,8 @@
             <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
                 <TextBlock Text="Auto-Connect to Twitch servers:" HorizontalAlignment="Center" />
                 <ToggleButton x:Name="AutoC" Style="{DynamicResource MaterialDesignSwitchLightToggleButton}"
-                              Margin="10 3 0 0" IsEnabled="{Binding Source={x:Static properties:Settings.Default}, Path=Verified}"
+                              Margin="10 3 0 0"
+                              IsEnabled="{Binding Source={x:Static properties:Settings.Default}, Path=Verified}"
                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=AutoConnect}"
                               ToolTip="Automatically connect your channel on start.">
                     <ToggleButton.RenderTransform>
@@ -80,7 +81,7 @@
                          Style="{StaticResource MaterialDesignFilledTextBox}"
                          TextWrapping="Wrap" />
             </StackPanel>
-            <Button x:Name="ThrowException" Width="{Binding ElementName=NpCommandText, Path=ActualWidth}" 
+            <Button x:Name="ThrowException" Width="{Binding ElementName=NpCommandText, Path=ActualWidth}"
                     Margin="0 10 0 0" Click="ThrowException_OnClick">
                 Test Exception / Crash
             </Button>

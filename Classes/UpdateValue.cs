@@ -3,11 +3,8 @@ using Newtonsoft.Json.Linq;
 using OsuMemoryDataProvider.OsuMemoryModels;
 using System;
 using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using Application = System.Windows.Application;
 
 namespace GadzzaaTB.Classes;
